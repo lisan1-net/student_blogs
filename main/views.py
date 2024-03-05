@@ -26,6 +26,8 @@ def home(request):
             filter_query &= Q(blog=blog)
         if grade := form.cleaned_data['grade']:
             filter_query &= Q(grade=grade)
+        if source := form.cleaned_data['source']:
+            filter_query &= Q(source=source)
         if part := form.cleaned_data['part']:
             filter_query &= Q(part__icontains=part)
         if editor := form.cleaned_data['editor']:

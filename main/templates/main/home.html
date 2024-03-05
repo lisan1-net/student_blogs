@@ -19,7 +19,7 @@
                     <h5>{{ text.author.area }}, {{ text.author.city|default_if_none:'' }}</h5>
                 {% endif %}
                 <div>{{ text.content|highlight:query }}</div>
-                <p>{{ text.blog }} - {{ text.part|default_if_none:'' }} - {{ text.editor|default_if_none:'' }}</p>
+                <p>{{ text.blog }} - {{ text.source|default_if_none:'' }} / {{ text.part|default_if_none:'' }} - {{ text.editor|default_if_none:'' }}</p>
                 <p>{{ text.content|add:'\n'|add:text.title|frequency:query }}</p>
             </div>
         </div>

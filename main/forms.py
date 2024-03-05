@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import widgets
 from django.utils.translation import gettext_lazy as _
 
 from main.models import *
@@ -23,8 +24,15 @@ def get_author_cities():
 
 
 def get_editors():
-    return ([(t['editor'], t['editor']) for t in Text.objects.order_by('editor').values('editor').distinct()
-             if t['editor']] + [(None, '')])
+    return ([(None, '')] +
+            [(t['editor'], t['editor']) for t in Text.objects.order_by('editor').values('editor').distinct()
+             if t['editor']])
+
+
+def get_sources():
+    return ([(None, '')] +
+            [(t['source'], t['source']) for t in Text.objects.order_by('source').values('source').distinct()
+             if t['source']])
 
 
 class SearchForm(forms.Form):
@@ -36,7 +44,8 @@ class SearchForm(forms.Form):
     author_sex = forms.ChoiceField(choices=[(None, ''), ('M', _('Male')), ('F', _('Female'))], required=False)
     author_area = forms.ChoiceField(choices=get_author_areas, required=False)
     author_city = forms.ChoiceField(choices=get_author_cities, required=False)
+    source = forms.ChoiceField(choices=get_sources, required=False)
     grade = forms.ChoiceField(choices=get_grades, required=False)
     part = forms.CharField(max_length=100, required=False)
     editor = forms.ChoiceField(choices=get_editors, required=False)
-    tags = forms.ModelMultipleChoiceField(Tag.objects.all(), required=False)
+    tags = forms.ModelMultipleChoiceField(Tag.objects.all(), required=False, widget=widgets.CheckboxSelectMultiple())
