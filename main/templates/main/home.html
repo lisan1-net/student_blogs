@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="jumbotron">
+        <form method="GET" role="form" class="form-horizontal">
+            {% bootstrap_form form layout="horizontal" bound_css_class=''%}
+            {% buttons submit='Search' %}{% endbuttons %}
+        </form>
+    </div>
+    {% for text in texts %}
+    	<div>
+            <h3>{{ text.title }} - {{ text.grade|default_if_none:'' }}</h3>
+            <h4>{{ text.author }} [{{ text.author.get_sex_display }}]</h4>
+            <h5>{% for tag in text.tags.all %} <span class="ml-1">{{ tag }}</span> {% endfor %}</h5>
+            {% if text.author.area %}
+                <h5>{{ text.author.area }}, {{ text.author.city|default_if_none:'' }}</h5>
+            {% endif %}
+            <div>{{ text.content }}</div>
+        </div>
+        <p>{{ text.blog }} - {{ text.part|default_if_none:'' }} - {{ text.editor|default_if_none:'' }}</p>
+        <hr>
+    {% endfor %}
+{% endblock %}

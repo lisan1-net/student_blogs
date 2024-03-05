@@ -1,0 +1,5 @@
+*.iml
+.*
+!.gitignore
+*.sqlite3
+*.db
