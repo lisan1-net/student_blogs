@@ -11,3 +11,9 @@ register = template.Library()
 def highlight(value, target):
     rgx = compile(rescape(target), IGNORECASE)
     return mark_safe(rgx.sub(r'<span class="bg-warning">\g<0></span>', value))
+
+
+@register.filter
+@stringfilter
+def frequency(value, target):
+    return value.lower().count(target.lower())
