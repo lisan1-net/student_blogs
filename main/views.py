@@ -12,7 +12,7 @@ def home(request):
     if form.is_valid():
         query = form.cleaned_data['search_query']
         filter_query = Q(title__icontains=query)
-        if form.cleaned_data['search_in_text']:
+        if form.cleaned_data['search_in_content']:
             filter_query |= Q(content__icontains=query)
         if author_name := form.cleaned_data['author_name']:
             filter_query &= Q(author__name__icontains=author_name)

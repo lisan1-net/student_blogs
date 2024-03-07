@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 06:20+0000\n"
+"POT-Creation-Date: 2024-03-07 09:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +18,110 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-#: main/forms.py:44 main/models.py:27
+
+#: main/forms.py:41
+msgid "Search query"
+msgstr "استعلام البحث"
+
+#: main/forms.py:42
+msgid "Enter an expression to search in the texts."
+msgstr "أدخل تعبيرًا للبحث في النصوص."
+
+#: main/forms.py:45
+msgid "Search in content"
+msgstr "البحث في المحتوى"
+
+#: main/forms.py:46
+msgid "Search in the content of the texts in addition to the title."
+msgstr "علّم للبحث في محتوى النصوص بالإضافة إلى العنوان."
+
+#: main/forms.py:49 main/models.py:9 main/models.py:43
+msgid "Blog"
+msgstr "مدونة"
+
+#: main/forms.py:49
+msgid "Select a blog to search in."
+msgstr "حدد مدونة للبحث فيها."
+
+#: main/forms.py:52 main/models.py:25
+msgid "Author name"
+msgstr "اسم المؤلف"
+
+#: main/forms.py:53
+msgid "Enter the name of the author."
+msgstr "أدخل اسم المؤلف."
+
+#: main/forms.py:56 main/models.py:27
 msgid "Male"
 msgstr "ذكر"
 
-#: main/forms.py:44 main/models.py:27
+#: main/forms.py:56 main/models.py:27
 msgid "Female"
 msgstr "أنثى"
 
-#: main/models.py:9 main/models.py:43
-msgid "Blog"
-msgstr "مدونة"
+#: main/forms.py:56 main/models.py:27
+msgid "Author sex"
+msgstr "جنس المؤلف"
+
+#: main/forms.py:57
+msgid "Select the sex of the author."
+msgstr "حدد جنس المؤلف."
+
+#: main/forms.py:60 main/models.py:29
+msgid "Author area"
+msgstr "منطقة المؤلف"
+
+#: main/forms.py:60
+msgid "Select the area of the author."
+msgstr "حدد منطقة المؤلف."
+
+#: main/forms.py:63 main/models.py:30
+msgid "Author city"
+msgstr "مدينة المؤلف"
+
+#: main/forms.py:63
+msgid "Select the city of the author."
+msgstr "حدد مدينة المؤلف."
+
+#: main/forms.py:66 main/models.py:51
+msgid "Source"
+msgstr "المصدر"
+
+#: main/forms.py:66
+msgid "Select the source of the text."
+msgstr "حدد مصدر النص."
+
+#: main/forms.py:69 main/models.py:54
+msgid "Grade"
+msgstr "المستوى"
+
+#: main/forms.py:70
+msgid "Select the grade of the student studying this text."
+msgstr "حدد المستوى الدراسي للطالب الذي يدرس هذا النص."
+
+#: main/forms.py:73 main/models.py:58
+msgid "Part"
+msgstr "الجزء"
+
+#: main/forms.py:74
+msgid "Enter the part of the book containing this text."
+msgstr "أدخل الجزء من الكتاب الذي يحتوي على هذا النص."
+
+#: main/forms.py:77 main/models.py:62
+msgid "Editor"
+msgstr "المحرر"
+
+#: main/forms.py:77
+msgid "Select the editor of the book."
+msgstr "حدد محرر الكتاب."
+
+#: main/forms.py:81
+msgid "Tags"
+msgstr "العلامات"
+
+#: main/forms.py:81
+msgid "Select the tags of the text."
+msgstr "حدد العلامات الخاصة بالنص."
 
 #: main/models.py:10
 msgid "Blogs"
@@ -62,33 +155,17 @@ msgstr "المؤلفون"
 msgid "Name"
 msgstr "الاسم"
 
-#: main/models.py:25
-msgid "Author name"
-msgstr "اسم المؤلف"
-
 #: main/models.py:27
 msgid "Sex"
 msgstr "الجنس"
-
-#: main/models.py:27
-msgid "Author sex"
-msgstr "جنس المؤلف"
 
 #: main/models.py:29
 msgid "Area"
 msgstr "المنطقة"
 
-#: main/models.py:29
-msgid "Author area"
-msgstr "منطقة المؤلف"
-
 #: main/models.py:30
 msgid "City"
 msgstr "المدينة"
-
-#: main/models.py:30
-msgid "Author city"
-msgstr "مدينة المؤلف"
 
 #: main/models.py:39
 msgid "Text"
@@ -119,32 +196,16 @@ msgid "Content of the text"
 msgstr "محتوى النص"
 
 #: main/models.py:51
-msgid "Source"
-msgstr "المصدر"
-
-#: main/models.py:51
 msgid "The source document of the text"
 msgstr "المستند المصدر للنص"
-
-#: main/models.py:54
-msgid "Grade"
-msgstr "المستوى"
 
 #: main/models.py:55
 msgid "Grade of the student studying this text"
 msgstr "مستوى الطالب الذي يدرس هذا النص"
 
-#: main/models.py:58
-msgid "Part"
-msgstr "الجزء"
-
 #: main/models.py:59
 msgid "Part of the book containing this text"
 msgstr "جزء الكتاب الذي يحتوي على هذا النص"
-
-#: main/models.py:62
-msgid "Editor"
-msgstr "المحرر"
 
 #: main/models.py:63
 msgid "Editor of the book containing this text"
