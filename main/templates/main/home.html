@@ -1,12 +1,13 @@
 {% extends 'main/base.html' %}
-{% load bootstrap4 %}
+{% load i18n %}
 {% load search_filters %}
 
 {% block content %}
-    <div class="jumbotron">
-        <form method="GET" role="form" class="form-horizontal">
-            {% bootstrap_form form layout="horizontal" bound_css_class=''%}
-            {% buttons submit='Search' %}{% endbuttons %}
+    <div class="jumbotron mt-3 p-3">
+        <h1>{% translate 'Search in the database' %}</h1>
+        <p class="lead">{% translate 'Search for texts in the database' %}</p>
+        <form method="get">
+            {{ form }}
         </form>
     </div>
     {% for text in texts %}

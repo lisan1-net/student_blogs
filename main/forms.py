@@ -37,9 +37,46 @@ def get_sources():
 
 class SearchForm(forms.Form):
 
+    template_name = 'main/parts/search_form.html'
+    error_css_class = 'is-invalid'
+
+    def __init__(self, *args, **kwargs):
+        super(SearchForm, self).__init__(*args, **kwargs)
+        self.label_suffix = ''
+        self.fields['search_query'].widget.attrs.update({
+            'placeholder': self.fields['search_query'].help_text,
+            'class': 'form-control form-control-lg',
+        })
+        self.fields['search_in_content'].widget.attrs.update({
+            'class': 'form-check-input',
+        })
+        self.fields['blog'].widget.attrs.update({
+            'class': 'form-control',
+        })
+        for bound_field in self.author_fields:
+            bound_field.field.widget.attrs.update({
+                'class': 'form-control',
+            })
+        for bound_field in self.text_fields:
+            bound_field.field.widget.attrs.update({
+                'class': 'form-control',
+            })
+
+    @property
+    def author_fields(self):
+        for field_name in self.fields.keys():
+            if field_name.startswith('author_'):
+                yield self[field_name]
+
+    @property
+    def text_fields(self):
+        for field_name in self.fields.keys():
+            if field_name in ('source', 'grade', 'part', 'editor'):
+                yield self[field_name]
+
     search_query = forms.CharField(
         max_length=100, min_length=2, label=_('Search query'),
-        help_text=_('Enter an expression to search in the texts.')
+        help_text=_('Enter an expression to search in the texts.'),
     )
     search_in_content = forms.BooleanField(
         required=False, initial=True, label=_('Search in content'),
@@ -77,6 +114,6 @@ class SearchForm(forms.Form):
         choices=get_editors, required=False, label=_('Editor'), help_text=_('Select the editor of the book.')
     )
     tags = forms.ModelMultipleChoiceField(
-        Tag.objects.all(), required=False, widget=widgets.CheckboxSelectMultiple(),
+        Tag.objects.all(), required=False, widget=widgets.CheckboxSelectMultiple,
         label=_('Tags'), help_text=_('Select the tags of the text.')
     )

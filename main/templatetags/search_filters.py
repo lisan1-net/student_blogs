@@ -10,7 +10,7 @@ register = template.Library()
 @stringfilter
 def highlight(value, target):
     rgx = compile(rescape(target), IGNORECASE)
-    return mark_safe(rgx.sub(r'<span class="bg-warning">\g<0></span>', value))
+    return mark_safe(rgx.sub(r'<mark class="p-0">\g<0></mark>', value))
 
 
 @register.filter
