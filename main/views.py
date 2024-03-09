@@ -1,6 +1,9 @@
+import re
+
 from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator
+
 
 from main.forms import SearchForm
 from main.models import *
@@ -8,9 +11,10 @@ from main.models import *
 
 def home(request):
     form = SearchForm(request.GET or None)
-    texts = None
+    results = []
     query = None
     advanced_search = False
+    query_frequency = None
     if form.is_valid():
         query = form.cleaned_data['search_query']
         filter_query = Q(title__icontains=query)
@@ -46,9 +50,40 @@ def home(request):
         if tags := form.cleaned_data['tags']:
             filter_query &= Q(tags__in=tags)
             advanced_search = True
-        texts = Paginator(Text.objects.filter(filter_query).distinct(), 5).get_page(request.GET.get('page'))
+        texts = Text.objects.filter(filter_query).distinct()
+        query_frequency = 0
+        for text in texts:
+            for positions in find_all_search_query_positions(text.title, query):
+                results.append({'text': text, 'start': positions[0], 'end': positions[1], 'field': 'title'})
+                query_frequency += 1
+            if form.cleaned_data['search_in_content']:
+                for positions in find_all_search_query_positions(text.content, query):
+                    results.append({'text': text, 'start': positions[0], 'end': positions[1], 'field': 'content'})
+                    query_frequency += 1
+        results = Paginator(results, 10).get_page(request.GET.get('page'))
         form.advanced = advanced_search
     return render(
         request, 'main/home.html',
-        context={'form': form, 'texts': texts, 'query': query}
+        context={'form': form, 'query': query, 'results': results, 'frequency': query_frequency}
     )
+
+
+def find_search_query_position(text: str, query: str, start_index=0) -> tuple[int, int]:
+    text = re.sub(r'\s+', ' ', text.lower())
+    query = re.sub(r'\s+', ' ', query.lower())
+    start = text.find(query, start_index)
+    if start == -1:
+        return -1, -1
+    end = start + len(query)
+    return start, end
+
+
+def find_all_search_query_positions(text: str, query: str) -> list[tuple[int, int]]:
+    positions = []
+    start = 0
+    while start != -1:
+        start, end = find_search_query_position(text, query, start)
+        if start != -1:
+            positions.append((start, end))
+            start = end
+    return positions
