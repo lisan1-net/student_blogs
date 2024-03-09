@@ -17,3 +17,10 @@ def highlight(value, target):
 @stringfilter
 def frequency(value, target):
     return value.lower().count(target.lower())
+
+
+@register.filter
+def url_with_page(request, page):
+    params = request.GET.copy()
+    params['page'] = page
+    return request.path + '?' + params.urlencode()

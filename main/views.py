@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 from main.forms import SearchForm
 from main.models import *
@@ -7,7 +8,7 @@ from main.models import *
 
 def home(request):
     form = SearchForm(request.GET or None)
-    texts = []
+    texts = None
     query = None
     advanced_search = False
     if form.is_valid():
@@ -45,7 +46,7 @@ def home(request):
         if tags := form.cleaned_data['tags']:
             filter_query &= Q(tags__in=tags)
             advanced_search = True
-        texts = Text.objects.filter(filter_query).distinct()
+        texts = Paginator(Text.objects.filter(filter_query).distinct(), 5).get_page(request.GET.get('page'))
         form.advanced = advanced_search
     return render(
         request, 'main/home.html',

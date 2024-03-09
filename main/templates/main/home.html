@@ -3,27 +3,52 @@
 {% load search_filters %}
 
 {% block content %}
-    <div class="jumbotron mt-3 p-3">
+    <div class="jumbotron mt-3 pt-3 pb-1">
         <h1>{% translate 'Search in the database' %}</h1>
         <p class="lead">{% translate 'Search for texts in the database' %}</p>
         <form method="get">
             {{ form }}
         </form>
     </div>
-    {% for text in texts %}
-    	<div class="row">
-            <div class="col-md-12">
-                <h3>{{ text.title|highlight:query }} - {{ text.grade|default_if_none:'' }}</h3>
-                <h4>{{ text.author }} [{{ text.author.get_sex_display }}]</h4>
-                <h5>{% for tag in text.tags.all %} <span class="ml-1">{{ tag }}</span> {% endfor %}</h5>
-                {% if text.author.area %}
-                    <h5>{{ text.author.area }}, {{ text.author.city|default_if_none:'' }}</h5>
-                {% endif %}
-                <div>{{ text.content|highlight:query }}</div>
-                <p>{{ text.blog }} - {{ text.source|default_if_none:'' }} / {{ text.part|default_if_none:'' }} - {{ text.editor|default_if_none:'' }}</p>
-                <p>{{ text.content|add:'\n'|add:text.title|frequency:query }}</p>
+    {% if query %}
+        {% for text in texts %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>{{ text.title|highlight:query }} - {{ text.grade|default_if_none:'' }}</h3>
+                    <h4>{{ text.author }} [{{ text.author.get_sex_display }}]</h4>
+                    <h5>{% for tag in text.tags.all %} <span class="ml-1">{{ tag }}</span> {% endfor %}</h5>
+                    {% if text.author.area %}
+                        <h5>{{ text.author.area }}, {{ text.author.city|default_if_none:'' }}</h5>
+                    {% endif %}
+                    <div>{{ text.content|highlight:query }}</div>
+                    <p>{{ text.blog }} - {{ text.source|default_if_none:'' }} / {{ text.part|default_if_none:'' }} - {{ text.editor|default_if_none:'' }}</p>
+                    <p>{{ text.content|add:'\n'|add:text.title|frequency:query }}</p>
+                </div>
             </div>
-        </div>
-        <hr>
-    {% endfor %}
+            <hr>
+        {% empty %}
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-muted">{% translate 'Query did not match any texts.' %}</p>
+                </div>
+            </div>
+        {% endfor %}
+        {% if texts.paginator.num_pages > 1 %}
+            <nav aria-label="{% translate 'ٍSearch pages' %}">
+                <ul class="pagination justify-content-center">
+                    {% for page in texts.paginator %}
+                        {% if page.number == texts.number %}
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="{{ request|url_with_page:page.number }}">{{ page.number }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ request|url_with_page:page.number }}">{{ page.number }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        {% endif %}
+    {% endif %}
 {% endblock %}
