@@ -47,71 +47,62 @@
         {%  translate 'Title' as title_name %}
         {%  translate 'Content' as content_name %}
         {% for result in results %}
-            <div class="row mb-2">
+            <div class="row mb-3">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-header">
+                            <span class="badge badge-primary">
+                                <i class="fa-solid fa-blog"></i>
+                                {{ result.text.blog }}
+                            </span>
+                            <span class="badge badge-secondary">
+                                {% if result.text.author.sex == 'M' %}
+                                    <span class="material-icons">face</span>
+                                {% elif result.text.author.sex == 'F' %}
+                                    <span class="material-icons">face_3</span>
+                                {% endif %}
+                                {{ result.text.author }}
+                            </span>
+                        </div>
+                        <div class="card-body lead">
                             <p class="card-text">
                                 {% if result.field == 'title' %}
-                                    <span class="badge badge-success">{{ title_name }}</span>
+                                    <small><span class="badge badge-success">{{ title_name }}</span></small>
                                     {% highlight_range result.text.title result.start result.end %}
                                 {% elif result.field == 'content' %}
-                                    <span class="badge badge-info">{{ content_name }}</span>
+                                    <small><span class="badge badge-info">{{ content_name }}</span></small>
                                     {% highlight_range result.text.content result.start result.end %}
                                 {% endif %}
                             </p>
                         </div>
+                        <div class="card-footer">
+                            {% if result.text.source %}
+                                <span class="badge badge-info">
+                                    <i class="fa-solid fa-book"></i>
+                                        <cite>{{ result.text.source }}</cite>
+                                        {% if result.text.part %}
+                                            <i class="fa-solid fa-book-open"></i>
+                                            {{ result.text.part }}
+                                        {% endif %}
+                                    </span>
+                                    {% if result.text.editor %}
+                                        <span class="badge badge-dark">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            {{ result.text.editor }}
+                                        </span>
+                                    {% endif %}
+                                {% endif %}
+                            {% if result.text.tags.exists %}
+                                <span>
+                                    {% for tag in result.text.tags.all %}
+                                        <span class="badge badge-primary">{{ tag }}</span>
+                                    {% endfor %}
+                                </span>
+                            {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-{#            <div class="row mb-3">#}
-{#                <div class="col-12">#}
-{#                    <div class="card">#}
-{#                        <div class="card-header">#}
-{#                            <h6 class="text-muted">{{ text.blog }}</h6>#}
-{#                            <h5 class="card-title d-flex justify-content-between align-items-center">#}
-{#                                <span>{{ text.title|highlight:query }}</span>#}
-{#                                <span class="badge badge-secondary badge-pill">#}
-{#                                    {{ text.content|add:'\n'|add:text.title|frequency:query }}#}
-{#                                </span>#}
-{#                            </h5>#}
-{#                            <h6 class="card-subtitle text-muted">{{ text.author }}</h6>#}
-{#                        </div>#}
-{#                        <div class="card-body">#}
-{#                            <p class="card-text">{{ text.content|highlight:query }}</p>#}
-{#                        </div>#}
-{#                        <div class="card-footer">#}
-{#                            <div class="lead">#}
-{#                                {% if text.source %}#}
-{#                                    <span class="badge badge-info">#}
-{#                                        <i class="fa-solid fa-book"></i>#}
-{#                                        <cite>#}
-{#                                            {{ text.source }}#}
-{#                                        </cite>#}
-{#                                        {% if text.part %}#}
-{#                                            <i class="fa-solid fa-book-open"></i>#}
-{#                                            {{ text.part }}#}
-{#                                        {% endif %}#}
-{#                                    </span>#}
-{#                                    {% if text.editor %}#}
-{#                                        <span class="badge badge-dark">#}
-{#                                            <i class="fa-solid fa-pen-to-square"></i>#}
-{#                                            {{ text.editor }}#}
-{#                                        </span>#}
-{#                                    {% endif %}#}
-{#                                {% endif %}#}
-{#                            {% if text.tags.exists %}#}
-{#                                <span>#}
-{#                                    {% for tag in text.tags.all %}#}
-{#                                        <span class="badge badge-primary">{{ tag }}</span>#}
-{#                                    {% endfor %}#}
-{#                                </span>#}
-{#                            {% endif %}#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
         {% empty %}
             <div class="row">
                 <div class="col-md-12">
