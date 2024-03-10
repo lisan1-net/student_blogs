@@ -14,7 +14,9 @@ def home(request):
     results = []
     query = None
     advanced_search = False
-    query_frequency = None
+    in_title_frequency = 0
+    in_content_frequency = 0
+    texts = Text.objects.none()
     if form.is_valid():
         query = form.cleaned_data['search_query']
         filter_query = Q(title__icontains=query)
@@ -51,20 +53,20 @@ def home(request):
             filter_query &= Q(tags__in=tags)
             advanced_search = True
         texts = Text.objects.filter(filter_query).distinct()
-        query_frequency = 0
         for text in texts:
             for positions in find_all_search_query_positions(text.title, query):
                 results.append({'text': text, 'start': positions[0], 'end': positions[1], 'field': 'title'})
-                query_frequency += 1
+                in_title_frequency += 1
             if form.cleaned_data['search_in_content']:
                 for positions in find_all_search_query_positions(text.content, query):
                     results.append({'text': text, 'start': positions[0], 'end': positions[1], 'field': 'content'})
-                    query_frequency += 1
+                    in_content_frequency += 1
         results = Paginator(results, 10).get_page(request.GET.get('page'))
         form.advanced = advanced_search
     return render(
         request, 'main/home.html',
-        context={'form': form, 'query': query, 'results': results, 'frequency': query_frequency}
+        context={'form': form, 'query': query, 'results': results, 'in_title_frequency': in_title_frequency,
+                 'in_content_frequency': in_content_frequency, 'matched_text_count': texts.count()}
     )
 
 

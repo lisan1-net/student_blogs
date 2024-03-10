@@ -1,5 +1,6 @@
 from django import template
 from django.template.defaultfilters import mark_safe
+from django.core.paginator import Paginator
 
 register = template.Library()
 
@@ -18,8 +19,8 @@ def highlight_range(text, start, end, surrounding_words=5):
     text_after = text[end:]
     words_before = text_before.split()
     words_after = text_after.split()
-    prefix = '...' if len(words_before) > surrounding_words else ''
-    suffix = '...' if len(words_after) > surrounding_words else ''
+    prefix = Paginator.ELLIPSIS if len(words_before) > surrounding_words else ''
+    suffix = Paginator.ELLIPSIS if len(words_after) > surrounding_words else ''
     return mark_safe(
         prefix + " ".join(words_before[-surrounding_words:]) +
         f' <mark class="p-0 bg-warning">{highlighted_text}</mark> ' + " ".join(words_after[:surrounding_words])

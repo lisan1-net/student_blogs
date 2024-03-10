@@ -12,15 +12,40 @@
     </div>
     {% if query %}
         <div class="row">
-            <div class="col-auto">
-                <p class="list-group-item text-secondary font-weight-bold">
-                    {% translate 'Search results' %}
-                    <span class="badge badge-secondary badge-pill">
-                        {{ frequency }}
-                    </span>
-                </p>
+            <div class="col-12">
+                <div class="list-group-item rounded-top pb-0 bg-secondary text-light">
+                    <h4 class="text-center">{% translate 'Search results' %}</h4>
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered text-center table-secondary">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">{% translate 'Title' %}</th>
+                        <th scope="col">{% translate 'Content' %}</th>
+                        <th scope="col">{% translate 'Total' %}</th>
+                        <th scope="col">{% translate 'Matched documents' %}</th>
+                        <th scope="col">{% translate 'Current page' %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ in_title_frequency }}</td>
+                        <td>{{ in_content_frequency }}</td>
+                        <td>{{ results.paginator.count }}</td>
+                        <td>{{ matched_text_count }}</td>
+                        <td>{% blocktranslate with f=results.start_index t=results.end_index c=results.paginator.count%}
+                        	Results from {{ f }} to {{ t }} of {{ c }}
+                        {% endblocktranslate %}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {%  translate 'Title' as title_name %}
+        {%  translate 'Content' as content_name %}
         {% for result in results %}
             <div class="row mb-2">
                 <div class="col-12">
@@ -28,8 +53,10 @@
                         <div class="card-body">
                             <p class="card-text">
                                 {% if result.field == 'title' %}
+                                    <span class="badge badge-success">{{ title_name }}</span>
                                     {% highlight_range result.text.title result.start result.end %}
                                 {% elif result.field == 'content' %}
+                                    <span class="badge badge-info">{{ content_name }}</span>
                                     {% highlight_range result.text.content result.start result.end %}
                                 {% endif %}
                             </p>
