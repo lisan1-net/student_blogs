@@ -1,7 +1,7 @@
 import re
 
 from django.shortcuts import render
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django.core.paginator import Paginator
 
 
@@ -52,8 +52,9 @@ def home(request):
         if tags := form.cleaned_data['tags']:
             filter_query &= Q(tags__in=tags)
             advanced_search = True
+        texts = Text.objects.filter(filter_query).distinct()
         results, in_title_frequency, in_content_frequency = find_search_results(
-            query, form.cleaned_data['search_in_content'], filter_query
+            query, form.cleaned_data['search_in_content'], texts
         )
         results = Paginator(results, 10).get_page(request.GET.get('page'))
         form.advanced = advanced_search
@@ -85,11 +86,10 @@ def find_all_search_query_positions(text: str, query: str) -> list[tuple[int, in
     return positions
 
 
-def find_search_results(query: str, search_in_content: bool, filter_query: Q) -> (list[Text], int, int):
+def find_search_results(query: str, search_in_content: bool, texts: QuerySet[Text]) -> tuple[list[dict], int, int]:
     in_title_frequency = 0
     in_content_frequency = 0
     results = []
-    texts = Text.objects.filter(filter_query).distinct()
     for text in texts:
         for positions in find_all_search_query_positions(text.title, query):
             results.insert(

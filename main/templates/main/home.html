@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="jumbotron mt-3 pt-3 pb-1 text-center">
-        <h1>{% translate 'Search in the database' %}</h1>
+        <h1 class="mb-3">{% translate 'Search in the database' %}</h1>
         <form method="get">
             {{ form }}
         </form>
@@ -22,8 +22,8 @@
                 <table class="table table-bordered text-center table-secondary">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">{% translate 'Title' %}</th>
-                        <th scope="col">{% translate 'Content' %}</th>
+                        <th scope="col">{% translate 'Titles' %}</th>
+                        <th scope="col">{% translate 'Contents' %}</th>
                         <th scope="col">{% translate 'Total' %}</th>
                         <th scope="col">{% translate 'Matched documents' %}</th>
                         <th scope="col">{% translate 'Current page' %}</th>
@@ -35,7 +35,7 @@
                         <td>{{ in_content_frequency }}</td>
                         <td>{{ results.paginator.count }}</td>
                         <td>{{ matched_text_count }}</td>
-                        <td>{% blocktranslate with f=results.start_index t=results.end_index c=results.paginator.count%}
+                        <td>{% blocktranslate trimmed with f=results.start_index t=results.end_index c=results.paginator.count%}
                         	Results from {{ f }} to {{ t }} of {{ c }}
                         {% endblocktranslate %}</td>
                     </tr>

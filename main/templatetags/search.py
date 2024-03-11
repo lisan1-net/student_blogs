@@ -23,6 +23,6 @@ def highlight_range(text, start, end, surrounding_words=5):
     suffix = Paginator.ELLIPSIS if len(words_after) > surrounding_words else ''
     return mark_safe(
         prefix + " ".join(words_before[-surrounding_words:]) +
-        f' <mark class="p-0 bg-warning">{highlighted_text}</mark> ' + " ".join(words_after[:surrounding_words])
+        f'<mark class="p-0 bg-warning">{highlighted_text}</mark>' + " ".join(words_after[:surrounding_words])
         + suffix
     )
