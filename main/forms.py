@@ -46,21 +46,41 @@ class SearchForm(forms.Form):
         self.fields['search_query'].widget.attrs.update({
             'placeholder': self.fields['search_query'].help_text,
             'class': 'form-control form-control-lg',
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+            'title': self.fields['search_query'].help_text,
         })
         self.fields['search_in_content'].widget.attrs.update({
             'class': 'form-check-input',
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+            'title': self.fields['search_in_content'].help_text,
         })
         self.fields['blog'].widget.attrs.update({
             'class': 'form-control',
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+            'title': self.fields['blog'].help_text,
         })
         for bound_field in self.author_fields:
             bound_field.field.widget.attrs.update({
                 'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-placement': 'top',
+                'title': bound_field.field.help_text,
             })
         for bound_field in self.text_fields:
             bound_field.field.widget.attrs.update({
                 'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-placement': 'top',
+                'title': bound_field.field.help_text,
             })
+        self.fields['tags'].widget.attrs.update({
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+            'title': self.fields['tags'].help_text,
+        })
 
     @property
     def author_fields(self):
@@ -86,18 +106,18 @@ class SearchForm(forms.Form):
         Blog.objects.all(), required=False, empty_label='', label=_('Blog'), help_text=_('Select a blog to search in.')
     )
     author_name = forms.CharField(
-        max_length=150, min_length=2, required=False, label=_('Author name'),
+        max_length=150, min_length=2, required=False, label=_('Name'),
         help_text=_('Enter the name of the author.')
     )
     author_sex = forms.ChoiceField(
-        choices=[(None, ''), ('M', _('Male')), ('F', _('Female'))], required=False, label=_('Author sex'),
+        choices=[(None, ''), ('M', _('Male')), ('F', _('Female'))], required=False, label=_('Sex'),
         help_text=_('Select the sex of the author.')
     )
     author_area = forms.ChoiceField(
-        choices=get_author_areas, required=False, label=_('Author area'), help_text=_('Select the area of the author.')
+        choices=get_author_areas, required=False, label=_('Area'), help_text=_('Select the area of the author.')
     )
     author_city = forms.ChoiceField(
-        choices=get_author_cities, required=False, label=_('Author city'), help_text=_('Select the city of the author.')
+        choices=get_author_cities, required=False, label=_('City'), help_text=_('Select the city of the author.')
     )
     source = forms.ChoiceField(
         choices=get_sources, required=False, label=_('Source'), help_text=_('Select the source of the text.')
@@ -108,7 +128,7 @@ class SearchForm(forms.Form):
     )
     part = forms.CharField(
         max_length=100, required=False, label=_('Part'),
-        help_text=_('Enter the part of the book containing this text.')
+        help_text=_('Enter the title of the book part containing this text.')
     )
     editor = forms.ChoiceField(
         choices=get_editors, required=False, label=_('Editor'), help_text=_('Select the editor of the book.')

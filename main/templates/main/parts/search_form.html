@@ -3,7 +3,7 @@
     <div class="input-group">
         {{ form.search_query }}
         <div class="input-group-append">
-            <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+            <button class="btn btn-outline-primary" type="submit" data-toggle="tooltip" data-placement="top" title="{% translate 'Search' %}"><i class="fas fa-search"></i></button>
         </div>
     </div>
 </div>
@@ -41,19 +41,17 @@
             </div>
         {% endfor %}
     </fieldset>
-    <div class="form-group form-row">
-        <div class="col-1">
-            {{ form.tags.label_tag }}
+    <fieldset class="border border-secondary p-1 mb-2 form-row">
+        <legend class="w-auto h5">{{ form.tags.label_tag }}</legend>
+        <div class="form-group col">
+            {% for checkbox in form.tags %}
+                <div class="form-check form-check-inline" title="{{ form.tags.help_text }}" data-toggle="tooltip" data-placement="top">
+                    <input class="form-check-input" type="checkbox" id="{{ checkbox.id_for_label }}" name="{{ form.tags.html_name }}" value="{{ checkbox.data.value }}" {{ checkbox.data.selected|yesno:'checked,' }}>
+                    <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                        {{ checkbox.choice_label }}
+                    </label>
+                </div>
+            {% endfor %}
         </div>
-        <div class="col-11">
-        {% for checkbox in form.tags %}
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="{{ checkbox.id_for_label }}" name="{{ form.tags.html_name }}" value="{{ checkbox.data.value }}" {{ checkbox.data.selected|yesno:'checked,' }}>
-                <label class="form-check-label" for="{{ checkbox.id_for_label }}">
-                    {{ checkbox.choice_label }}
-                </label>
-            </div>
-        {% endfor %}
-        </div>
-    </div>
+    </fieldset>
 </div>
