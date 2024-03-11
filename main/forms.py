@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 from main.models import *
 from taggit.models import Tag
 
+from pyarabic.araby import strip_tashkeel, strip_tatweel
+
 
 def get_grades():
     return (
@@ -137,3 +139,10 @@ class SearchForm(forms.Form):
         Tag.objects.all(), required=False, widget=widgets.CheckboxSelectMultiple,
         label=_('Tags'), help_text=_('Select the tags of the text.')
     )
+
+    def clean(self):
+        cleaned_data = super(SearchForm, self).clean()
+        for k, v in cleaned_data.items():
+            if isinstance(self.fields[k], forms.CharField):
+                cleaned_data[k] = strip_tashkeel(strip_tatweel(v.lower()))
+        return cleaned_data

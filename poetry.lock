@@ -90,6 +90,20 @@ pool = ["psycopg-pool"]
 test = ["anyio (>=3.6.2,<4.0)", "mypy (>=1.4.1)", "pproxy (>=2.7)", "pytest (>=6.2.5)", "pytest-cov (>=3.0)", "pytest-randomly (>=3.5)"]
 
 [[package]]
+name = "pyarabic"
+version = "0.6.15"
+description = "Arabic text tools for Python"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "PyArabic-0.6.15-py3-none-any.whl", hash = "sha256:b9a530277876008f5fbe53249c6953b4513dbbf2ea8f4339694e87c8a75d7edf"},
+]
+
+[package.dependencies]
+six = ">=1.14.0"
+
+[[package]]
 name = "python-lorem"
 version = "1.3.0.post1"
 description = "Lorem ipsum generator."
@@ -108,6 +122,18 @@ files = [
 
 [package.extras]
 docs = ["Sphinx (>=6.1.3)", "furo", "sphinx-autodoc-typehints", "sphinx-copybutton", "sphinx-opengraph"]
+
+[[package]]
+name = "six"
+version = "1.16.0"
+description = "Python 2 and 3 compatibility utilities"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
+    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
 
 [[package]]
 name = "sqlparse"
@@ -153,4 +179,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "c1e06e729e316f81fd939c3b02555338b5ce1b3c58ccb3060225154f13cbc57a"
+content-hash = "c5916f7aa060f910b0f4c656d71f80e6bebe160360c68f562db62fb760df584e"

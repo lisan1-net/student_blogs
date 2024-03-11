@@ -1,9 +1,8 @@
-import re
+from typing import Iterable
 
 from django.shortcuts import render
-from django.db.models import Q, QuerySet
+from django.db.models import Q
 from django.core.paginator import Paginator
-
 
 from main.forms import SearchForm
 from main.models import *
@@ -16,12 +15,9 @@ def home(request):
     advanced_search = False
     in_title_frequency = 0
     in_content_frequency = 0
-    texts = Text.objects.none()
+    texts = set()
     if form.is_valid():
-        query = form.cleaned_data['search_query']
-        filter_query = Q(title__icontains=query)
-        if form.cleaned_data['search_in_content']:
-            filter_query |= Q(content__icontains=query)
+        filter_query = Q()
         if author_name := form.cleaned_data['author_name']:
             filter_query &= Q(author__name__icontains=author_name)
             advanced_search = True
@@ -52,7 +48,13 @@ def home(request):
         if tags := form.cleaned_data['tags']:
             filter_query &= Q(tags__in=tags)
             advanced_search = True
-        texts = Text.objects.filter(filter_query).distinct()
+        query = form.cleaned_data['search_query']
+        for text in Text.objects.filter(filter_query).distinct():
+            if text not in texts:
+                if query in text.title_normalized:
+                    texts.add(text)
+                elif form.cleaned_data['search_in_content'] and query in text.content_normalized:
+                    texts.add(text)
         results, in_title_frequency, in_content_frequency = find_search_results(
             query, form.cleaned_data['search_in_content'], texts
         )
@@ -61,13 +63,13 @@ def home(request):
     return render(
         request, 'main/home.html',
         context={'form': form, 'query': query, 'results': results, 'in_title_frequency': in_title_frequency,
-                 'in_content_frequency': in_content_frequency, 'matched_text_count': texts.count()}
+                 'in_content_frequency': in_content_frequency, 'matched_text_count': len(texts)}
     )
 
 
 def find_search_query_position(text: str, query: str, start_index=0) -> tuple[int, int]:
-    text = re.sub(r'\s+', ' ', text.lower())
-    query = re.sub(r'\s+', ' ', query.lower())
+    text = text.lower()
+    query = query.lower()
     start = text.find(query, start_index)
     if start == -1:
         return -1, -1
@@ -86,19 +88,19 @@ def find_all_search_query_positions(text: str, query: str) -> list[tuple[int, in
     return positions
 
 
-def find_search_results(query: str, search_in_content: bool, texts: QuerySet[Text]) -> tuple[list[dict], int, int]:
+def find_search_results(query: str, search_in_content: bool, texts: Iterable[Text]) -> tuple[list[dict], int, int]:
     in_title_frequency = 0
     in_content_frequency = 0
     results = []
     for text in texts:
-        for positions in find_all_search_query_positions(text.title, query):
+        for positions in find_all_search_query_positions(text.title_normalized, query):
             results.insert(
                 in_title_frequency,
                 {'text': text, 'start': positions[0], 'end': positions[1], 'field': 'title'}
             )
             in_title_frequency += 1
         if search_in_content:
-            for positions in find_all_search_query_positions(text.content, query):
+            for positions in find_all_search_query_positions(text.content_normalized, query):
                 results.append({'text': text, 'start': positions[0], 'end': positions[1], 'field': 'content'})
                 in_content_frequency += 1
     return results, in_title_frequency, in_content_frequency

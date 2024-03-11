@@ -67,10 +67,10 @@
                             <p class="card-text">
                                 {% if result.field == 'title' %}
                                     <small><span class="badge badge-success">{{ title_name }}</span></small>
-                                    {% highlight_range result.text.title result.start result.end %}
+                                    {% highlight_range result.text.title_normalized result.start result.end %}
                                 {% elif result.field == 'content' %}
                                     <small><span class="badge badge-info">{{ content_name }}</span></small>
-                                    {% highlight_range result.text.content result.start result.end %}
+                                    {% highlight_range result.text.content_normalized result.start result.end %}
                                 {% endif %}
                             </p>
                         </div>

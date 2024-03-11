@@ -1,6 +1,8 @@
+from functools import cached_property
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from taggit.managers import TaggableManager
+from pyarabic.araby import strip_tashkeel, strip_tatweel
 
 
 class Blog(models.Model):
@@ -73,3 +75,11 @@ class Text(models.Model):
 
     def __str__(self):
         return self.title
+
+    @cached_property
+    def title_normalized(self):
+        return strip_tashkeel(strip_tatweel(self.title)).lower()
+
+    @cached_property
+    def content_normalized(self):
+        return strip_tashkeel(strip_tatweel(self.content)).lower()
