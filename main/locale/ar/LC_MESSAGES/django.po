@@ -117,11 +117,11 @@ msgstr "حدد محرر الكتاب."
 
 #: main/forms.py:138
 msgid "Tags"
-msgstr "العلامات"
+msgstr "الوسوم"
 
 #: main/forms.py:138
 msgid "Select the tags of the text."
-msgstr "حدد العلامات الخاصة بالنص."
+msgstr "حدد الوسوم الخاصة بالنص."
 
 #: main/models.py:10
 msgid "Blogs"
