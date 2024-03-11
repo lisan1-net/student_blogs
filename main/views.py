@@ -55,7 +55,10 @@ def home(request):
         texts = Text.objects.filter(filter_query).distinct()
         for text in texts:
             for positions in find_all_search_query_positions(text.title, query):
-                results.append({'text': text, 'start': positions[0], 'end': positions[1], 'field': 'title'})
+                results.insert(
+                    in_title_frequency,
+                    {'text': text, 'start': positions[0], 'end': positions[1], 'field': 'title'}
+                )
                 in_title_frequency += 1
             if form.cleaned_data['search_in_content']:
                 for positions in find_all_search_query_positions(text.content, query):
