@@ -11,7 +11,7 @@ from main.models import *
 
 def home(request):
     form = SearchForm(request.GET or None)
-    results = []
+    results = None
     query = None
     advanced_search = False
     in_title_frequency = 0
@@ -52,18 +52,9 @@ def home(request):
         if tags := form.cleaned_data['tags']:
             filter_query &= Q(tags__in=tags)
             advanced_search = True
-        texts = Text.objects.filter(filter_query).distinct()
-        for text in texts:
-            for positions in find_all_search_query_positions(text.title, query):
-                results.insert(
-                    in_title_frequency,
-                    {'text': text, 'start': positions[0], 'end': positions[1], 'field': 'title'}
-                )
-                in_title_frequency += 1
-            if form.cleaned_data['search_in_content']:
-                for positions in find_all_search_query_positions(text.content, query):
-                    results.append({'text': text, 'start': positions[0], 'end': positions[1], 'field': 'content'})
-                    in_content_frequency += 1
+        results, in_title_frequency, in_content_frequency = find_search_results(
+            query, form.cleaned_data['search_in_content'], filter_query
+        )
         results = Paginator(results, 10).get_page(request.GET.get('page'))
         form.advanced = advanced_search
     return render(
@@ -92,3 +83,22 @@ def find_all_search_query_positions(text: str, query: str) -> list[tuple[int, in
             positions.append((start, end))
             start = end
     return positions
+
+
+def find_search_results(query: str, search_in_content: bool, filter_query: Q) -> (list[Text], int, int):
+    in_title_frequency = 0
+    in_content_frequency = 0
+    results = []
+    texts = Text.objects.filter(filter_query).distinct()
+    for text in texts:
+        for positions in find_all_search_query_positions(text.title, query):
+            results.insert(
+                in_title_frequency,
+                {'text': text, 'start': positions[0], 'end': positions[1], 'field': 'title'}
+            )
+            in_title_frequency += 1
+        if search_in_content:
+            for positions in find_all_search_query_positions(text.content, query):
+                results.append({'text': text, 'start': positions[0], 'end': positions[1], 'field': 'content'})
+                in_content_frequency += 1
+    return results, in_title_frequency, in_content_frequency
