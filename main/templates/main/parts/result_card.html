@@ -1,0 +1,57 @@
+{% load search %}
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <span class="badge badge-primary">
+                    <i class="fa-solid fa-blog"></i>
+                    {{ result.text.blog }}
+                </span>
+                <span class="badge badge-secondary">
+                    {% if result.text.author.sex == 'M' %}
+                        <span class="material-icons">face</span>
+                    {% elif result.text.author.sex == 'F' %}
+                        <span class="material-icons">face_3</span>
+                    {% endif %}
+                    {{ result.text.author }}
+                </span>
+            </div>
+            <div class="card-body lead">
+                <p class="card-text">
+                    {% if result.field == 'title' %}
+                        <small><span class="badge badge-success">{{ title_name }}</span></small>
+                        {% highlight_range result.text.title_normalized result.start result.end %}
+                    {% elif result.field == 'content' %}
+                        <small><span class="badge badge-info">{{ content_name }}</span></small>
+                        {% highlight_range result.text.content_normalized result.start result.end %}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="card-footer">
+                {% if result.text.source %}
+                    <span class="badge badge-info">
+                        <i class="fa-solid fa-book"></i>
+                        <cite>{{ result.text.source }}</cite>
+                        {% if result.text.part %}
+                            <i class="fa-solid fa-book-open"></i>
+                            {{ result.text.part }}
+                        {% endif %}
+                    </span>
+                    {% if result.text.editor %}
+                        <span class="badge badge-dark">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            {{ result.text.editor }}
+                        </span>
+                    {% endif %}
+                {% endif %}
+                {% if result.text.tags.exists %}
+                    <span>
+                        {% for tag in result.text.tags.all %}
+                            <span class="badge badge-primary">{{ tag }}</span>
+                        {% endfor %}
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

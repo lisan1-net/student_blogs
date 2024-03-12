@@ -46,62 +46,7 @@
         {%  translate 'Title' as title_name %}
         {%  translate 'Content' as content_name %}
         {% for result in results %}
-            <div class="row mb-3">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="badge badge-primary">
-                                <i class="fa-solid fa-blog"></i>
-                                {{ result.text.blog }}
-                            </span>
-                            <span class="badge badge-secondary">
-                                {% if result.text.author.sex == 'M' %}
-                                    <span class="material-icons">face</span>
-                                {% elif result.text.author.sex == 'F' %}
-                                    <span class="material-icons">face_3</span>
-                                {% endif %}
-                                {{ result.text.author }}
-                            </span>
-                        </div>
-                        <div class="card-body lead">
-                            <p class="card-text">
-                                {% if result.field == 'title' %}
-                                    <small><span class="badge badge-success">{{ title_name }}</span></small>
-                                    {% highlight_range result.text.title_normalized result.start result.end %}
-                                {% elif result.field == 'content' %}
-                                    <small><span class="badge badge-info">{{ content_name }}</span></small>
-                                    {% highlight_range result.text.content_normalized result.start result.end %}
-                                {% endif %}
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            {% if result.text.source %}
-                                <span class="badge badge-info">
-                                    <i class="fa-solid fa-book"></i>
-                                        <cite>{{ result.text.source }}</cite>
-                                        {% if result.text.part %}
-                                            <i class="fa-solid fa-book-open"></i>
-                                            {{ result.text.part }}
-                                        {% endif %}
-                                    </span>
-                                    {% if result.text.editor %}
-                                        <span class="badge badge-dark">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                            {{ result.text.editor }}
-                                        </span>
-                                    {% endif %}
-                                {% endif %}
-                            {% if result.text.tags.exists %}
-                                <span>
-                                    {% for tag in result.text.tags.all %}
-                                        <span class="badge badge-primary">{{ tag }}</span>
-                                    {% endfor %}
-                                </span>
-                            {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            {% include 'main/parts/result_card.html' with result=result%}
         {% empty %}
             <div class="row">
                 <div class="col-md-12">
@@ -109,22 +54,6 @@
                 </div>
             </div>
         {% endfor %}
-        {% if results.paginator.num_pages > 1 %}
-            <nav aria-label="{% translate 'ٍSearch pages' %}">
-                <ul class="pagination justify-content-center">
-                    {% for page in results.paginator %}
-                        {% if page.number == results.number %}
-                            <li class="page-item active" aria-current="page">
-                                <a class="page-link" href="{{ request|url_with_page:page.number }}">{{ page.number }}</a>
-                            </li>
-                        {% else %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ request|url_with_page:page.number }}">{{ page.number }}</a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </nav>
-        {% endif %}
+        {% include 'main/parts/pagination.html' with results=results %}
     {% endif %}
 {% endblock %}

@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load search %}
+{% if results.paginator.num_pages > 1 %}
+    <nav aria-label="{% translate 'ٍSearch pages' %}">
+        <ul class="pagination justify-content-center">
+            {% for page in results.paginator %}
+                {% if page.number == results.number %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="{{ request|url_with_page:page.number }}">{{ page.number }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ request|url_with_page:page.number }}">{{ page.number }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+{% endif %}
