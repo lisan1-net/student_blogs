@@ -3,4 +3,4 @@
 !.gitignore
 *.sqlite3
 *.db
-/static
+/staticfiles
