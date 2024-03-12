@@ -7,6 +7,3 @@ poetry install
 
 # Apply database migrations
 python manage.py migrate
-
-# Compile translations
-python manage.py compilemessages

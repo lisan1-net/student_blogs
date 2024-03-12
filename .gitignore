@@ -3,4 +3,3 @@
 !.gitignore
 *.sqlite3
 *.db
-*.mo
