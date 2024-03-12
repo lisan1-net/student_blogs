@@ -5,5 +5,8 @@ set -o errexit
 # Install packages
 poetry install
 
+# Convert static asset files
+python manage.py collectstatic --no-input
+
 # Apply database migrations
 python manage.py migrate
