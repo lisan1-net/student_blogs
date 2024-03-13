@@ -26,14 +26,17 @@
     <style>
         .material-icons {
             vertical-align: bottom;
-            font-size: medium;
+            font-size: 1.25em;
+        }
+        .fa-solid {
+            font-size: 1.25em;
         }
     </style>
 
     {% translate 'Database search engine' as  app_name%}
     {% translate 'Abdulaziz Abdullah' as owner_name %}
 
-    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+    <title>{% block title %}{{ app_name }}{% endblock %}{% block extra_title %}{% endblock %}</title>
 </head>
 <body>
     <header>

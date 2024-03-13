@@ -4,34 +4,30 @@
         <div class="card">
             <div class="card-header">
                 <span class="badge badge-primary">
-                    <i class="fa-solid fa-blog"></i>
+                    <i class="fa-solid fa-folder-open"></i>
                     {{ result.text.blog }}
                 </span>
                 <span class="badge badge-secondary">
-                    {% if result.text.author.sex == 'M' %}
-                        <span class="material-icons">face</span>
-                    {% elif result.text.author.sex == 'F' %}
-                        <span class="material-icons">face_3</span>
-                    {% endif %}
+                    {{ result.text.author|author_icon }}
                     {{ result.text.author }}
                 </span>
             </div>
             <div class="card-body lead">
-                <p class="card-text">
+                <div class="card-text">
                     {% if result.field == 'title' %}
                         <small><span class="badge badge-success">{{ title_name }}</span></small>
-                        {% highlight_range result.text.title_normalized result.start result.end %}
+                        {% highlight_range result.text.title_normalized result.start result.end result.text.pk %}
                     {% elif result.field == 'content' %}
                         <small><span class="badge badge-info">{{ content_name }}</span></small>
-                        {% highlight_range result.text.content_normalized result.start result.end %}
+                        {% highlight_range result.text.content_normalized result.start result.end result.text.pk %}
                     {% endif %}
-                </p>
+                </div>
             </div>
             <div class="card-footer">
                 {% if result.text.source %}
                     <span class="badge badge-info">
                         <i class="fa-solid fa-book"></i>
-                        <cite>{{ result.text.source }}</cite>
+                        <b>{{ result.text.source }}</b>
                         {% if result.text.part %}
                             <i class="fa-solid fa-book-open"></i>
                             {{ result.text.part }}

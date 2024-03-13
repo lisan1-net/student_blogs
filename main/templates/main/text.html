@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% load search %}
+{% block extra_title %} - {{ text.title }}{% endblock %}
+{% block content %}
+    <div class="card mt-3">
+        <div class="card-header text-center">
+            <h4>{{ text.title }}</h4>
+            <h6 class="text-muted">{{ text.author|author_icon }} {{ text.author }}</h6>
+            {% if text.source %}
+                <small class="text-muted row">
+                    <span class="col">
+                        <i class="fa-solid fa-book"></i>
+                        {{ text.source }}
+                    </span>
+                    {% if text.part %}
+                        <span class="col">
+                            <i class="fa-solid fa-book-open"></i>
+                            {{ text.part }}
+                        </span>
+                    {% endif %}
+                    {% if text.editor %}
+                        <span class="col">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            {{ text.editor }}
+                        </span>
+                    {% endif %}
+                </small>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <div class="card-text">{{ text.content|paragraphs_wrap }}</div>
+        </div>
+    </div>
+{% endblock %}
