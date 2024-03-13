@@ -39,4 +39,11 @@ def find_search_results(query: str, search_in_content: bool, texts: Iterable[Tex
             for positions in find_all_search_query_positions(text.content_normalized, query):
                 results.append({'text': text, 'start': positions[0], 'end': positions[1], 'field': 'content'})
                 in_content_frequency += 1
+    words = query.split()
+    if len(words) > 1:
+        for word in words:
+            r, t, c = find_search_results(word, search_in_content, texts)
+            results += r
+            in_title_frequency += t
+            in_content_frequency += c
     return results, in_title_frequency, in_content_frequency

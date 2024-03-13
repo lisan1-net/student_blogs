@@ -48,12 +48,7 @@ def home(request):
             filter_query &= Q(tags__in=tags)
             advanced_search = True
         query = form.cleaned_data['search_query']
-        for text in Text.objects.filter(filter_query).distinct():
-            if text not in texts:
-                if query in text.title_normalized:
-                    texts.add(text)
-                elif form.cleaned_data['search_in_content'] and query in text.content_normalized:
-                    texts.add(text)
+        texts = Text.objects.filter(filter_query).distinct()
         results, in_title_frequency, in_content_frequency = find_search_results(
             query, form.cleaned_data['search_in_content'], texts
         )
