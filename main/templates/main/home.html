@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load i18n %}
 {% load search %}
+{% load l10n %}
 
 {% block content %}
     <div class="jumbotron mt-3 pt-3 pb-1 text-center">
@@ -31,6 +32,7 @@
                     </thead>
                     <tbody>
                     <tr>
+                    {% localize on %}
                         <td>{{ in_title_frequency }}</td>
                         <td>{{ in_content_frequency }}</td>
                         <td>{{ results.paginator.count }}</td>
@@ -38,6 +40,7 @@
                         <td>{% blocktranslate trimmed with f=results.start_index t=results.end_index c=results.paginator.count%}
                         	Results from {{ f }} to {{ t }} of {{ c }}
                         {% endblocktranslate %}</td>
+                    {% endlocalize %}
                     </tr>
                     </tbody>
                 </table>

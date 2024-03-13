@@ -98,7 +98,8 @@ class SearchForm(forms.Form):
 
     search_query = forms.CharField(
         max_length=100, min_length=2, label=_('Search query'),
-        help_text=_('Enter an expression to search in the texts.'),
+        help_text=_('Enter an expression to search in the texts. Any expression in double quotes will be searched as a '
+                    'whole word.')
     )
     search_in_content = forms.BooleanField(
         required=False, initial=True, label=_('Search in content'),

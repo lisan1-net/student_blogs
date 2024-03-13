@@ -38,7 +38,7 @@ def highlight_range(text: str, start: int, end: int, pk:int, surrounding_words=5
     prefix = Paginator.ELLIPSIS if len(words_before) > surrounding_words else ''
     suffix = Paginator.ELLIPSIS if len(words_after) > surrounding_words else ''
     href = reverse('text', args=[pk])
-    onclick = f"window.open('{href}', 'newwindow', 'width=600,height=400'); return false;"
+    onclick = f"window.open('{href}', 'newwindow', 'width=800,height=600'); return false;"
     return mark_safe(
         prefix + " ".join(words_before[-surrounding_words:]) +
         f'<a class="text-warning text-decoration-none" href="{href}" onclick="{onclick}">{highlighted_text}</a>' +

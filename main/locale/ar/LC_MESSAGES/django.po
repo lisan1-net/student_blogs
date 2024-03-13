@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-11 04:09+0000\n"
+"POT-Creation-Date: 2024-03-13 06:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,261 +19,263 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: main/forms.py:98
+#: main/forms.py:100
 msgid "Search query"
 msgstr "استعلام البحث"
 
-#: main/forms.py:99
-msgid "Enter an expression to search in the texts."
-msgstr "أدخل تعبيرًا للبحث في النصوص."
+#: main/forms.py:101
+msgid ""
+"Enter an expression to search in the texts. Any expression in double quotes "
+"will be searched as a whole word."
+msgstr "أدخل تعبيرًا للبحث في النصوص. أي تعبير بين علامتي اقتباس مزدوجة سيتم البحث عنه ككلمة كاملة."
 
-#: main/forms.py:102
+#: main/forms.py:105
 msgid "Search in content"
 msgstr "البحث في المحتوى"
 
-#: main/forms.py:103
+#: main/forms.py:106
 msgid "Search in the content of the texts in addition to the title."
 msgstr "علّم للبحث في محتوى النصوص بالإضافة إلى العنوان."
 
-#: main/forms.py:106 main/models.py:9 main/models.py:43
+#: main/forms.py:109 main/models.py:11 main/models.py:45
 msgid "Blog"
-msgstr "مدونة"
+msgstr "المدونة"
 
-#: main/forms.py:106
+#: main/forms.py:109
 msgid "Select a blog to search in."
 msgstr "حدد مدونة للبحث فيها."
 
-#: main/forms.py:109 main/models.py:25
+#: main/forms.py:112 main/models.py:27
 msgid "Name"
 msgstr "الاسم"
 
-#: main/forms.py:110
+#: main/forms.py:113
 msgid "Enter the name of the author."
 msgstr "أدخل اسم المؤلف."
 
-#: main/forms.py:113 main/models.py:27
+#: main/forms.py:116 main/models.py:29
 msgid "Male"
 msgstr "ذكر"
 
-#: main/forms.py:113 main/models.py:27
+#: main/forms.py:116 main/models.py:29
 msgid "Female"
 msgstr "أنثى"
 
-#: main/forms.py:113 main/models.py:27
+#: main/forms.py:116 main/models.py:29
 msgid "Sex"
 msgstr "الجنس"
 
-#: main/forms.py:114
+#: main/forms.py:117
 msgid "Select the sex of the author."
 msgstr "حدد جنس المؤلف."
 
-#: main/forms.py:117 main/models.py:29
+#: main/forms.py:120 main/models.py:31
 msgid "Area"
 msgstr "المنطقة"
 
-#: main/forms.py:117
+#: main/forms.py:120
 msgid "Select the area of the author."
 msgstr "حدد منطقة المؤلف."
 
-#: main/forms.py:120 main/models.py:30
+#: main/forms.py:123 main/models.py:32
 msgid "City"
 msgstr "المدينة"
 
-#: main/forms.py:120
+#: main/forms.py:123
 msgid "Select the city of the author."
 msgstr "حدد مدينة المؤلف."
 
-#: main/forms.py:123 main/models.py:51
+#: main/forms.py:126 main/models.py:53
 msgid "Source"
 msgstr "المصدر"
 
-#: main/forms.py:123
+#: main/forms.py:126
 msgid "Select the source of the text."
 msgstr "حدد مصدر النص."
 
-#: main/forms.py:126 main/models.py:54
+#: main/forms.py:129 main/models.py:56
 msgid "Grade"
 msgstr "المستوى"
 
-#: main/forms.py:127
+#: main/forms.py:130
 msgid "Select the grade of the student studying this text."
 msgstr "حدد المستوى الدراسي للطالب الذي يدرس هذا النص."
 
-#: main/forms.py:130 main/models.py:58
+#: main/forms.py:133 main/models.py:60
 msgid "Part"
 msgstr "الجزء"
 
-#: main/forms.py:131
+#: main/forms.py:134
 msgid "Enter the title of the book part containing this text."
 msgstr "أدخل عنوان الجزء من الكتاب الذي يحتوي على هذا النص."
 
-#: main/forms.py:134 main/models.py:62
+#: main/forms.py:137 main/models.py:64
 msgid "Editor"
 msgstr "المحرر"
 
-#: main/forms.py:134
+#: main/forms.py:137
 msgid "Select the editor of the book."
 msgstr "حدد محرر الكتاب."
 
-#: main/forms.py:138
+#: main/forms.py:141
 msgid "Tags"
 msgstr "الوسوم"
 
-#: main/forms.py:138
+#: main/forms.py:141
 msgid "Select the tags of the text."
 msgstr "حدد الوسوم الخاصة بالنص."
 
-#: main/models.py:10
+#: main/models.py:12
 msgid "Blogs"
-msgstr "مدونات"
+msgstr "المدونات"
 
-#: main/models.py:12 main/models.py:48 main/templates/main/home.html:46
+#: main/models.py:14 main/models.py:50 main/templates/main/home.html:49
 msgid "Title"
 msgstr "العنوان"
 
-#: main/models.py:12
+#: main/models.py:14
 msgid "Blog title"
 msgstr "عنوان المدونة"
 
-#: main/models.py:13
+#: main/models.py:15
 msgid "Description"
 msgstr "الوصف"
 
-#: main/models.py:13
+#: main/models.py:15
 msgid "Blog description"
 msgstr "وصف المدونة"
 
-#: main/models.py:22 main/models.py:46
+#: main/models.py:24 main/models.py:48
 #: main/templates/main/parts/search_form.html:27
 msgid "Author"
 msgstr "المؤلف"
 
-#: main/models.py:23
+#: main/models.py:25
 msgid "Authors"
 msgstr "المؤلفون"
 
-#: main/models.py:25
+#: main/models.py:27
 msgid "Author name"
 msgstr "اسم المؤلف"
 
-#: main/models.py:27
+#: main/models.py:29
 msgid "Author sex"
 msgstr "جنس المؤلف"
 
-#: main/models.py:29
+#: main/models.py:31
 msgid "Author area"
 msgstr "منطقة المؤلف"
 
-#: main/models.py:30
+#: main/models.py:32
 msgid "Author city"
 msgstr "مدينة المؤلف"
 
-#: main/models.py:39
+#: main/models.py:41
 msgid "Text"
 msgstr "النص"
 
-#: main/models.py:40
+#: main/models.py:42
 msgid "Texts"
 msgstr "النصوص"
 
-#: main/models.py:43
+#: main/models.py:45
 msgid "Blog where this text is in"
 msgstr "المدوّنة التي يوجد فيها هذا النص"
 
-#: main/models.py:46
+#: main/models.py:48
 msgid "Author that wrote this article"
 msgstr "المؤلف الذي كتب هذه المقالة"
 
-#: main/models.py:48
+#: main/models.py:50
 msgid "Title of the text"
 msgstr "عنوان النص"
 
-#: main/models.py:49 main/templates/main/home.html:47
+#: main/models.py:51 main/templates/main/home.html:50
 msgid "Content"
 msgstr "المحتوى"
 
-#: main/models.py:49
+#: main/models.py:51
 msgid "Content of the text"
 msgstr "محتوى النص"
 
-#: main/models.py:51
+#: main/models.py:53
 msgid "The source document of the text"
 msgstr "المستند المصدر للنص"
 
-#: main/models.py:55
+#: main/models.py:57
 msgid "Grade of the student studying this text"
 msgstr "مستوى الطالب الذي يدرس هذا النص"
 
-#: main/models.py:59
+#: main/models.py:61
 msgid "Part of the book containing this text"
 msgstr "جزء الكتاب الذي يحتوي على هذا النص"
 
-#: main/models.py:63
+#: main/models.py:65
 msgid "Editor of the book containing this text"
 msgstr "محرر الكتاب الذي يحتوي على هذا النص"
 
-#: main/models.py:66
+#: main/models.py:68
 msgid "Added on"
 msgstr "أضيف في"
 
-#: main/models.py:66
+#: main/models.py:68
 msgid "Date and time of adding the text to the database"
 msgstr "تاريخ ووقت إضافة النص إلى قاعدة البيانات"
 
-#: main/models.py:69
+#: main/models.py:71
 msgid "Last updated on"
 msgstr "آخر تحديث في"
 
-#: main/models.py:70
+#: main/models.py:72
 msgid "Date and time of the last update of the text in the database"
 msgstr "تاريخ ووقت آخر تحديث للنص في قاعدة البيانات"
 
-#: main/templates/main/base.html:30
+#: main/templates/main/base.html:36
 msgid "Database search engine"
 msgstr "محرك بحث قاعدة البيانات"
 
-#: main/templates/main/base.html:31
+#: main/templates/main/base.html:37
 msgid "Abdulaziz Abdullah"
 msgstr "عبد العزيز عبد الله"
 
-#: main/templates/main/home.html:7
+#: main/templates/main/home.html:8
 msgid "Search in the database"
 msgstr "البحث في قاعدة البيانات"
 
-#: main/templates/main/home.html:16
+#: main/templates/main/home.html:17
 msgid "Search results"
 msgstr "نتائج البحث"
 
-#: main/templates/main/home.html:25
+#: main/templates/main/home.html:26
 msgid "Titles"
 msgstr "العناوين"
 
-#: main/templates/main/home.html:26
+#: main/templates/main/home.html:27
 msgid "Contents"
 msgstr "المحتويات"
 
-#: main/templates/main/home.html:27
+#: main/templates/main/home.html:28
 msgid "Total"
 msgstr "الإجمالي"
 
-#: main/templates/main/home.html:28
+#: main/templates/main/home.html:29
 msgid "Matched documents"
 msgstr "المستندات المطابقة"
 
-#: main/templates/main/home.html:29
+#: main/templates/main/home.html:30
 msgid "Current page"
 msgstr "الصفحة الحالية"
 
-#: main/templates/main/home.html:38
+#: main/templates/main/home.html:40
 #, python-format
 msgid "Results from %(f)s to %(t)s of %(c)s"
 msgstr "النتائج من %(f)s إلى %(t)s من أصل %(c)s"
 
-#: main/templates/main/home.html:108
+#: main/templates/main/home.html:56
 msgid "Query did not match any texts."
 msgstr "الاستعلام لم يطابق أي نصوص."
 
-#: main/templates/main/home.html:113
+#: main/templates/main/parts/pagination.html:4
 msgid "ٍSearch pages"
 msgstr "صفحات البحث"
 
@@ -288,3 +290,6 @@ msgstr "بحث متقدم"
 #: main/templates/main/parts/search_form.html:36
 msgid "Text information"
 msgstr "معلومات النص"
+
+#~ msgid "Enter an expression to search in the texts."
+#~ msgstr "أدخل تعبيرًا للبحث في النصوص."
