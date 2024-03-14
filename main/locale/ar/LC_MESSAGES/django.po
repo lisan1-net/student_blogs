@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 14:43+0000\n"
+"POT-Creation-Date: 2024-03-14 14:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,8 +20,8 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: main/apps.py:8
-msgid "Database search engine"
-msgstr "محرك بحث قاعدة البيانات"
+msgid "Students blog"
+msgstr "مدونة الطلاب"
 
 #: main/forms.py:53
 msgid "Search query"
@@ -186,8 +186,8 @@ msgid "Level %(level)d"
 msgstr "الصف %(level)d"
 
 #: main/templates/main/base.html:8
-msgid "Abdulaziz Abdullah"
-msgstr "عبد العزيز عبد الله"
+msgid "Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi"
+msgstr "حقوق النشر 2024. جميع الحقوق محفوظة. د. عبد العزيز عبد الله المهيوبي"
 
 #: main/templates/main/home.html:7
 msgid "Search in the database"
@@ -237,6 +237,12 @@ msgstr "معلومات النص"
 #: main/templates/main/parts/search_form.html:40
 msgid "No tags found"
 msgstr "لم يتم العثور على وسوم"
+
+#~ msgid "Database search engine"
+#~ msgstr "محرك بحث قاعدة البيانات"
+
+#~ msgid "Abdulaziz Abdullah"
+#~ msgstr "عبد العزيز عبد الله"
 
 #~ msgid "Search in content"
 #~ msgstr "البحث في المحتوى"

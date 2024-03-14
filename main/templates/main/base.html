@@ -5,7 +5,7 @@
 {% get_current_language as LANG_CODE %}
 {% get_current_language_bidi as bidi %}
 {% get_app_name as app_name %}
-{% translate 'Abdulaziz Abdullah' as owner_name %}
+{% translate 'Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi' as copyright %}
 
 <!doctype html>
 <html lang="{{ LANG_CODE }}" dir="{{ bidi|yesno:'rtl,ltr' }}">
@@ -26,6 +26,12 @@
 
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&display=swap" rel="stylesheet">
+
     <style>
         .material-icons {
             vertical-align: middle;
@@ -33,6 +39,12 @@
         }
         .fa-solid {
             font-size: 1.25em;
+        }
+        body {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
         }
     </style>
 
@@ -58,7 +70,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <p>&copy; {{app_name}} - {{ owner_name }}</p>
+                    <p>{{ copyright }} - <a href="mailto:s99scom@hotmail.com">s99scom@hotmail.com</a></p>
                 </div>
             </div>
         </div>
