@@ -6,6 +6,14 @@ from main.models import *
 from taggit.models import Tag
 
 
+def get_schools():
+    return Text.objects.values_list('school', flat=True).distinct()
+
+
+def get_cities():
+    return Text.objects.values_list('city', flat=True).distinct()
+
+
 class SearchForm(forms.ModelForm):
 
     class Meta:
@@ -14,6 +22,10 @@ class SearchForm(forms.ModelForm):
         def formfield_for_dbfield(db_field, required=False, **kwargs):
             if isinstance(db_field, models.IntegerField):
                 kwargs['min_value'] = 1
+            if db_field.name == 'school':
+                kwargs['widget'] = widgets.Select(choices=[(None, '')] + [(s, s) for s in get_schools()])
+            elif db_field.name == 'city':
+                kwargs['widget'] = widgets.Select(choices=[(None, '')] + [(c, c) for c in get_cities()])
             form_field = db_field.formfield(required=required, **kwargs)
             if form_field:
                 form_field.widget.attrs.update({
