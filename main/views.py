@@ -17,32 +17,26 @@ def home(request):
     matched_texts_count = None
     if form.is_valid():
         filter_query = Q()
-        if author_name := form.cleaned_data['author_name']:
-            filter_query &= Q(author__name__icontains=author_name)
+        if student_number := form.cleaned_data['student_number']:
+            filter_query &= Q(student_number=student_number)
             advanced_search = True
-        if author_sex := form.cleaned_data['author_sex']:
-            filter_query &= Q(author__sex=author_sex)
+        if sex := form.cleaned_data['sex']:
+            filter_query &= Q(sex=sex)
             advanced_search = True
-        if author_area := form.cleaned_data['author_area']:
-            filter_query &= Q(author__area=author_area)
+        if level := form.cleaned_data['level']:
+            filter_query &= Q(level=level)
             advanced_search = True
-        if author_city := form.cleaned_data['author_city']:
-            filter_query &= Q(author__city=author_city)
+        if city := form.cleaned_data['city']:
+            filter_query &= Q(city__icontains=city)
+            advanced_search = True
+        if school := form.cleaned_data['school']:
+            filter_query &= Q(school__icontains=school)
             advanced_search = True
         if blog := form.cleaned_data['blog']:
             filter_query &= Q(blog=blog)
             advanced_search = True
-        if grade := form.cleaned_data['grade']:
-            filter_query &= Q(grade=grade)
-            advanced_search = True
-        if source := form.cleaned_data['source']:
-            filter_query &= Q(source=source)
-            advanced_search = True
-        if part := form.cleaned_data['part']:
-            filter_query &= Q(part__icontains=part)
-            advanced_search = True
-        if editor := form.cleaned_data['editor']:
-            filter_query &= Q(editor=editor)
+        if type_ := form.cleaned_data['type']:
+            filter_query &= Q(type=type_)
             advanced_search = True
         if tags := form.cleaned_data['tags']:
             filter_query &= Q(tags__in=tags)

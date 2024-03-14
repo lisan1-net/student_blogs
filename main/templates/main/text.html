@@ -5,27 +5,34 @@
     <div class="card mt-3">
         <div class="card-header text-center">
             <h4>{{ text.title }}</h4>
-            <h6 class="text-muted">{{ text.author|author_icon }} {{ text.author }}</h6>
-            {% if text.source %}
-                <small class="text-muted row">
+            <h6 class="text-muted">{{ text.sex|sex_icon }} {{ text.get_student_number_display }}</h6>
+            <hr>
+            <small class="text-muted row">
+                {% if text.city %}
+                <span class="col">
+                    <i class="fa-solid fa-city"></i>
+                    {{ text.city }}
+                </span>
+                {% endif %}
+                {% if text.school %}
                     <span class="col">
-                        <i class="fa-solid fa-book"></i>
-                        {{ text.source }}
+                        <i class="fa-solid fa-school"></i>
+                        {{ text.school }}
                     </span>
-                    {% if text.part %}
-                        <span class="col">
-                            <i class="fa-solid fa-book-open"></i>
-                            {{ text.part }}
-                        </span>
-                    {% endif %}
-                    {% if text.editor %}
-                        <span class="col">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                            {{ text.editor }}
-                        </span>
-                    {% endif %}
-                </small>
-            {% endif %}
+                {% endif %}
+                {% if text.level %}
+                    <span class="col">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                        {{ text.get_level_display }}
+                    </span>
+                {% endif %}
+                {% if text.type %}
+                    <span class="col">
+                        {{ text.type|text_type_icon }}
+                        {{ text.get_type_display }}
+                    </span>
+                {% endif %}
+            </small>
         </div>
         <div class="card-body">
             <div class="card-text">{{ text.content|paragraphs_wrap }}</div>

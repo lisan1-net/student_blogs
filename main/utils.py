@@ -1,12 +1,13 @@
 import re
 from typing import Iterable
+from functools import lru_cache
 
-from main.models import Text
+from pyarabic.normalize import strip_tatweel, strip_tashkeel
 
 
 def find_search_query_position(text: str, query: str, start_index=0) -> tuple[int, int]:
-    text = text.lower()
-    query = query.lower()
+    text = normalize(text)
+    query = normalize(query)
     start = -1
     if query.startswith('"') and query.endswith('"'):
         query = query[1:-1]
@@ -32,7 +33,7 @@ def find_all_search_query_positions(text: str, query: str) -> list[tuple[int, in
     return positions
 
 
-def find_search_results(query: str, search_in_content: bool, texts: Iterable[Text]) -> tuple[list[dict], int, int]:
+def find_search_results(query: str, search_in_content: bool, texts: Iterable) -> tuple[list[dict], int, int]:
     in_title_frequency = 0
     in_content_frequency = 0
     results = []
@@ -55,3 +56,8 @@ def find_search_results(query: str, search_in_content: bool, texts: Iterable[Tex
             in_title_frequency += t
             in_content_frequency += c
     return results, in_title_frequency, in_content_frequency
+
+
+@lru_cache(maxsize=1024)
+def normalize(text):
+    return strip_tatweel(strip_tashkeel(text.lower()))

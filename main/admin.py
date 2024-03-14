@@ -1,7 +1,6 @@
 from django.contrib import admin
+from django.apps import apps
 
-from main.models import *
-
-admin.site.register(Blog)
-admin.site.register(Author)
-admin.site.register(Text)
+app = apps.get_app_config('main')
+for model in app.get_models():
+    admin.site.register(model)

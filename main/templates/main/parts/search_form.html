@@ -24,18 +24,9 @@
         {{ form.blog }}
     </div>
     <fieldset class="border border-secondary p-1 mb-2 form-row">
-        <legend class="w-auto h5">{% translate 'Author' %}</legend>
-        {% for field in form.author_fields %}
-            <div class="form-group col-3">
-                {{ field.label_tag }}
-                {{ field }}
-            </div>
-        {% endfor %}
-    </fieldset>
-    <fieldset class="border border-secondary p-1 mb-2 form-row">
-        <legend class="w-auto h5">{% translate 'Text information' %}</legend>
+        <legend class="w-auto h5">{% translate 'Student information' %}</legend>
         {% for field in form.text_fields %}
-            <div class="form-group col-3">
+            <div class="form-group col-4">
                 {{ field.label_tag }}
                 {{ field }}
             </div>
@@ -51,6 +42,8 @@
                         {{ checkbox.choice_label }}
                     </label>
                 </div>
+            {% empty %}
+                <div class="form-text text-muted">{% translate 'No tags found' %}</div>
             {% endfor %}
         </div>
     </fieldset>

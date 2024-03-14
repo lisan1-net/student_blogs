@@ -8,8 +8,8 @@
                     {{ result.text.blog }}
                 </span>
                 <span class="badge badge-secondary">
-                    {{ result.text.author|author_icon }}
-                    {{ result.text.author }}
+                    {{ result.text.sex|sex_icon }}
+                    {{ result.text.get_student_number_display }}
                 </span>
             </div>
             <div class="card-body lead">
@@ -23,23 +23,33 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="card-footer">
-                {% if result.text.source %}
-                    <span class="badge badge-info">
-                        <i class="fa-solid fa-book"></i>
-                        <b>{{ result.text.source }}</b>
-                        {% if result.text.part %}
-                            <i class="fa-solid fa-book-open"></i>
-                            {{ result.text.part }}
-                        {% endif %}
+            <div class="card-footer d-flex justify-content-between">
+                <span>
+                {% if result.text.city %}
+                    <span class="badge badge-dark">
+                        <i class="fa-solid fa-city"></i>
+                        {{ result.text.city }}
                     </span>
-                    {% if result.text.editor %}
-                        <span class="badge badge-dark">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                            {{ result.text.editor }}
-                        </span>
-                    {% endif %}
                 {% endif %}
+                {% if result.text.school %}
+                    <span class="badge badge-info">
+                        <i class="fa-solid fa-school"></i>
+                        <b>{{ result.text.school }}</b>
+                    </span>
+                {% endif %}
+                {% if result.text.level %}
+                    <span class="badge badge-warning">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                    {{ result.text.get_level_display }}
+                </span>
+                {% endif %}
+                {% if result.text.type %}
+                    <span class="badge badge-secondary">
+                        {{ result.text.type|text_type_icon }}
+                        {{ result.text.get_type_display }}
+                    </span>
+                {% endif %}
+                </span>
                 {% if result.text.tags.exists %}
                     <span>
                         {% for tag in result.text.tags.all %}
