@@ -2,49 +2,43 @@
 <div class="row mb-3">
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <span class="badge badge-primary">
+            <div class="card-header d-flex align-items-center">
+                <span class="badge badge-primary mr-1">
                     <i class="fa-solid fa-folder-open"></i>
                     {{ result.text.blog }}
                 </span>
-                <span class="badge badge-secondary">
+                <span class="badge badge-secondary mr-1">
                     {{ result.text.sex|sex_icon }}
                     {{ result.text.get_student_number_display }}
                 </span>
             </div>
             <div class="card-body lead">
                 <div class="card-text">
-                    {% if result.field == 'title' %}
-                        <small><span class="badge badge-success">{{ title_name }}</span></small>
-                        {% highlight_range result.text.title_normalized result.start result.end result.text.pk %}
-                    {% elif result.field == 'content' %}
-                        <small><span class="badge badge-info">{{ content_name }}</span></small>
-                        {% highlight_range result.text.content_normalized result.start result.end result.text.pk %}
-                    {% endif %}
+                    {% highlight_range result.text.content_normalized result.start result.end result.text.pk %}
                 </div>
             </div>
-            <div class="card-footer d-flex justify-content-between">
-                <span>
+            <div class="card-footer">
+                <span class="d-flex align-items-center">
                 {% if result.text.city %}
-                    <span class="badge badge-dark">
+                    <span class="badge badge-dark mr-1">
                         <i class="fa-solid fa-city"></i>
                         {{ result.text.city }}
                     </span>
                 {% endif %}
                 {% if result.text.school %}
-                    <span class="badge badge-info">
+                    <span class="badge badge-info mr-1">
                         <i class="fa-solid fa-school"></i>
                         <b>{{ result.text.school }}</b>
                     </span>
                 {% endif %}
                 {% if result.text.level %}
-                    <span class="badge badge-warning">
+                    <span class="badge badge-warning mr-1">
                     <i class="fa-solid fa-book-open-reader"></i>
                     {{ result.text.get_level_display }}
                 </span>
                 {% endif %}
                 {% if result.text.type %}
-                    <span class="badge badge-secondary">
+                    <span class="badge badge-secondary mr-1">
                         {{ result.text.type|text_type_icon }}
                         {{ result.text.get_type_display }}
                     </span>

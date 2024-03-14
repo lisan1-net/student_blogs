@@ -12,6 +12,8 @@ class SearchForm(forms.ModelForm):
 
         @staticmethod
         def formfield_for_dbfield(db_field, required=False, **kwargs):
+            if isinstance(db_field, models.IntegerField):
+                kwargs['min_value'] = 1
             form_field = db_field.formfield(required=required, **kwargs)
             if form_field:
                 form_field.widget.attrs.update({
@@ -40,12 +42,6 @@ class SearchForm(forms.ModelForm):
             'data-placement': 'top',
             'title': self.fields['search_query'].help_text,
         })
-        self.fields['search_in_content'].widget.attrs.update({
-            'class': 'form-check-input',
-            'data-toggle': 'tooltip',
-            'data-placement': 'top',
-            'title': self.fields['search_in_content'].help_text,
-        })
         self.fields['blog'].empty_label = ''
         self.fields['tags'].widget.attrs.update({
             'data-toggle': 'tooltip',
@@ -58,10 +54,6 @@ class SearchForm(forms.ModelForm):
         help_text=_('Enter an expression to search in the texts. Any expression in double quotes will be searched as a '
                     'whole word.')
     )
-    search_in_content = forms.BooleanField(
-        required=False, initial=True, label=_('Search in content'),
-        help_text=_('Search in the content of the texts in addition to the title.')
-    )
 
     tags = forms.ModelMultipleChoiceField(
         Tag.objects.all(), required=False, widget=widgets.CheckboxSelectMultiple,
@@ -71,7 +63,7 @@ class SearchForm(forms.ModelForm):
     @property
     def text_fields(self):
         for field in self.fields:
-            if field in ('search_query', 'search_in_content', 'blog', 'tags'):
+            if field in ('search_query', 'blog', 'tags'):
                 continue
             yield self[field]
 

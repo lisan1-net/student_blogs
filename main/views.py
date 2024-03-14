@@ -12,7 +12,6 @@ def home(request):
     results = None
     query = None
     advanced_search = False
-    in_title_frequency = 0
     in_content_frequency = 0
     matched_texts_count = None
     if form.is_valid():
@@ -43,16 +42,14 @@ def home(request):
             advanced_search = True
         query = form.cleaned_data['search_query']
         texts = Text.objects.filter(filter_query).distinct()
-        results, in_title_frequency, in_content_frequency = find_search_results(
-            query, form.cleaned_data['search_in_content'], texts
-        )
+        results, in_content_frequency = find_search_results(query, texts)
         matched_texts_count = len(set(r['text'] for r in results))
         results = Paginator(results, 10).get_page(request.GET.get('page'))
         form.advanced = advanced_search
     return render(
         request, 'main/home.html',
-        context={'form': form, 'query': query, 'results': results, 'in_title_frequency': in_title_frequency,
-                 'in_content_frequency': in_content_frequency, 'matched_text_count': matched_texts_count}
+        context={'form': form, 'query': query, 'results': results, 'frequency': in_content_frequency,
+                 'matched_text_count': matched_texts_count}
     )
 
 

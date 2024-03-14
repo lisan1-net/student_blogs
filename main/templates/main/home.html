@@ -1,7 +1,6 @@
 {% extends 'main/base.html' %}
 {% load i18n %}
 {% load search %}
-{% load l10n %}
 
 {% block content %}
     <div class="jumbotron mt-3 pt-3 pb-1 text-center">
@@ -23,24 +22,18 @@
                 <table class="table table-bordered text-center table-secondary">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">{% translate 'Titles' %}</th>
-                        <th scope="col">{% translate 'Contents' %}</th>
-                        <th scope="col">{% translate 'Total' %}</th>
+                        <th scope="col">{% translate 'Expression frequency' %}</th>
                         <th scope="col">{% translate 'Matched documents' %}</th>
                         <th scope="col">{% translate 'Current page' %}</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                    {% localize on %}
-                        <td>{{ in_title_frequency }}</td>
-                        <td>{{ in_content_frequency }}</td>
-                        <td>{{ results.paginator.count }}</td>
+                        <td>{{ frequency }}</td>
                         <td>{{ matched_text_count }}</td>
                         <td>{% blocktranslate trimmed with f=results.start_index t=results.end_index c=results.paginator.count%}
                         	Results from {{ f }} to {{ t }} of {{ c }}
                         {% endblocktranslate %}</td>
-                    {% endlocalize %}
                     </tr>
                     </tbody>
                 </table>

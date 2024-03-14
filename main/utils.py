@@ -33,29 +33,20 @@ def find_all_search_query_positions(text: str, query: str) -> list[tuple[int, in
     return positions
 
 
-def find_search_results(query: str, search_in_content: bool, texts: Iterable) -> tuple[list[dict], int, int]:
-    in_title_frequency = 0
+def find_search_results(query: str, texts: Iterable) -> tuple[list[dict], int]:
     in_content_frequency = 0
     results = []
     for text in texts:
-        for positions in find_all_search_query_positions(text.title_normalized, query):
-            results.insert(
-                in_title_frequency,
-                {'text': text, 'start': positions[0], 'end': positions[1], 'field': 'title'}
-            )
-            in_title_frequency += 1
-        if search_in_content:
-            for positions in find_all_search_query_positions(text.content_normalized, query):
-                results.append({'text': text, 'start': positions[0], 'end': positions[1], 'field': 'content'})
-                in_content_frequency += 1
+        for positions in find_all_search_query_positions(text.content_normalized, query):
+            results.append({'text': text, 'start': positions[0], 'end': positions[1]})
+            in_content_frequency += 1
     words = query.split()
     if len(words) > 1:
         for word in words:
-            r, t, c = find_search_results(word, search_in_content, texts)
+            r, c = find_search_results(word, texts)
             results += r
-            in_title_frequency += t
             in_content_frequency += c
-    return results, in_title_frequency, in_content_frequency
+    return results, in_content_frequency
 
 
 @lru_cache(maxsize=1024)
