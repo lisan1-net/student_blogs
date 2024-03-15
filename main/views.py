@@ -26,10 +26,10 @@ def home(request):
             filter_query &= Q(level=level)
             advanced_search = True
         if city := form.cleaned_data['city']:
-            filter_query &= Q(city__icontains=city)
+            filter_query &= Q(city=city)
             advanced_search = True
         if school := form.cleaned_data['school']:
-            filter_query &= Q(school__icontains=school)
+            filter_query &= Q(school=school)
             advanced_search = True
         if blog := form.cleaned_data['blog']:
             filter_query &= Q(blog=blog)

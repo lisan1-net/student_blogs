@@ -48,7 +48,11 @@
         }
     </style>
 
+    <!-- SEO meta tags -->
     <title>{% block title %}{{ app_name }}{% endblock %}{% block extra_title %}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% translate 'Search engine in the blogs of students' %}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% translate 'search, blogs, students' %}{% endblock %}">
+    <meta name="robots" content="{% block meta_robots %}index, follow{% endblock %}">
 </head>
 <body>
     <header>
