@@ -1,10 +1,12 @@
+from collections import Counter
+
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from django.core.paginator import Paginator
 
 from main.forms import SearchForm
 from main.models import *
-from main.utils import find_search_results
+from main.utils import find_search_results, split_words
 
 
 def home(request):
@@ -56,3 +58,12 @@ def home(request):
 def text(request, pk):
     text = get_object_or_404(Text, pk=pk)
     return render(request, 'main/text.html', context={'text': text})
+
+
+def word_frequencies(request):
+    frequencies = Counter()
+    for text in Text.objects.all():
+        frequencies.update(split_words(text.content_normalized))
+    paginator = Paginator(frequencies.most_common(len(frequencies.keys())), 60)
+    page = paginator.get_page(request.GET.get('page'))
+    return render(request, 'main/words.html', context={'frequencies': page})

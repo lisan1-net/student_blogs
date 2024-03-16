@@ -3,14 +3,18 @@
 {% if results.paginator.num_pages > 1 %}
     <nav aria-label="{% translate 'ٍSearch pages' %}">
         <ul class="pagination justify-content-center">
-            {% for page in results.paginator %}
-                {% if page.number == results.number %}
+            {% for page_num in results.paginator|visible_page_numbers:results.number %}
+                {% if page_num == results.number %}
                     <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="{{ request|url_with_page:page.number }}">{{ page.number }}</a>
+                        <a class="page-link" href="{{ request|url_with_page:page_num }}">{{ page_num }}</a>
                     </li>
                 {% else %}
                     <li class="page-item">
-                        <a class="page-link" href="{{ request|url_with_page:page.number }}">{{ page.number }}</a>
+                    {% if page_num != results.paginator.ELLIPSIS %}
+                        <a class="page-link" href="{{ request|url_with_page:page_num }}">{{ page_num }}</a>
+                    {% else %}
+                        <span class="page-link">{{ page_num }}</span>
+                    {% endif %}
                     </li>
                 {% endif %}
             {% endfor %}

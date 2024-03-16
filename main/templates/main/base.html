@@ -53,15 +53,11 @@
     <meta name="description" content="{% block meta_description %}{% translate 'Search engine in the blogs of students' %}{% endblock %}">
     <meta name="keywords" content="{% block meta_keywords %}{% translate 'search, blogs, students' %}{% endblock %}">
     <meta name="robots" content="{% block meta_robots %}index, follow{% endblock %}">
+    <meta name="author" content="Hamza Abbad <hamza.abbad@gmail.com>">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-dark bg-primary justify-content-center">
-            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-                <span class="material-icons" style="font-size: 2em">find_in_page</span>
-                {{ app_name }}
-            </a>
-        </nav>
+        {% include 'main/parts/navbar.html' %}
     </header>
 
     <main>

@@ -8,6 +8,11 @@ register = template.Library()
 
 
 @register.filter
+def visible_page_numbers(paginator: Paginator, number: int):
+    return paginator.get_elided_page_range(number, on_each_side=2, on_ends=1)
+
+
+@register.filter
 def sex_icon(sex):
     icon_name = ''
     if sex == 'M':

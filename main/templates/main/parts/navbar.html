@@ -1,0 +1,27 @@
+{% load i18n %}
+{% translate 'Search' as search %}
+{% translate 'Vocabulary' as word_frequencies %}
+{% url 'home' as home_path %}
+{% url 'words' as words_path %}
+<nav class="navbar navbar-dark bg-primary navbar-expand">
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <span class="material-icons" style="font-size: 2em">find_in_page</span>
+        <span class="h4">{{ app_name }}</span>
+    </a>
+    <ul class="navbar-nav lead">
+        <li class="nav-item">
+            {% if request.path == home_path %}
+                <a class="nav-link active" href="{{ home_path }}">{{ search }}</a>
+            {% else %}
+                <a class="nav-link" href="{{ home_path }}">{{ search }}</a>
+            {% endif %}
+        </li>
+        <li class="nav-item">
+            {% if request.path == words_path %}
+                <a class="nav-link active" href="{{ words_path }}">{{ word_frequencies }}</a>
+            {% else %}
+                <a class="nav-link" href="{{ words_path }}">{{ word_frequencies }}</a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>

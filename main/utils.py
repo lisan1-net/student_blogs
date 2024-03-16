@@ -2,7 +2,7 @@ import re
 from typing import Iterable
 from functools import lru_cache
 
-from pyarabic.normalize import strip_tatweel, strip_tashkeel
+from pyarabic.araby import strip_tatweel, strip_diacritics, tokenize, is_arabicword, COMMA, SEMICOLON, QUESTION
 
 
 def find_search_query_position(text: str, query: str, start_index=0) -> tuple[int, int]:
@@ -51,4 +51,13 @@ def find_search_results(query: str, texts: Iterable) -> tuple[list[dict], int]:
 
 @lru_cache(maxsize=1024)
 def normalize(text):
-    return strip_tatweel(strip_tashkeel(text.lower()))
+    return strip_tatweel(strip_diacritics(text.lower()))
+
+
+@lru_cache(maxsize=1024)
+def split_words(text):
+    return tokenize(text, conditions=is_arabic_word)
+
+
+def is_arabic_word(word):
+    return is_arabicword(word) and all(c not in word for c in (COMMA, SEMICOLON, QUESTION))

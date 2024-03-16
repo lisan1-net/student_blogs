@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-15 03:00+0000\n"
+"POT-Creation-Date: 2024-03-16 09:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -226,13 +226,18 @@ msgstr "النتائج من %(f)s إلى %(t)s من أصل %(c)s"
 msgid "Query did not match any texts."
 msgstr "الاستعلام لم يطابق أي نصوص."
 
-#: main/templates/main/parts/pagination.html:4
-msgid "ٍSearch pages"
-msgstr "صفحات البحث"
-
+#: main/templates/main/parts/navbar.html:2
 #: main/templates/main/parts/search_form.html:6
 msgid "Search"
 msgstr "ابحث"
+
+#: main/templates/main/parts/navbar.html:3
+msgid "Vocabulary"
+msgstr "الألفاظ"
+
+#: main/templates/main/parts/pagination.html:4
+msgid "ٍSearch pages"
+msgstr "صفحات البحث"
 
 #: main/templates/main/parts/search_form.html:12
 msgid "Advanced search"
@@ -245,6 +250,14 @@ msgstr "معلومات النص"
 #: main/templates/main/parts/search_form.html:40
 msgid "No tags found"
 msgstr "لم يتم العثور على وسوم"
+
+#: main/templates/main/words.html:6
+msgid "Vocabulary of the database"
+msgstr "ألفاظ قاعدة البيانات"
+
+#: main/templates/main/words.html:23
+msgid "No words found in the database"
+msgstr "لم يتم العثور على ألفاظ في قاعدة البيانات"
 
 #~ msgid "Database search engine"
 #~ msgstr "محرك بحث قاعدة البيانات"
