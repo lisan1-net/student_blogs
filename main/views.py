@@ -67,3 +67,9 @@ def word_frequencies(request):
     paginator = Paginator(frequencies.most_common(len(frequencies.keys())), 60)
     page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/words.html', context={'frequencies': page})
+
+
+def search_widget(request):
+    response = render(request, 'main/search_widget.html')
+    response['Content-Security-Policy'] = "frame-ancestors *"
+    return response

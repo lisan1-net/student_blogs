@@ -68,3 +68,8 @@ def highlight_range(text: str, start: int, end: int, pk:int, surrounding_words=5
 @register.simple_tag
 def get_app_name():
     return apps.get_app_config('main').verbose_name
+
+
+@register.simple_tag
+def get_app_icon(style=''):
+    return mark_safe(f'<span class="material-icons" style="{style}">history_edu</span>')

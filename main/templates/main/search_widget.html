@@ -1,0 +1,37 @@
+{% load search %}
+{% load i18n %}
+{% get_current_language as LANG_CODE %}
+{% get_current_language_bidi as bidi %}
+{% get_app_name as app_name %}
+<!DOCTYPE html>
+<html lang="{{ LANG_CODE }}" dir="{{ bidi|yesno:'rtl,ltr' }}">
+<head>
+    <meta charset="UTF-8">
+    {% include 'main/parts/stylesheets.html' %}
+    <title>{{ app_name }} - {% translate 'Search box' %}</title>
+    <style>
+        .card {
+            max-width: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <div class="card m-auto text-center">
+        <form action="{% url 'home' %}" method="get" class="card-body" target="_blank">
+            <div class="form-group">
+                <label class="h3 text-secondary" for="search_query">{% translate 'Search in student blogs' %}</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{% get_app_icon %}</span>
+                    </div>
+                    <input type="text" class="form-control" name="search_query" placeholder="{% translate 'Enter an expression' %}" id="search_query">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% include 'main/parts/scripts.html' %}
+</body>
+</html>

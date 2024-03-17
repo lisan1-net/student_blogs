@@ -1,11 +1,12 @@
+{% load search %}
 {% load i18n %}
-{% translate 'Search' as search %}
+{% translate 'Search' context 'Navbar' as search%}
 {% translate 'Vocabulary' as word_frequencies %}
 {% url 'home' as home_path %}
 {% url 'words' as words_path %}
 <nav class="navbar navbar-dark bg-primary navbar-expand">
     <a class="navbar-brand" href="{% url 'home' %}">
-        <span class="material-icons" style="font-size: 2em">find_in_page</span>
+        {% get_app_icon 'font-size:2em' %}
         <span class="h4">{{ app_name }}</span>
     </a>
     <ul class="navbar-nav lead">

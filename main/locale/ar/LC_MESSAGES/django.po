@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-16 09:02+0000\n"
+"POT-Creation-Date: 2024-03-17 02:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -189,11 +189,11 @@ msgstr "الصف %(level)d"
 msgid "Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi"
 msgstr "حقوق النشر 2024. جميع الحقوق محفوظة. د. عبد العزيز عبد الله المهيوبي"
 
-#: main/templates/main/base.html:53
+#: main/templates/main/base.html:21
 msgid "Search engine in the blogs of students"
 msgstr "محرك بحث في مدونات الطلاب"
 
-#: main/templates/main/base.html:54
+#: main/templates/main/base.html:22
 msgid "search, blogs, students"
 msgstr "بحث، مدونات، طلاب"
 
@@ -227,9 +227,9 @@ msgid "Query did not match any texts."
 msgstr "الاستعلام لم يطابق أي نصوص."
 
 #: main/templates/main/parts/navbar.html:2
-#: main/templates/main/parts/search_form.html:6
+msgctxt "Navbar"
 msgid "Search"
-msgstr "ابحث"
+msgstr "البحث"
 
 #: main/templates/main/parts/navbar.html:3
 msgid "Vocabulary"
@@ -238,6 +238,11 @@ msgstr "الألفاظ"
 #: main/templates/main/parts/pagination.html:4
 msgid "ٍSearch pages"
 msgstr "صفحات البحث"
+
+#: main/templates/main/parts/search_form.html:6
+msgctxt "Form action"
+msgid "Search"
+msgstr "ابحث"
 
 #: main/templates/main/parts/search_form.html:12
 msgid "Advanced search"
@@ -251,11 +256,23 @@ msgstr "معلومات النص"
 msgid "No tags found"
 msgstr "لم يتم العثور على وسوم"
 
+#: main/templates/main/search_widget.html:9
+msgid "Search box"
+msgstr "صندوق البحث"
+
+#: main/templates/main/search_widget.html:15
+msgid "Search in student blogs"
+msgstr "البحث في مدونات الطلاب"
+
+#: main/templates/main/search_widget.html:17
+msgid "Enter an expression"
+msgstr "أدخل تعبيرًا"
+
 #: main/templates/main/words.html:6
 msgid "Vocabulary of the database"
 msgstr "ألفاظ قاعدة البيانات"
 
-#: main/templates/main/words.html:23
+#: main/templates/main/words.html:24
 msgid "No words found in the database"
 msgstr "لم يتم العثور على ألفاظ في قاعدة البيانات"
 
@@ -264,9 +281,6 @@ msgstr "لم يتم العثور على ألفاظ في قاعدة البيان�
 
 #~ msgid "Abdulaziz Abdullah"
 #~ msgstr "عبد العزيز عبد الله"
-
-#~ msgid "Search in content"
-#~ msgstr "البحث في المحتوى"
 
 #~ msgid "Search in the content of the texts in addition to the title."
 #~ msgstr "علّم للبحث في محتوى النصوص بالإضافة إلى العنوان."
@@ -354,6 +368,3 @@ msgstr "لم يتم العثور على ألفاظ في قاعدة البيان�
 
 #~ msgid "Editor of the book containing this text"
 #~ msgstr "محرر الكتاب الذي يحتوي على هذا النص"
-
-#~ msgid "Enter an expression to search in the texts."
-#~ msgstr "أدخل تعبيرًا للبحث في النصوص."
