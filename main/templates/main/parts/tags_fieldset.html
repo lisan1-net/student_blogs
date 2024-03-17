@@ -1,0 +1,20 @@
+{% load i18n %}
+<fieldset class="border border-secondary p-1 mb-2 form-row">
+    <legend class="w-auto h5">{{ form.tags.label_tag }}</legend>
+    <div class="form-group col">
+        {% for checkbox in form.tags %}
+            <div class="form-check form-check-inline" title="{{ form.tags.help_text }}" data-toggle="tooltip"
+                 data-placement="top">
+                <input class="form-check-input" type="checkbox" id="{{ checkbox.id_for_label }}"
+                       name="{{ form.tags.html_name }}"
+                       value="{{ checkbox.data.value }}" {{ checkbox.data.selected|yesno:'checked,' }}>
+                <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                    {{ checkbox.choice_label }}
+                </label>
+            </div>
+        {% empty %}
+            <div class="form-text text-muted">{% translate 'No tags found' %}</div>
+        {% endfor %}
+    </div>
+    {% include 'main/parts/error_list.html' with errors=form.tags.errors %}
+</fieldset>

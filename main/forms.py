@@ -85,3 +85,23 @@ class SearchForm(forms.ModelForm):
             if isinstance(self.fields[k], forms.CharField):
                 cleaned_data[k] = normalize(v)
         return cleaned_data
+
+
+class VocabularyForm(SearchForm):
+
+    class Meta(SearchForm.Meta):
+        help_texts = {
+            'blog': _('The blog to search in'),
+        }
+
+    template_name = 'main/parts/vocabulary_form.html'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['blog'].required = True
+        self.fields['blog'].empty_label = _('Select a blog')
+        self.fields['blog'].widget.attrs.update({
+            'class': 'custom-select',
+            'title': self.fields['blog'].help_text,
+        })
+        del self.fields['search_query']

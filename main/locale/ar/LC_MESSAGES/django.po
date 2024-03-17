@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-17 02:44+0000\n"
+"POT-Creation-Date: 2024-03-17 15:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,6 +43,14 @@ msgstr "الوسوم"
 msgid "Select the tags of the text."
 msgstr "حدد الوسوم الخاصة بالنص."
 
+#: main/forms.py:94
+msgid "The blog to search in"
+msgstr "حدد مدونة للبحث فيها"
+
+#: main/forms.py:102
+msgid "Select a blog"
+msgstr "حدد مدونة"
+
 #: main/models.py:12 main/models.py:38
 msgid "Blog"
 msgstr "المدونة"
@@ -51,7 +59,7 @@ msgstr "المدونة"
 msgid "Blogs"
 msgstr "المدونات"
 
-#: main/models.py:15 main/models.py:40 main/templates/main/home.html:42
+#: main/models.py:15 main/models.py:40 main/templates/main/home.html:40
 msgid "Title"
 msgstr "العنوان"
 
@@ -103,7 +111,7 @@ msgstr "المدونة التي تحتوي على هذا النص"
 msgid "Title of the text"
 msgstr "عنوان النص"
 
-#: main/models.py:41 main/templates/main/home.html:43
+#: main/models.py:41 main/templates/main/home.html:41
 msgid "Content"
 msgstr "المحتوى"
 
@@ -124,8 +132,8 @@ msgid "Number"
 msgstr "الرقم"
 
 #: main/models.py:44
-msgid "Number of the student writer of this text"
-msgstr "رقم الطالب كاتب هذا النص"
+msgid "Number of the student"
+msgstr "رقم الطالب"
 
 #: main/models.py:47
 msgid "Sex"
@@ -140,24 +148,24 @@ msgid "Level"
 msgstr "الصف"
 
 #: main/models.py:49
-msgid "Level of the student writer of this text"
-msgstr "صف الطالب كاتب هذا النص"
+msgid "Level of the student"
+msgstr "صف الطالب"
 
 #: main/models.py:53
 msgid "School"
 msgstr "المدرسة"
 
 #: main/models.py:53
-msgid "School of the student writer of this text"
-msgstr "مدرسة الطالب كاتب هذا النص"
+msgid "School of the student"
+msgstr "مدرسة الطالب"
 
 #: main/models.py:56
 msgid "City"
 msgstr "المدينة"
 
 #: main/models.py:56
-msgid "City of the student writer of this text"
-msgstr "مدينة الطالب كاتب هذا النص"
+msgid "City of the student"
+msgstr "مدينة الطالب"
 
 #: main/models.py:59
 msgid "Added on"
@@ -177,10 +185,22 @@ msgstr "تاريخ ووقت آخر تحديث للنص في قاعدة البي�
 
 #: main/models.py:79
 #, python-format
-msgid "Student %(number)d"
-msgstr "الطالب %(number)d"
+msgid "Student number %(number)d"
+msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:82
+#: main/models.py:81
+#, python-format
+msgctxt "Male"
+msgid "Student number %(number)d"
+msgstr "الطالب رقم %(number)d"
+
+#: main/models.py:83
+#, python-format
+msgctxt "Female"
+msgid "Student number %(number)d"
+msgstr "الطالبة رقم %(number)d"
+
+#: main/models.py:87
 #, python-format
 msgid "Level %(level)d"
 msgstr "الصف %(level)d"
@@ -201,28 +221,28 @@ msgstr "بحث، مدونات، طلاب"
 msgid "Search in the database"
 msgstr "البحث في قاعدة البيانات"
 
-#: main/templates/main/home.html:16
+#: main/templates/main/home.html:14
 msgid "Search results"
 msgstr "نتائج البحث"
 
-#: main/templates/main/home.html:25
+#: main/templates/main/home.html:23
 msgid "Expression frequency"
 msgstr "تكرار العبارة"
 
-#: main/templates/main/home.html:26
+#: main/templates/main/home.html:24
 msgid "Matched documents"
 msgstr "المستندات المطابقة"
 
-#: main/templates/main/home.html:27
+#: main/templates/main/home.html:25
 msgid "Current page"
 msgstr "الصفحة الحالية"
 
-#: main/templates/main/home.html:34
+#: main/templates/main/home.html:32
 #, python-format
 msgid "Results from %(f)s to %(t)s of %(c)s"
 msgstr "النتائج من %(f)s إلى %(t)s من أصل %(c)s"
 
-#: main/templates/main/home.html:49
+#: main/templates/main/home.html:47
 msgid "Query did not match any texts."
 msgstr "الاستعلام لم يطابق أي نصوص."
 
@@ -233,48 +253,59 @@ msgstr "البحث"
 
 #: main/templates/main/parts/navbar.html:3
 msgid "Vocabulary"
-msgstr "الألفاظ"
+msgstr "شيوع الألفاظ"
 
 #: main/templates/main/parts/pagination.html:4
 msgid "ٍSearch pages"
 msgstr "صفحات البحث"
 
-#: main/templates/main/parts/search_form.html:6
+#: main/templates/main/parts/search_form.html:9
+#: main/templates/main/parts/vocabulary_form.html:11
 msgctxt "Form action"
 msgid "Search"
 msgstr "ابحث"
 
-#: main/templates/main/parts/search_form.html:12
+#: main/templates/main/parts/search_form.html:19
 msgid "Advanced search"
 msgstr "بحث متقدم"
 
-#: main/templates/main/parts/search_form.html:21
+#: main/templates/main/parts/student_fieldset.html:3
 msgid "Student information"
 msgstr "معلومات النص"
 
-#: main/templates/main/parts/search_form.html:40
+#: main/templates/main/parts/tags_fieldset.html:16
 msgid "No tags found"
 msgstr "لم يتم العثور على وسوم"
 
-#: main/templates/main/search_widget.html:9
+#: main/templates/main/parts/vocabulary_form.html:21
+msgid "Advanced options"
+msgstr "خيارات متقدمة"
+
+#: main/templates/main/search_widget.html:11
 msgid "Search box"
 msgstr "صندوق البحث"
 
-#: main/templates/main/search_widget.html:15
+#: main/templates/main/search_widget.html:22
 msgid "Search in student blogs"
 msgstr "البحث في مدونات الطلاب"
 
-#: main/templates/main/search_widget.html:17
+#: main/templates/main/search_widget.html:27
 msgid "Enter an expression"
 msgstr "أدخل تعبيرًا"
 
-#: main/templates/main/words.html:6
+#: main/templates/main/vocabulary.html:8
 msgid "Vocabulary of the database"
-msgstr "ألفاظ قاعدة البيانات"
+msgstr "شيوع الألفاظ في المدونات"
 
-#: main/templates/main/words.html:24
-msgid "No words found in the database"
-msgstr "لم يتم العثور على ألفاظ في قاعدة البيانات"
+#: main/templates/main/vocabulary.html:31
+msgid "No words found"
+msgstr "لم يتم العثور على أيّة ألفاظ"
+
+#~ msgid "No words found in the database"
+#~ msgstr "لم يتم العثور على ألفاظ في قاعدة البيانات"
+
+#~ msgid "City of the student writer of this text"
+#~ msgstr "مدينة الطالب كاتب هذا النص"
 
 #~ msgid "Database search engine"
 #~ msgstr "محرك بحث قاعدة البيانات"
@@ -293,9 +324,6 @@ msgstr "لم يتم العثور على ألفاظ في قاعدة البيان�
 
 #~ msgid "Total"
 #~ msgstr "الإجمالي"
-
-#~ msgid "Select a blog to search in."
-#~ msgstr "حدد مدونة للبحث فيها."
 
 #~ msgid "Name"
 #~ msgstr "الاسم"

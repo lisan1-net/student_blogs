@@ -1,6 +1,6 @@
 from django.core import validators
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, pgettext
 from taggit.managers import TaggableManager
 
 from main.utils import normalize
@@ -41,19 +41,19 @@ class Text(models.Model):
     content = models.TextField(verbose_name=_('Content'), help_text=_('Content of the text'))
     type = models.CharField(max_length=10, choices=TEXT_TYPE, verbose_name=_('Type'), help_text=_('Type of the text'))
     student_number = models.IntegerField(
-        verbose_name=_('Number'), help_text=_('Number of the student writer of this text'),
+        verbose_name=_('Number'), help_text=_('Number of the student'),
         validators=[validators.MinValueValidator(1)]
     )
     sex = models.CharField(max_length=1, choices=SEX, verbose_name=_('Sex'), help_text=_('Student sex'))
     level = models.IntegerField(
-        verbose_name=_('Level'), help_text=_('Level of the student writer of this text'),
+        verbose_name=_('Level'), help_text=_('Level of the student'),
         validators=[validators.MinValueValidator(1)]
     )
     school = models.CharField(
-        max_length=100, verbose_name=_('School'), help_text=_('School of the student writer of this text')
+        max_length=100, verbose_name=_('School'), help_text=_('School of the student')
     )
     city = models.CharField(
-        max_length=100, verbose_name=_('City'), help_text=_('City of the student writer of this text')
+        max_length=100, verbose_name=_('City'), help_text=_('City of the student')
     )
     added = models.DateTimeField(
         auto_now_add=True, verbose_name=_('Added on'), help_text=_('Date and time of adding the text to the database')
@@ -76,7 +76,12 @@ class Text(models.Model):
         return normalize(self.content)
 
     def get_student_number_display(self):
-        return _('Student %(number)d') % {'number': self.student_number}
+        translation = _('Student number %(number)d')
+        if self.sex == 'M':
+            translation = pgettext('Male', 'Student number %(number)d')
+        elif self.sex == 'F':
+            translation = pgettext('Female', 'Student number %(number)d')
+        return translation % {'number': self.student_number}
 
     def get_level_display(self):
         return _('Level %(level)d') % {'level': self.level}

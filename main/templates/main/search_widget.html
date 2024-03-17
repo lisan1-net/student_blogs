@@ -22,11 +22,11 @@
                 <label class="h3 text-secondary" for="search_query">{% translate 'Search in student blogs' %}</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">{% get_app_icon %}</span>
+                        <span class="input-group-text">{% include 'main/parts/app_icon.html' %}</span>
                     </div>
                     <input type="text" class="form-control" name="search_query" placeholder="{% translate 'Enter an expression' %}" id="search_query">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-outline-primary" type="submit">{% include 'main/parts/search_icon.html' %}</button>
                     </div>
                 </div>
             </div>

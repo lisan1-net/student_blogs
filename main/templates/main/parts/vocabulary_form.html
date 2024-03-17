@@ -1,0 +1,28 @@
+{% load i18n %}
+<form method="get" class="text-center">
+    {% include 'main/parts/error_list.html' with errors=form.non_field_errors %}
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label for="{{ form.blog.id_for_label }}" class="input-group-text">{{ form.blog.label }}</label>
+            </div>
+            {{ form.blog }}
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit" data-toggle="tooltip" data-placement="top" title="{% translate 'Search' context 'Form action' %}">
+                    {% include 'main/parts/search_icon.html' %}
+                </button>
+            </div>
+        </div>
+        {% include 'main/parts/error_list.html' with errors=form.blog.errors %}
+    </div>
+    <div class="form-group">
+        <a class="btn btn-link" data-toggle="collapse" href="#advanced-options" role="button" aria-expanded="false"
+           aria-controls="advanced-options">
+            {% translate 'Advanced options' %}
+        </a>
+    </div>
+    <div class="collapse {{ form.advanced|yesno:"show," }}" id="advanced-options">
+        {% include 'main/parts/student_fieldset.html' %}
+        {% include 'main/parts/tags_fieldset.html' %}
+    </div>
+</form>

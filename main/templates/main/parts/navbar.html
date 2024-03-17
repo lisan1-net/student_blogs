@@ -1,12 +1,11 @@
-{% load search %}
 {% load i18n %}
 {% translate 'Search' context 'Navbar' as search%}
 {% translate 'Vocabulary' as word_frequencies %}
 {% url 'home' as home_path %}
-{% url 'words' as words_path %}
+{% url 'vocabulary' as vocabulary_path %}
 <nav class="navbar navbar-dark bg-primary navbar-expand">
     <a class="navbar-brand" href="{% url 'home' %}">
-        {% get_app_icon 'font-size:2em' %}
+        {% include 'main/parts/app_icon.html' with style='font-size:2em' %}
         <span class="h4">{{ app_name }}</span>
     </a>
     <ul class="navbar-nav lead">
@@ -18,10 +17,10 @@
             {% endif %}
         </li>
         <li class="nav-item">
-            {% if request.path == words_path %}
-                <a class="nav-link active" href="{{ words_path }}">{{ word_frequencies }}</a>
+            {% if request.path == vocabulary_path %}
+                <a class="nav-link active" href="{{ vocabulary_path }}">{{ word_frequencies }}</a>
             {% else %}
-                <a class="nav-link" href="{{ words_path }}">{{ word_frequencies }}</a>
+                <a class="nav-link" href="{{ vocabulary_path }}">{{ word_frequencies }}</a>
             {% endif %}
         </li>
     </ul>
