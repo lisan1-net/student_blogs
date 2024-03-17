@@ -1,4 +1,5 @@
 import re
+from collections import Counter
 from typing import Iterable
 from functools import lru_cache
 
@@ -61,3 +62,11 @@ def split_words(text):
 
 def is_arabic_word(word):
     return is_arabicword(word) and all(c not in word for c in (COMMA, SEMICOLON, QUESTION))
+
+
+@lru_cache(maxsize=1024)
+def get_word_frequencies(texts):
+    frequencies = Counter()
+    for text in texts:
+        frequencies.update(split_words(text.content_normalized))
+    return frequencies.most_common(len(frequencies.keys()))

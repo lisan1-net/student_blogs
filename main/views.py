@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 
 from main.forms import SearchForm
 from main.models import *
-from main.utils import find_search_results, split_words
+from main.utils import find_search_results, split_words, get_word_frequencies
 
 
 def home(request):
@@ -61,10 +61,8 @@ def text(request, pk):
 
 
 def word_frequencies(request):
-    frequencies = Counter()
-    for text in Text.objects.all():
-        frequencies.update(split_words(text.content_normalized))
-    paginator = Paginator(frequencies.most_common(len(frequencies.keys())), 60)
+    frequencies = get_word_frequencies(Text.objects.all())
+    paginator = Paginator(frequencies, 60)
     page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/words.html', context={'frequencies': page})
 
