@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-17 15:07+0000\n"
+"POT-Creation-Date: 2024-03-18 11:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "Students blog"
 msgstr "مدونة الطلاب"
 
-#: main/forms.py:65
+#: main/forms.py:72
 msgid "Search query"
 msgstr "استعلام البحث"
 
-#: main/forms.py:66
+#: main/forms.py:73
 msgid ""
 "Enter an expression to search in the texts. Any expression in double quotes "
 "will be searched as a whole word."
@@ -35,19 +35,19 @@ msgstr ""
 "أدخل تعبيرًا للبحث في النصوص. أي تعبير بين علامتي اقتباس مزدوجة سيتم البحث "
 "عنه ككلمة كاملة."
 
-#: main/forms.py:72
+#: main/forms.py:79
 msgid "Tags"
 msgstr "الوسوم"
 
-#: main/forms.py:72
+#: main/forms.py:79
 msgid "Select the tags of the text."
 msgstr "حدد الوسوم الخاصة بالنص."
 
-#: main/forms.py:94
+#: main/forms.py:101
 msgid "The blog to search in"
 msgstr "حدد مدونة للبحث فيها"
 
-#: main/forms.py:102
+#: main/forms.py:109
 msgid "Select a blog"
 msgstr "حدد مدونة"
 
