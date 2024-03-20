@@ -80,7 +80,6 @@ def vocabulary(request):
 
 def search_widget(request):
     response = render(request, 'main/search_widget.html')
-    response['Content-Security-Policy'] = "frame-ancestors *"
     return response
 
 
