@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.http import HttpResponse
+from django.db import connections
 
 from main.forms import *
 from main.models import *
@@ -80,3 +82,8 @@ def search_widget(request):
     response = render(request, 'main/search_widget.html')
     response['Content-Security-Policy'] = "frame-ancestors *"
     return response
+
+
+def health_check(request):
+    connections['default'].cursor().execute('SELECT 1')
+    return HttpResponse('OK', content_type='text/plain', status=200)
