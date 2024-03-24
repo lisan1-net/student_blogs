@@ -5,6 +5,33 @@
 {% block content %}
     <div class="jumbotron mt-3 pt-3 pb-1 text-center">
         <h1 class="mb-3">{% translate 'Search in the database' %}</h1>
+        <h4 class="mb-3">{% translate 'Available blogs' %}</h4>
+        <div class="row row-cols-md-3 row-cols-sm-1 d-flex justify-content-center">
+        {% for blog in blogs %}
+            <div class="col mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title mb-0">{{ blog.title }}</h6>
+                    </div>
+                    {% with blog.word_count as counts %}
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{% translate 'Words with duplication' %}</span>
+                                <span class="badge badge-secondary pt-2">{{ counts.0 }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{% translate 'Words without duplication' %}</span>
+                                <span class="badge badge-secondary pt-2">{{ counts.1 }}</span>
+                            </li>
+                        </ul>
+                    {% endwith %}
+                    <a href="{% url 'vocabulary' %}?blog={{ blog.id }}" class="btn btn-outline-primary m-2">
+                        {% translate 'Show vocabulary' %}
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
         {{ form }}
     </div>
     {% if query %}

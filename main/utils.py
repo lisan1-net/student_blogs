@@ -69,4 +69,4 @@ def get_word_frequencies(texts):
     frequencies = Counter()
     for text in texts:
         frequencies.update(split_words(text.content_normalized))
-    return frequencies.most_common(len(frequencies.keys()))
+    return frequencies

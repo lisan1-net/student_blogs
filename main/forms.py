@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import widgets
+from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 
 from main.models import *
@@ -7,17 +8,23 @@ from taggit.models import Tag
 
 
 def get_schools():
-    return Text.objects.values_list('school', flat=True).distinct()
+    return Text.objects.values_list('school', 'school').distinct()
 
 
 def get_cities():
-    return Text.objects.values_list('city', flat=True).distinct()
+    return Text.objects.values_list('city', 'city').distinct()
 
 
 def with_empty(choices_function):
     def wrapper():
-        return [(None, '')] + [(c, c) for c in choices_function()]
+        return [(None, '')] + list(choices_function())
     return wrapper
+
+
+def get_blogs():
+    for _id, title in Blog.objects.values_list('id', 'title'):
+        blog = Blog.objects.get(id=_id)
+        yield _id, f'{title} - {blog.get_word_count_display()}'
 
 
 class SearchForm(forms.ModelForm):
@@ -33,6 +40,9 @@ class SearchForm(forms.ModelForm):
                                                label=db_field.verbose_name, help_text=db_field.help_text)
             elif db_field.name == 'city':
                 form_field = forms.ChoiceField(choices=with_empty(get_cities), required=required,
+                                               label=db_field.verbose_name, help_text=db_field.help_text)
+            elif db_field.name == 'blog':
+                form_field = forms.ChoiceField(choices=with_empty(get_blogs), required=required,
                                                label=db_field.verbose_name, help_text=db_field.help_text)
             else:
                 form_field = db_field.formfield(required=required, **kwargs)
@@ -94,6 +104,12 @@ class SearchForm(forms.ModelForm):
             if isinstance(self.fields[k], forms.CharField):
                 cleaned_data[k] = normalize(v)
         return cleaned_data
+
+    def clean_blog(self):
+        blog_id = self.cleaned_data['blog']
+        if blog_id:
+            return get_object_or_404(Blog, id=int(blog_id))
+        return None
 
 
 class VocabularyForm(SearchForm):
