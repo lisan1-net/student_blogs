@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.http import HttpResponse
@@ -56,7 +56,7 @@ def home(request):
     return render(
         request, 'main/home.html',
         context={'form': form, 'query': query, 'results': results, 'frequency': in_content_frequency,
-                 'matched_text_count': matched_texts_count}
+                 'matched_text_count': matched_texts_count, 'blogs': Blog.objects.all()}
     )
 
 
@@ -73,7 +73,7 @@ def vocabulary(request):
         filter_query &= build_common_filter_query(vocabulary_form)
         texts = Text.objects.filter(filter_query)
         frequencies = get_word_frequencies(texts)
-        paginator = Paginator(frequencies, 60)
+        paginator = Paginator(frequencies.most_common(len(frequencies.keys())), 60)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/vocabulary.html', context={'form': vocabulary_form, 'frequencies': page})
 

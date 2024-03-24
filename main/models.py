@@ -1,9 +1,11 @@
+from functools import lru_cache
+
 from django.core import validators
 from django.db import models
 from django.utils.translation import gettext_lazy as _, pgettext
 from taggit.managers import TaggableManager
 
-from main.utils import normalize
+from main.utils import normalize, get_word_frequencies
 
 
 class Blog(models.Model):
@@ -17,6 +19,19 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+    @lru_cache(maxsize=1024)
+    def word_count(self):
+        frequencies = get_word_frequencies(self.text_set.all())
+        with_duplications = frequencies.total()
+        without_duplications = len(frequencies.keys())
+        return with_duplications, without_duplications
+
+    def get_word_count_display(self):
+        with_duplications, without_duplications = self.word_count()
+        return _('Words: %(words)d, Unique words: %(unique)d') % {
+            'words': with_duplications, 'unique': without_duplications
+        }
 
 
 class Text(models.Model):

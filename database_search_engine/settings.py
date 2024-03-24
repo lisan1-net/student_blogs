@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'taggit',
+    'django_read_only',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +128,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+USE_THOUSAND_SEPARATOR = True
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
@@ -146,3 +150,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # TAGGIT
 
 TAGGIT_CASE_INSENSITIVE = True
+
+
+# Django Read-Only
+
+DJANGO_READ_ONLY = config('DJANGO_READ_ONLY', default=False, cast=bool)
