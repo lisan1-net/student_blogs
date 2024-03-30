@@ -20,7 +20,6 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
 
-    @lru_cache(maxsize=1024)
     def word_count(self):
         frequencies = get_word_frequencies(self.text_set.all())
         with_duplications = frequencies.total()
@@ -37,13 +36,13 @@ class Blog(models.Model):
 class Text(models.Model):
 
     TEXT_TYPE = [
-        (None, ''),
+        (None, _('Unspecified')),
         ('SPOKEN', _('Spoken')),
         ('WRITTEN', _('Written')),
         ('NOTEBOOKS', _('Notebooks')),
     ]
 
-    SEX = [(None, ''), ('M', _('Male')), ('F', _('Female'))]
+    SEX = [(None, _('Unspecified')), ('M', _('Male')), ('F', _('Female'))]
 
     class Meta:
         verbose_name = _('Text')
@@ -56,19 +55,19 @@ class Text(models.Model):
     content = models.TextField(verbose_name=_('Content'), help_text=_('Content of the text'))
     type = models.CharField(max_length=10, choices=TEXT_TYPE, verbose_name=_('Type'), help_text=_('Type of the text'))
     student_number = models.IntegerField(
-        verbose_name=_('Number'), help_text=_('Number of the student'),
+        verbose_name=_('Number'), help_text=_('Number of the student'), null=True, blank=True,
         validators=[validators.MinValueValidator(1)]
     )
     sex = models.CharField(max_length=1, choices=SEX, verbose_name=_('Sex'), help_text=_('Student sex'))
     level = models.IntegerField(
-        verbose_name=_('Level'), help_text=_('Level of the student'),
+        verbose_name=_('Level'), help_text=_('Level of the student'), null=True, blank=True,
         validators=[validators.MinValueValidator(1)]
     )
     school = models.CharField(
-        max_length=100, verbose_name=_('School'), help_text=_('School of the student')
+        max_length=100, verbose_name=_('School'), help_text=_('School of the student'), null=True, blank=True
     )
     city = models.CharField(
-        max_length=100, verbose_name=_('City'), help_text=_('City of the student')
+        max_length=100, verbose_name=_('City'), help_text=_('City of the student'), null=True, blank=True
     )
     added = models.DateTimeField(
         auto_now_add=True, verbose_name=_('Added on'), help_text=_('Date and time of adding the text to the database')
