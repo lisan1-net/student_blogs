@@ -30,6 +30,12 @@ def build_common_filter_query(form: SearchForm):
     if type_ := form.cleaned_data['type']:
         filter_query &= Q(type=type_)
         advanced_search = True
+    if source_type := form.cleaned_data['source_type']:
+        filter_query &= Q(source_type=source_type)
+        advanced_search = True
+    if author_name := form.cleaned_data['author_name']:
+        filter_query &= Q(author_name__icontains=author_name)
+        advanced_search = True
     if tags := form.cleaned_data['tags']:
         filter_query &= Q(tags__in=tags)
         advanced_search = True

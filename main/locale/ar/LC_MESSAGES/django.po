@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-30 13:28+0000\n"
+"POT-Creation-Date: 2024-03-30 14:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "Students blog"
 msgstr "مدونة الطلاب"
 
-#: main/forms.py:84
+#: main/forms.py:91
 msgid "Search query"
 msgstr "استعلام البحث"
 
-#: main/forms.py:85
+#: main/forms.py:92
 msgid ""
 "Enter an expression to search in the texts. Any expression in double quotes "
 "will be searched as a whole word."
@@ -35,19 +35,19 @@ msgstr ""
 "أدخل تعبيرًا للبحث في النصوص. أي تعبير بين علامتي اقتباس مزدوجة سيتم البحث "
 "عنه ككلمة كاملة."
 
-#: main/forms.py:91
+#: main/forms.py:98
 msgid "Tags"
 msgstr "الوسوم"
 
-#: main/forms.py:91
+#: main/forms.py:98
 msgid "Select the tags of the text."
 msgstr "حدد الوسوم الخاصة بالنص."
 
-#: main/forms.py:119
+#: main/forms.py:126
 msgid "The blog to search in"
 msgstr "حدد مدونة للبحث فيها"
 
-#: main/forms.py:127
+#: main/forms.py:134
 msgid "Select a blog"
 msgstr "حدد مدونة"
 
@@ -177,39 +177,47 @@ msgid "City of the student"
 msgstr "مدينة الطالب"
 
 #: main/models.py:74
+msgid "Author name"
+msgstr "اسم المؤلف"
+
+#: main/models.py:77
+msgid "Source type"
+msgstr "نوع المصدر"
+
+#: main/models.py:80
 msgid "Added on"
 msgstr "أضيف في"
 
-#: main/models.py:74
+#: main/models.py:80
 msgid "Date and time of adding the text to the database"
 msgstr "تاريخ ووقت إضافة النص إلى قاعدة البيانات"
 
-#: main/models.py:77
+#: main/models.py:83
 msgid "Last updated on"
 msgstr "آخر تحديث في"
 
-#: main/models.py:78
+#: main/models.py:84
 msgid "Date and time of the last update of the text in the database"
 msgstr "تاريخ ووقت آخر تحديث للنص في قاعدة البيانات"
 
-#: main/models.py:94
+#: main/models.py:100
 #, python-format
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:96
+#: main/models.py:102
 #, python-format
 msgctxt "Male"
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:98
+#: main/models.py:104
 #, python-format
 msgctxt "Female"
 msgid "Student number %(number)d"
 msgstr "الطالبة رقم %(number)d"
 
-#: main/models.py:102
+#: main/models.py:108
 #, python-format
 msgid "Level %(level)d"
 msgstr "الصف %(level)d"
@@ -372,9 +380,6 @@ msgstr "لم يتم العثور على أيّة ألفاظ"
 #~ msgid "Select the city of the author."
 #~ msgstr "حدد مدينة المؤلف."
 
-#~ msgid "Source"
-#~ msgstr "المصدر"
-
 #~ msgid "Select the source of the text."
 #~ msgstr "حدد مصدر النص."
 
@@ -401,9 +406,6 @@ msgstr "لم يتم العثور على أيّة ألفاظ"
 
 #~ msgid "Authors"
 #~ msgstr "المؤلفون"
-
-#~ msgid "Author name"
-#~ msgstr "اسم المؤلف"
 
 #~ msgid "Author sex"
 #~ msgstr "جنس المؤلف"

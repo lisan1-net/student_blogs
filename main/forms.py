@@ -27,6 +27,10 @@ def get_blogs():
         yield _id, f'{title} - {blog.get_word_count_display()}'
 
 
+def get_source_types():
+    return Text.objects.values_list('source_type', 'source_type').distinct()
+
+
 class SearchForm(forms.ModelForm):
 
     class Meta:
@@ -43,6 +47,9 @@ class SearchForm(forms.ModelForm):
                                                label=db_field.verbose_name, help_text=db_field.help_text)
             elif db_field.name == 'blog':
                 form_field = forms.ChoiceField(choices=with_empty(get_blogs), required=required,
+                                               label=db_field.verbose_name, help_text=db_field.help_text)
+            elif db_field.name == 'source_type':
+                form_field = forms.ChoiceField(choices=with_empty(get_source_types), required=required,
                                                label=db_field.verbose_name, help_text=db_field.help_text)
             else:
                 form_field = db_field.formfield(required=required, **kwargs)
@@ -102,7 +109,7 @@ class SearchForm(forms.ModelForm):
         cleaned_data = super(SearchForm, self).clean()
         for k, v in cleaned_data.items():
             if isinstance(self.fields[k], forms.CharField):
-                cleaned_data[k] = normalize(v)
+                cleaned_data[k] = normalize(v) if v is not None else None
         return cleaned_data
 
     def clean_blog(self):
