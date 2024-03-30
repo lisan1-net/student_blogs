@@ -20,6 +20,7 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
 
+    @lru_cache(maxsize=1024)
     def word_count(self):
         frequencies = get_word_frequencies(self.text_set.all())
         with_duplications = frequencies.total()
