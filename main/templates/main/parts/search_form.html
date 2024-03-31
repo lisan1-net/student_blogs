@@ -21,8 +21,8 @@
     </div>
     <div class="collapse {{ form.advanced|yesno:"show," }}" id="advanced-search">
         <div class="form-group form-row">
-            {{ form.blog.label_tag }}
-            {{ form.blog }}
+            <label for="{{ form.blog.id_for_label }}" class="col-form-label col-auto">{% translate 'Blog' %}</label>
+            <div class="col">{{ form.blog }}</div>
         </div>
         {% include 'main/parts/error_list.html' with errors=form.blog.errors %}
         {% include 'main/parts/student_fieldset.html' %}

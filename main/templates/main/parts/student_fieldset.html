@@ -1,8 +1,19 @@
 {% load i18n %}
-<fieldset class="border border-secondary p-1 mb-2 form-row">
-    <legend class="w-auto h5">{% translate 'Student information' %}</legend>
-    {% for field in form.text_fields %}
+<h5><u>{% translate 'Text information' %}</u></h5>
+<fieldset class="border border-secondary p-1 mb-2 form-row rounded">
+    <legend class="w-auto h6">{% translate 'Student blog options' %}</legend>
+    {% for field in form.student_blog_fields %}
         <div class="form-group col-4">
+            {{ field.label_tag }}
+            {{ field }}
+        </div>
+        {% include 'main/parts/error_list.html' with errors=field.errors %}
+    {% endfor %}
+</fieldset>
+<fieldset class="border border-secondary p-1 mb-2 form-row rounded">
+    <legend class="w-auto h6">{% translate 'Books and stories blog options' %}</legend>
+    {% for field in form.story_blog_fields %}
+        <div class="form-group col-6">
             {{ field.label_tag }}
             {{ field }}
         </div>

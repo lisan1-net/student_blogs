@@ -99,11 +99,16 @@ class SearchForm(forms.ModelForm):
     )
 
     @property
-    def text_fields(self):
-        for field in self.fields:
-            if field in ('search_query', 'blog', 'tags'):
+    def student_blog_fields(self):
+        for field_name in self.fields:
+            if field_name in ('search_query', 'blog', 'tags', 'author_name', 'source_type'):
                 continue
-            yield self[field]
+            yield self[field_name]
+
+    @property
+    def story_blog_fields(self):
+        for field_name in filter(lambda f: f in ('author_name', 'source_type'), self.fields):
+            yield self[field_name]
 
     def clean(self):
         cleaned_data = super(SearchForm, self).clean()

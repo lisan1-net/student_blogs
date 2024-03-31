@@ -1,6 +1,6 @@
 {% load i18n %}
-<fieldset class="border border-secondary p-1 mb-2 form-row">
-    <legend class="w-auto h5">{{ form.tags.label_tag }}</legend>
+<fieldset class="border border-secondary p-1 mb-3 form-row rounded">
+    <legend class="w-auto h6">{{ form.tags.label_tag }}</legend>
     <div class="form-group col">
         {% for checkbox in form.tags %}
             <div class="form-check form-check-inline" title="{{ form.tags.help_text }}" data-toggle="tooltip"

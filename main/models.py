@@ -37,13 +37,13 @@ class Blog(models.Model):
 class Text(models.Model):
 
     TEXT_TYPE = [
-        (None, _('Unspecified')),
+        (None, ''),
         ('SPOKEN', _('Spoken')),
         ('WRITTEN', _('Written')),
         ('NOTEBOOKS', _('Notebooks')),
     ]
 
-    SEX = [(None, _('Unspecified')), ('M', _('Male')), ('F', _('Female'))]
+    SEX = [(None, ''), ('M', _('Male')), ('F', _('Female'))]
 
     class Meta:
         verbose_name = _('Text')

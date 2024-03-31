@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-30 14:20+0000\n"
+"POT-Creation-Date: 2024-03-31 06:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,11 +43,11 @@ msgstr "الوسوم"
 msgid "Select the tags of the text."
 msgstr "حدد الوسوم الخاصة بالنص."
 
-#: main/forms.py:126
+#: main/forms.py:131
 msgid "The blog to search in"
 msgstr "حدد مدونة للبحث فيها"
 
-#: main/forms.py:134
+#: main/forms.py:139
 msgid "Select a blog"
 msgstr "حدد مدونة"
 
@@ -302,9 +302,17 @@ msgstr "ابحث"
 msgid "Advanced search"
 msgstr "بحث متقدم"
 
-#: main/templates/main/parts/student_fieldset.html:3
-msgid "Student information"
+#: main/templates/main/parts/student_fieldset.html:2
+msgid "Text information"
 msgstr "معلومات النص"
+
+#: main/templates/main/parts/student_fieldset.html:4
+msgid "Student blog options"
+msgstr "خيارات مدونة الطلاب"
+
+#: main/templates/main/parts/student_fieldset.html:14
+msgid "Books and stories blog options"
+msgstr "خيارات مدونات الكتب والقصص"
 
 #: main/templates/main/parts/tags_fieldset.html:16
 msgid "No tags found"
