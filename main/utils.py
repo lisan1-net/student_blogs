@@ -64,9 +64,11 @@ def is_arabic_word(word):
     return is_arabicword(word) and all(c not in word for c in (COMMA, SEMICOLON, QUESTION))
 
 
-@lru_cache(maxsize=1024)
 def get_word_frequencies(texts):
     frequencies = Counter()
-    for text in texts:
-        frequencies.update(split_words(text.content_normalized))
+    if isinstance(texts, Iterable):
+        for text in texts:
+            frequencies.update(split_words(text.content_normalized))
+    else:
+        frequencies.update(split_words(texts.content_normalized))
     return frequencies

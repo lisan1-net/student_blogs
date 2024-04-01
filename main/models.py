@@ -1,11 +1,10 @@
-from functools import lru_cache
-
 from django.core import validators
 from django.db import models
 from django.utils.translation import gettext_lazy as _, pgettext
 from taggit.managers import TaggableManager
 
-from main.utils import normalize, get_word_frequencies
+from main.utils import normalize
+from indexes.models import Word
 
 
 class Blog(models.Model):
@@ -20,11 +19,10 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
 
-    @lru_cache(maxsize=1024)
     def word_count(self):
-        frequencies = get_word_frequencies(self.text_set.all())
-        with_duplications = frequencies.total()
-        without_duplications = len(frequencies.keys())
+        blog_words = Word.objects.filter(text_words__text__blog=self)
+        with_duplications = blog_words.aggregate(models.Sum('text_words__frequency'))['text_words__frequency__sum'] or 0
+        without_duplications = blog_words.count()
         return with_duplications, without_duplications
 
     def get_word_count_display(self):
@@ -84,6 +82,10 @@ class Text(models.Model):
         help_text=_('Date and time of the last update of the text in the database')
     )
     tags = TaggableManager(blank=True)
+    words_indexed = models.BooleanField(
+        default=False, verbose_name=_('Words indexed'), editable=False,
+        help_text=_('Indicates whether the words of this text are indexed or not')
+    )
 
     def __str__(self):
         return self.title
@@ -106,3 +108,8 @@ class Text(models.Model):
 
     def get_level_display(self):
         return _('Level %(level)d') % {'level': self.level}
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if update_fields is None or 'content' in update_fields:
+            self.words_indexed = False
+        super().save(force_insert, force_update, using, update_fields)

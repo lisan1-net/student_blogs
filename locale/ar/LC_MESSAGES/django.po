@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-31 06:49+0000\n"
+"POT-Creation-Date: 2024-04-01 05:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,102 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: indexes/apps.py:8
+msgid "Indexes"
+msgstr "الفهارس"
+
+#: indexes/management/commands/indexwords.py:11
+msgid "Index words of the blog texts"
+msgstr "فهرسة كلمات نصوص المدونة"
+
+#: indexes/management/commands/indexwords.py:14
+msgid "Blog IDs to index words"
+msgstr "معرفات المدونات لفهرسة الكلمات"
+
+#: indexes/management/commands/indexwords.py:15
+msgid "Clear all indexed words"
+msgstr "مسح جميع الكلمات المفهرسة"
+
+#: indexes/management/commands/indexwords.py:19
+msgid "Clearing all indexed text words..."
+msgstr "جارٍ مسح جميع كلمات النص المفهرسة..."
+
+#: indexes/management/commands/indexwords.py:26
+#, python-format
+msgid "Blog with ID %(id)d does not exist"
+msgstr "المدونة ذات المعرف %(id)d غير موجودة"
+
+#: indexes/management/commands/indexwords.py:27
+msgid "Indexing words..."
+msgstr "جارٍ فهرسة الكلمات..."
+
+#: indexes/management/commands/indexwords.py:30
+#, python-format
+msgid "Indexing words of \"%(blog)s\"..."
+msgstr "جارٍ فهرسة كلمات \"%(blog)s\"..."
+
+#: indexes/management/commands/indexwords.py:34
+#, python-format
+msgid "Indexing words of \"%(text)s\"..."
+msgstr "جارٍ فهرسة كلمات \"%(text)s\"..."
+
+#: indexes/management/commands/indexwords.py:45
+msgid "Finished indexing words"
+msgstr "تمت فهرسة الكلمات"
+
+#: indexes/models.py:8 indexes/models.py:11 indexes/models.py:31
+msgid "Word"
+msgstr "الكلمة"
+
+#: indexes/models.py:9
+msgid "Words"
+msgstr "الكلمات"
+
+#: indexes/models.py:11
+msgid "Word that is found in texts"
+msgstr "الكلمة الموجودة في النصوص"
+
+#: indexes/models.py:13 main/models.py:48
+msgid "Texts"
+msgstr "النصوص"
+
+#: indexes/models.py:13
+msgid "Texts that contain this word"
+msgstr "النصوص التي تحتوي على هذه الكلمة"
+
+#: indexes/models.py:23
+msgid "Text Word"
+msgstr "كلمة النص"
+
+#: indexes/models.py:24
+msgid "Text Words"
+msgstr "كلمات النص"
+
+#: indexes/models.py:27 main/models.py:47
+msgid "Text"
+msgstr "النص"
+
+#: indexes/models.py:27
+msgid "Text that contains this word"
+msgstr "النص الذي يحتوي على هذه الكلمة"
+
+#: indexes/models.py:31
+msgid "Word that is found in this text"
+msgstr "الكلمة الموجودة في هذا النص"
+
+#: indexes/models.py:35
+msgid "Frequency"
+msgstr "التكرار"
+
+#: indexes/models.py:35
+msgid "Number of times this word appears in this text"
+msgstr "عدد مرات ظهور هذه الكلمة في هذا النص"
+
+#: indexes/models.py:39
+#, python-format
+msgid "\"%(word)s\" in \"%(text)s\" [%(frequency)d]"
+msgstr "\"%(word)s\" في \"%(text)s\" [%(frequency)d]"
 
 #: main/apps.py:8
 msgid "Students blog"
@@ -51,173 +147,170 @@ msgstr "حدد مدونة للبحث فيها"
 msgid "Select a blog"
 msgstr "حدد مدونة"
 
-#: main/models.py:14 main/models.py:53
+#: main/models.py:13 main/models.py:51
+#: main/templates/main/parts/search_form.html:24
 msgid "Blog"
 msgstr "المدونة"
 
-#: main/models.py:15
+#: main/models.py:14
 msgid "Blogs"
 msgstr "المدونات"
 
-#: main/models.py:17 main/models.py:55 main/templates/main/home.html:67
+#: main/models.py:16 main/models.py:53 main/templates/main/home.html:67
 msgid "Title"
 msgstr "العنوان"
 
-#: main/models.py:17
+#: main/models.py:16
 msgid "Blog title"
 msgstr "عنوان المدونة"
 
-#: main/models.py:18
+#: main/models.py:17
 msgid "Description"
 msgstr "الوصف"
 
-#: main/models.py:18
+#: main/models.py:17
 msgid "Blog description"
 msgstr "وصف المدونة"
 
-#: main/models.py:32
+#: main/models.py:30
 #, python-format
 msgid "Words: %(words)d, Unique words: %(unique)d"
 msgstr "الكلمات: %(words)d، الكلمات بدون تكرار: %(unique)d"
 
-#: main/models.py:40 main/models.py:46
-msgid "Unspecified"
-msgstr "غير محدد"
-
-#: main/models.py:41
+#: main/models.py:39
 msgid "Spoken"
 msgstr "منطوق"
 
-#: main/models.py:42
+#: main/models.py:40
 msgid "Written"
 msgstr "مكتوب"
 
-#: main/models.py:43
+#: main/models.py:41
 msgid "Notebooks"
 msgstr "كراسات"
 
-#: main/models.py:46
+#: main/models.py:44
 msgid "Male"
 msgstr "ذكر"
 
-#: main/models.py:46
+#: main/models.py:44
 msgid "Female"
 msgstr "أنثى"
 
-#: main/models.py:49
-msgid "Text"
-msgstr "النص"
-
-#: main/models.py:50
-msgid "Texts"
-msgstr "النصوص"
-
-#: main/models.py:53
+#: main/models.py:51
 msgid "Blog that contains this text"
 msgstr "المدونة التي تحتوي على هذا النص"
 
-#: main/models.py:55
+#: main/models.py:53
 msgid "Title of the text"
 msgstr "عنوان النص"
 
-#: main/models.py:56 main/templates/main/home.html:68
+#: main/models.py:54 main/templates/main/home.html:68
 msgid "Content"
 msgstr "المحتوى"
 
-#: main/models.py:56
+#: main/models.py:54
 msgid "Content of the text"
 msgstr "محتوى النص"
 
-#: main/models.py:57
+#: main/models.py:55
 msgid "Type"
 msgstr "النوع"
 
-#: main/models.py:57
+#: main/models.py:55
 msgid "Type of the text"
 msgstr "نوع النص"
 
-#: main/models.py:59
+#: main/models.py:57
 msgid "Number"
 msgstr "الرقم"
 
-#: main/models.py:59
+#: main/models.py:57
 msgid "Number of the student"
 msgstr "رقم الطالب"
 
-#: main/models.py:62
+#: main/models.py:60
 msgid "Sex"
 msgstr "الجنس"
 
-#: main/models.py:62
+#: main/models.py:60
 msgid "Student sex"
 msgstr "جنس الطالب"
 
-#: main/models.py:64
+#: main/models.py:62
 msgid "Level"
 msgstr "الصف"
 
-#: main/models.py:64
+#: main/models.py:62
 msgid "Level of the student"
 msgstr "صف الطالب"
 
-#: main/models.py:68
+#: main/models.py:66
 msgid "School"
 msgstr "المدرسة"
 
-#: main/models.py:68
+#: main/models.py:66
 msgid "School of the student"
 msgstr "مدرسة الطالب"
 
-#: main/models.py:71
+#: main/models.py:69
 msgid "City"
 msgstr "المدينة"
 
-#: main/models.py:71
+#: main/models.py:69
 msgid "City of the student"
 msgstr "مدينة الطالب"
 
-#: main/models.py:74
+#: main/models.py:72
 msgid "Author name"
 msgstr "اسم المؤلف"
 
-#: main/models.py:77
+#: main/models.py:75
 msgid "Source type"
 msgstr "نوع المصدر"
 
-#: main/models.py:80
+#: main/models.py:78
 msgid "Added on"
 msgstr "أضيف في"
 
-#: main/models.py:80
+#: main/models.py:78
 msgid "Date and time of adding the text to the database"
 msgstr "تاريخ ووقت إضافة النص إلى قاعدة البيانات"
 
-#: main/models.py:83
+#: main/models.py:81
 msgid "Last updated on"
 msgstr "آخر تحديث في"
 
-#: main/models.py:84
+#: main/models.py:82
 msgid "Date and time of the last update of the text in the database"
 msgstr "تاريخ ووقت آخر تحديث للنص في قاعدة البيانات"
 
-#: main/models.py:100
-#, python-format
-msgid "Student number %(number)d"
-msgstr "الطالب رقم %(number)d"
+#: main/models.py:86
+msgid "Words indexed"
+msgstr "الكلمات مفهرسة"
+
+#: main/models.py:87
+msgid "Indicates whether the words of this text are indexed or not"
+msgstr "يشير إلى ما إذا كانت كلمات هذا النص مفهرسة أم لا"
 
 #: main/models.py:102
 #, python-format
-msgctxt "Male"
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
 #: main/models.py:104
 #, python-format
+msgctxt "Male"
+msgid "Student number %(number)d"
+msgstr "الطالب رقم %(number)d"
+
+#: main/models.py:106
+#, python-format
 msgctxt "Female"
 msgid "Student number %(number)d"
 msgstr "الطالبة رقم %(number)d"
 
-#: main/models.py:108
+#: main/models.py:110
 #, python-format
 msgid "Level %(level)d"
 msgstr "الصف %(level)d"
@@ -342,12 +435,12 @@ msgstr "شيوع الألفاظ في المدونات"
 msgid "No words found"
 msgstr "لم يتم العثور على أيّة ألفاظ"
 
+#~ msgid "Unspecified"
+#~ msgstr "غير محدد"
+
 #, python-format
 #~ msgid "%(count)d words, %(unique)d unique words"
 #~ msgstr "%(count)d كلمات، %(unique)d كلمات فريدة"
-
-#~ msgid "No words found in the database"
-#~ msgstr "لم يتم العثور على ألفاظ في قاعدة البيانات"
 
 #~ msgid "City of the student writer of this text"
 #~ msgstr "مدينة الطالب كاتب هذا النص"

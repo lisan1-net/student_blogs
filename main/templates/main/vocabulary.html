@@ -13,15 +13,15 @@
     {% if form.is_bound %}
         {% if frequencies %}
         <div class="row row-cols-md-6 row-cols-sm-3 d-flex justify-content-center">
-            {% for frequency in frequencies %}
+            {% for word, frequency in frequencies %}
                 <div class="col mb-3">
                     <div class="card list-group-item-action">
                         <div class="card-body lead d-flex justify-content-between align-items-center p-2">
-                            <a href='{{ request|search_url_for_word:frequency.0 }}'
+                            <a href='{{ request|search_url_for_word:word }}'
                                class="stretched-link text-decoration-none">
-                                {{ frequency.0 }}
+                                {{ word }}
                             </a>
-                            <span class="badge badge-secondary pt-2">{{ frequency.1 }}</span>
+                            <span class="badge badge-secondary pt-2">{{ frequency }}</span>
                         </div>
                     </div>
                 </div>
