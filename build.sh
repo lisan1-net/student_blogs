@@ -10,6 +10,3 @@ python manage.py collectstatic --no-input
 
 # Apply database migrations
 python manage.py migrate
-
-# Run the indexing command
-python manage.py indexwords

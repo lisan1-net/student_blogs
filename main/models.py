@@ -52,12 +52,16 @@ class Text(models.Model):
     )
     title = models.CharField(max_length=200, verbose_name=_('Title'), help_text=_('Title of the text'))
     content = models.TextField(verbose_name=_('Content'), help_text=_('Content of the text'))
-    type = models.CharField(max_length=10, choices=TEXT_TYPE, verbose_name=_('Type'), help_text=_('Type of the text'))
+    type = models.CharField(
+        max_length=10, choices=TEXT_TYPE, verbose_name=_('Type'), help_text=_('Type of the text'), null=True, blank=True
+    )
     student_number = models.IntegerField(
         verbose_name=_('Number'), help_text=_('Number of the student'), null=True, blank=True,
         validators=[validators.MinValueValidator(1)]
     )
-    sex = models.CharField(max_length=1, choices=SEX, verbose_name=_('Sex'), help_text=_('Student sex'))
+    sex = models.CharField(
+        max_length=1, choices=SEX, verbose_name=_('Sex'), help_text=_('Student sex'), null=True, blank=True
+    )
     level = models.IntegerField(
         verbose_name=_('Level'), help_text=_('Level of the student'), null=True, blank=True,
         validators=[validators.MinValueValidator(1)]
