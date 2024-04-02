@@ -8,7 +8,9 @@ class Word(models.Model):
         verbose_name = _('Word')
         verbose_name_plural = _('Words')
 
-    content = models.CharField(max_length=50, verbose_name=_('Word'), help_text=_('Word that is found in texts'))
+    content = models.CharField(
+        max_length=50, verbose_name=_('Word'), help_text=_('Word that is found in texts'), unique=True
+    )
     texts = models.ManyToManyField(
         'main.Text', verbose_name=_('Texts'), help_text=_('Texts that contain this word'), through='TextWord'
     )
@@ -22,6 +24,7 @@ class TextWord(models.Model):
     class Meta:
         verbose_name = _('Text Word')
         verbose_name_plural = _('Text Words')
+        unique_together = ('text', 'word')
 
     text = models.ForeignKey(
         'main.Text', on_delete=models.CASCADE, verbose_name=_('Text'), help_text=_('Text that contains this word'),

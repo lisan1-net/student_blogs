@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-01 05:17+0000\n"
+"POT-Creation-Date: 2024-04-02 08:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,34 +35,39 @@ msgstr "معرفات المدونات لفهرسة الكلمات"
 msgid "Clear all indexed words"
 msgstr "مسح جميع الكلمات المفهرسة"
 
-#: indexes/management/commands/indexwords.py:19
+#: indexes/management/commands/indexwords.py:16
+msgid "Maximum number of texts to index words"
+msgstr "أقصى عدد من النصوص لفهرسة الكلمات"
+
+#: indexes/management/commands/indexwords.py:20
 msgid "Clearing all indexed text words..."
 msgstr "جارٍ مسح جميع كلمات النص المفهرسة..."
 
-#: indexes/management/commands/indexwords.py:26
+#: indexes/management/commands/indexwords.py:27
 #, python-format
 msgid "Blog with ID %(id)d does not exist"
 msgstr "المدونة ذات المعرف %(id)d غير موجودة"
 
-#: indexes/management/commands/indexwords.py:27
-msgid "Indexing words..."
-msgstr "جارٍ فهرسة الكلمات..."
-
-#: indexes/management/commands/indexwords.py:30
+#: indexes/management/commands/indexwords.py:28
 #, python-format
-msgid "Indexing words of \"%(blog)s\"..."
-msgstr "جارٍ فهرسة كلمات \"%(blog)s\"..."
+msgid "Number of texts that will be indexed: %(count)d"
+msgstr "عدد النصوص التي ستتم فهرستها: %(count)d"
 
-#: indexes/management/commands/indexwords.py:34
+#: indexes/management/commands/indexwords.py:31
 #, python-format
 msgid "Indexing words of \"%(text)s\"..."
 msgstr "جارٍ فهرسة كلمات \"%(text)s\"..."
 
-#: indexes/management/commands/indexwords.py:45
+#: indexes/management/commands/indexwords.py:34
+#, python-format
+msgid "Indexing word \"%(word)s\" [%(frequency)d]..."
+msgstr "فهرسة الكلمة \"%(word)s\" [%(frequency)d]..."
+
+#: indexes/management/commands/indexwords.py:39
 msgid "Finished indexing words"
 msgstr "تمت فهرسة الكلمات"
 
-#: indexes/models.py:8 indexes/models.py:11 indexes/models.py:31
+#: indexes/models.py:8 indexes/models.py:12 indexes/models.py:34
 msgid "Word"
 msgstr "الكلمة"
 
@@ -70,47 +75,47 @@ msgstr "الكلمة"
 msgid "Words"
 msgstr "الكلمات"
 
-#: indexes/models.py:11
+#: indexes/models.py:12
 msgid "Word that is found in texts"
 msgstr "الكلمة الموجودة في النصوص"
 
-#: indexes/models.py:13 main/models.py:48
+#: indexes/models.py:15 main/models.py:48
 msgid "Texts"
 msgstr "النصوص"
 
-#: indexes/models.py:13
+#: indexes/models.py:15
 msgid "Texts that contain this word"
 msgstr "النصوص التي تحتوي على هذه الكلمة"
 
-#: indexes/models.py:23
+#: indexes/models.py:25
 msgid "Text Word"
 msgstr "كلمة النص"
 
-#: indexes/models.py:24
+#: indexes/models.py:26
 msgid "Text Words"
 msgstr "كلمات النص"
 
-#: indexes/models.py:27 main/models.py:47
+#: indexes/models.py:30 main/models.py:47
 msgid "Text"
 msgstr "النص"
 
-#: indexes/models.py:27
+#: indexes/models.py:30
 msgid "Text that contains this word"
 msgstr "النص الذي يحتوي على هذه الكلمة"
 
-#: indexes/models.py:31
+#: indexes/models.py:34
 msgid "Word that is found in this text"
 msgstr "الكلمة الموجودة في هذا النص"
 
-#: indexes/models.py:35
+#: indexes/models.py:38
 msgid "Frequency"
 msgstr "التكرار"
 
-#: indexes/models.py:35
+#: indexes/models.py:38
 msgid "Number of times this word appears in this text"
 msgstr "عدد مرات ظهور هذه الكلمة في هذا النص"
 
-#: indexes/models.py:39
+#: indexes/models.py:42
 #, python-format
 msgid "\"%(word)s\" in \"%(text)s\" [%(frequency)d]"
 msgstr "\"%(word)s\" في \"%(text)s\" [%(frequency)d]"
@@ -213,104 +218,104 @@ msgstr "المحتوى"
 msgid "Content of the text"
 msgstr "محتوى النص"
 
-#: main/models.py:55
+#: main/models.py:56
 msgid "Type"
 msgstr "النوع"
 
-#: main/models.py:55
+#: main/models.py:56
 msgid "Type of the text"
 msgstr "نوع النص"
 
-#: main/models.py:57
+#: main/models.py:59
 msgid "Number"
 msgstr "الرقم"
 
-#: main/models.py:57
+#: main/models.py:59
 msgid "Number of the student"
 msgstr "رقم الطالب"
 
-#: main/models.py:60
+#: main/models.py:63
 msgid "Sex"
 msgstr "الجنس"
 
-#: main/models.py:60
+#: main/models.py:63
 msgid "Student sex"
 msgstr "جنس الطالب"
 
-#: main/models.py:62
+#: main/models.py:66
 msgid "Level"
 msgstr "الصف"
 
-#: main/models.py:62
+#: main/models.py:66
 msgid "Level of the student"
 msgstr "صف الطالب"
 
-#: main/models.py:66
+#: main/models.py:70
 msgid "School"
 msgstr "المدرسة"
 
-#: main/models.py:66
+#: main/models.py:70
 msgid "School of the student"
 msgstr "مدرسة الطالب"
 
-#: main/models.py:69
+#: main/models.py:73
 msgid "City"
 msgstr "المدينة"
 
-#: main/models.py:69
+#: main/models.py:73
 msgid "City of the student"
 msgstr "مدينة الطالب"
 
-#: main/models.py:72
+#: main/models.py:76
 msgid "Author name"
 msgstr "اسم المؤلف"
 
-#: main/models.py:75
+#: main/models.py:79
 msgid "Source type"
 msgstr "نوع المصدر"
 
-#: main/models.py:78
+#: main/models.py:82
 msgid "Added on"
 msgstr "أضيف في"
 
-#: main/models.py:78
+#: main/models.py:82
 msgid "Date and time of adding the text to the database"
 msgstr "تاريخ ووقت إضافة النص إلى قاعدة البيانات"
 
-#: main/models.py:81
+#: main/models.py:85
 msgid "Last updated on"
 msgstr "آخر تحديث في"
 
-#: main/models.py:82
+#: main/models.py:86
 msgid "Date and time of the last update of the text in the database"
 msgstr "تاريخ ووقت آخر تحديث للنص في قاعدة البيانات"
 
-#: main/models.py:86
+#: main/models.py:90
 msgid "Words indexed"
 msgstr "الكلمات مفهرسة"
 
-#: main/models.py:87
+#: main/models.py:91
 msgid "Indicates whether the words of this text are indexed or not"
 msgstr "يشير إلى ما إذا كانت كلمات هذا النص مفهرسة أم لا"
 
-#: main/models.py:102
+#: main/models.py:106
 #, python-format
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:104
+#: main/models.py:108
 #, python-format
 msgctxt "Male"
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:106
+#: main/models.py:110
 #, python-format
 msgctxt "Female"
 msgid "Student number %(number)d"
 msgstr "الطالبة رقم %(number)d"
 
-#: main/models.py:110
+#: main/models.py:114
 #, python-format
 msgid "Level %(level)d"
 msgstr "الصف %(level)d"
@@ -434,6 +439,13 @@ msgstr "شيوع الألفاظ في المدونات"
 #: main/templates/main/vocabulary.html:31
 msgid "No words found"
 msgstr "لم يتم العثور على أيّة ألفاظ"
+
+#~ msgid "Indexing words..."
+#~ msgstr "جارٍ فهرسة الكلمات..."
+
+#, python-format
+#~ msgid "Indexing words of \"%(blog)s\"..."
+#~ msgstr "جارٍ فهرسة كلمات \"%(blog)s\"..."
 
 #~ msgid "Unspecified"
 #~ msgstr "غير محدد"

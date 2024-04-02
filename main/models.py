@@ -112,8 +112,3 @@ class Text(models.Model):
 
     def get_level_display(self):
         return _('Level %(level)d') % {'level': self.level}
-
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        if update_fields is None or 'content' in update_fields:
-            self.words_indexed = False
-        super().save(force_insert, force_update, using, update_fields)
