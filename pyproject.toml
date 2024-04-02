@@ -17,6 +17,7 @@ dj-database-url = "^2.1.0"
 uvicorn = "^0.28.0"
 whitenoise = {extras = ["brotli"], version = "^6.6.0"}
 django-read-only = "^1.15.0"
+django-debug-toolbar = "^4.3.0"
 
 
 [tool.poetry.group.dev.dependencies]
