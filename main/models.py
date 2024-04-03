@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _, pgettext
 from taggit.managers import TaggableManager
 
 from main.utils import normalize
-from indexes.models import Word, TextWord
+from indexes.models import TextWord
 
 
 class Blog(models.Model):
@@ -20,8 +20,9 @@ class Blog(models.Model):
         return self.title
 
     def word_count(self):
-        with_duplications = TextWord.objects.filter(text__blog=self, word__part='STEM').count()
-        without_duplications = Word.objects.filter(texts__blog=self, part='STEM').count()
+        text_words = TextWord.objects.filter(text__blog=self, word__part='STEM')
+        with_duplications = text_words.count()
+        without_duplications = text_words.values('word').distinct().count()
         return with_duplications, without_duplications
 
     def get_word_count_display(self):
