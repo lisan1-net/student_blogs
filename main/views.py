@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.db.models import Q, Sum
+from django.db.models import Q, Count
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.db import connections
@@ -27,7 +27,7 @@ def build_common_filter_query(form: SearchForm):
     if school := form.cleaned_data['school']:
         filter_query &= Q(school=school)
         advanced_search = True
-    if type_ := form.cleaned_data['type']:
+    if type_ := form.cleaned_data['part']:
         filter_query &= Q(type=type_)
         advanced_search = True
     if source_type := form.cleaned_data['source_type']:
@@ -78,9 +78,9 @@ def vocabulary(request):
         filter_query = Q(blog=vocabulary_form.cleaned_data['blog'])
         filter_query &= build_common_filter_query(vocabulary_form)
         texts = Text.objects.filter(filter_query).distinct()
-        word_frequencies = Word.objects.filter(text_words__text__in=texts).distinct().annotate(
-            frequency=Sum('text_words__frequency')
-        ).order_by('-frequency').values_list('content', 'frequency')
+        word_frequencies = TextWord.objects.filter(text__in=texts).values('word__content').annotate(
+            frequency=Count('word__content')
+        ).order_by('-frequency')
         paginator = Paginator(word_frequencies, 60)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/vocabulary.html', context={'form': vocabulary_form, 'frequencies': page})

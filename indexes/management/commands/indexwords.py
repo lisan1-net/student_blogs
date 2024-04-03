@@ -3,7 +3,7 @@ from django.utils.translation import gettext as _
 
 from indexes.models import Word, TextWord
 from main.models import Blog, Text
-from main.utils import get_word_frequencies
+from indexes.utils import *
 
 
 class Command(BaseCommand):
@@ -29,11 +29,23 @@ class Command(BaseCommand):
         texts = Text.objects.filter(blog__in=options['blogs'], words_indexed=False)[:options['max_texts']]
         for text in texts:
             self.stdout.write(_('Indexing words of "%(text)s"...') % {'text': text})
-            frequencies = get_word_frequencies(text)
-            for content, frequency in frequencies.items():
-                self.stdout.write(_('Indexing word "%(word)s" [%(frequency)d]...') % {'word': content, 'frequency': frequency})
-                word, created = Word.objects.get_or_create(content=content)
-                TextWord.objects.update_or_create(text=text, word=word, frequency=frequency)
+            for word_content, (start, end) in get_words_ranges(text.content):
+                for t, w in zip(['PREFIX', 'STEM', 'SUFFIX'], segment(word_content)):
+                    if w == '':
+                        continue
+                    part = ''
+                    match t:
+                        case 'PREFIX':
+                            part = _('Prefix')
+                        case 'STEM':
+                            part = _('Stem')
+                        case 'SUFFIX':
+                            part = _('Suffix')
+                    self.stdout.write(_('Indexing %(part)s "%(word)s" [%(start)d:%(end)d]') % {
+                        'word': w, 'start': start, 'end': end, 'part': part
+                    })
+                    word, created = Word.objects.get_or_create(content=w, part=t)
+                    TextWord.objects.update_or_create(text=text, word=word, start=start, end=end)
             text.words_indexed = True
             text.save()
         self.stdout.write(self.style.SUCCESS(_('Finished indexing words')))

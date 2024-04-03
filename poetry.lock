@@ -361,6 +361,20 @@ doc = ["sphinx"]
 test = ["pytest", "pytest-cov"]
 
 [[package]]
+name = "tashaphyne"
+version = "0.3.6"
+description = "Tashaphyne Arabic Light Stemmer"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "Tashaphyne-0.3.6-py3-none-any.whl", hash = "sha256:5f01fd90ab8689c2110aa8bed20c30e8f1ca3262427df20705509fe45b1ca63c"},
+]
+
+[package.dependencies]
+pyarabic = "*"
+
+[[package]]
 name = "typing-extensions"
 version = "4.10.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -425,4 +439,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "ba1bdb4e0511db5319b232e793576776617b494274a7e15a51887f708887d63d"
+content-hash = "53d76886450b595390e25d45a1e31e047a82e7920fd3b6d3b115c485e7dd3f98"

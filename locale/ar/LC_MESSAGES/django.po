@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-02 08:56+0000\n"
+"POT-Creation-Date: 2024-04-03 11:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,16 +58,28 @@ msgstr "عدد النصوص التي ستتم فهرستها: %(count)d"
 msgid "Indexing words of \"%(text)s\"..."
 msgstr "جارٍ فهرسة كلمات \"%(text)s\"..."
 
-#: indexes/management/commands/indexwords.py:34
-#, python-format
-msgid "Indexing word \"%(word)s\" [%(frequency)d]..."
-msgstr "فهرسة الكلمة \"%(word)s\" [%(frequency)d]..."
+#: indexes/management/commands/indexwords.py:39 indexes/models.py:21
+msgid "Prefix"
+msgstr "السابقة"
 
-#: indexes/management/commands/indexwords.py:39
+#: indexes/management/commands/indexwords.py:41 indexes/models.py:20
+msgid "Stem"
+msgstr "الجذع"
+
+#: indexes/management/commands/indexwords.py:43 indexes/models.py:22
+msgid "Suffix"
+msgstr "اللاحقة"
+
+#: indexes/management/commands/indexwords.py:44
+#, python-format
+msgid "Indexing %(part)s \"%(word)s\" [%(start)d:%(end)d]"
+msgstr "جارٍ فهرسة %(part)s \"%(word)s\" [%(start)d:%(end)d]"
+
+#: indexes/management/commands/indexwords.py:51
 msgid "Finished indexing words"
 msgstr "تمت فهرسة الكلمات"
 
-#: indexes/models.py:8 indexes/models.py:12 indexes/models.py:34
+#: indexes/models.py:8 indexes/models.py:12 indexes/models.py:45
 msgid "Word"
 msgstr "الكلمة"
 
@@ -79,46 +91,62 @@ msgstr "الكلمات"
 msgid "Word that is found in texts"
 msgstr "الكلمة الموجودة في النصوص"
 
-#: indexes/models.py:15 main/models.py:48
+#: indexes/models.py:16 main/models.py:47
 msgid "Texts"
 msgstr "النصوص"
 
-#: indexes/models.py:15
+#: indexes/models.py:16
 msgid "Texts that contain this word"
 msgstr "النصوص التي تحتوي على هذه الكلمة"
 
-#: indexes/models.py:25
+#: indexes/models.py:26
+msgid "Part"
+msgstr "الجزء"
+
+#: indexes/models.py:26
+msgid "Part of the word"
+msgstr "جزء الكلمة"
+
+#: indexes/models.py:37
 msgid "Text Word"
 msgstr "كلمة النص"
 
-#: indexes/models.py:26
+#: indexes/models.py:38
 msgid "Text Words"
 msgstr "كلمات النص"
 
-#: indexes/models.py:30 main/models.py:47
+#: indexes/models.py:41 main/models.py:46
 msgid "Text"
 msgstr "النص"
 
-#: indexes/models.py:30
+#: indexes/models.py:41
 msgid "Text that contains this word"
 msgstr "النص الذي يحتوي على هذه الكلمة"
 
-#: indexes/models.py:34
+#: indexes/models.py:45
 msgid "Word that is found in this text"
 msgstr "الكلمة الموجودة في هذا النص"
 
-#: indexes/models.py:38
-msgid "Frequency"
-msgstr "التكرار"
+#: indexes/models.py:49
+msgid "Start"
+msgstr "البداية"
 
-#: indexes/models.py:38
-msgid "Number of times this word appears in this text"
-msgstr "عدد مرات ظهور هذه الكلمة في هذا النص"
+#: indexes/models.py:49
+msgid "Start position of the word in the text"
+msgstr "بداية الكلمة في النص"
 
-#: indexes/models.py:42
+#: indexes/models.py:52
+msgid "End"
+msgstr "النهاية"
+
+#: indexes/models.py:52
+msgid "End position of the word in the text"
+msgstr "نهاية الكلمة في النص"
+
+#: indexes/models.py:56
 #, python-format
-msgid "\"%(word)s\" in \"%(text)s\" [%(frequency)d]"
-msgstr "\"%(word)s\" في \"%(text)s\" [%(frequency)d]"
+msgid "\"%(word)s\" in \"%(text)s\" [%(start)d:%(end)d]"
+msgstr "\"%(word)s\" في \"%(text)s\" [%(start)d:%(end)d]"
 
 #: main/apps.py:8
 msgid "Students blog"
@@ -152,7 +180,7 @@ msgstr "حدد مدونة للبحث فيها"
 msgid "Select a blog"
 msgstr "حدد مدونة"
 
-#: main/models.py:13 main/models.py:51
+#: main/models.py:13 main/models.py:50
 #: main/templates/main/parts/search_form.html:24
 msgid "Blog"
 msgstr "المدونة"
@@ -161,7 +189,7 @@ msgstr "المدونة"
 msgid "Blogs"
 msgstr "المدونات"
 
-#: main/models.py:16 main/models.py:53 main/templates/main/home.html:67
+#: main/models.py:16 main/models.py:52 main/templates/main/home.html:67
 msgid "Title"
 msgstr "العنوان"
 
@@ -177,145 +205,145 @@ msgstr "الوصف"
 msgid "Blog description"
 msgstr "وصف المدونة"
 
-#: main/models.py:30
+#: main/models.py:29
 #, python-format
 msgid "Words: %(words)d, Unique words: %(unique)d"
 msgstr "الكلمات: %(words)d، الكلمات بدون تكرار: %(unique)d"
 
-#: main/models.py:39
+#: main/models.py:38
 msgid "Spoken"
 msgstr "منطوق"
 
-#: main/models.py:40
+#: main/models.py:39
 msgid "Written"
 msgstr "مكتوب"
 
-#: main/models.py:41
+#: main/models.py:40
 msgid "Notebooks"
 msgstr "كراسات"
 
-#: main/models.py:44
+#: main/models.py:43
 msgid "Male"
 msgstr "ذكر"
 
-#: main/models.py:44
+#: main/models.py:43
 msgid "Female"
 msgstr "أنثى"
 
-#: main/models.py:51
+#: main/models.py:50
 msgid "Blog that contains this text"
 msgstr "المدونة التي تحتوي على هذا النص"
 
-#: main/models.py:53
+#: main/models.py:52
 msgid "Title of the text"
 msgstr "عنوان النص"
 
-#: main/models.py:54 main/templates/main/home.html:68
+#: main/models.py:53 main/templates/main/home.html:68
 msgid "Content"
 msgstr "المحتوى"
 
-#: main/models.py:54
+#: main/models.py:53
 msgid "Content of the text"
 msgstr "محتوى النص"
 
-#: main/models.py:56
+#: main/models.py:55
 msgid "Type"
 msgstr "النوع"
 
-#: main/models.py:56
+#: main/models.py:55
 msgid "Type of the text"
 msgstr "نوع النص"
 
-#: main/models.py:59
+#: main/models.py:58
 msgid "Number"
 msgstr "الرقم"
 
-#: main/models.py:59
+#: main/models.py:58
 msgid "Number of the student"
 msgstr "رقم الطالب"
 
-#: main/models.py:63
+#: main/models.py:62
 msgid "Sex"
 msgstr "الجنس"
 
-#: main/models.py:63
+#: main/models.py:62
 msgid "Student sex"
 msgstr "جنس الطالب"
 
-#: main/models.py:66
+#: main/models.py:65
 msgid "Level"
 msgstr "الصف"
 
-#: main/models.py:66
+#: main/models.py:65
 msgid "Level of the student"
 msgstr "صف الطالب"
 
-#: main/models.py:70
+#: main/models.py:69
 msgid "School"
 msgstr "المدرسة"
 
-#: main/models.py:70
+#: main/models.py:69
 msgid "School of the student"
 msgstr "مدرسة الطالب"
 
-#: main/models.py:73
+#: main/models.py:72
 msgid "City"
 msgstr "المدينة"
 
-#: main/models.py:73
+#: main/models.py:72
 msgid "City of the student"
 msgstr "مدينة الطالب"
 
-#: main/models.py:76
+#: main/models.py:75
 msgid "Author name"
 msgstr "اسم المؤلف"
 
-#: main/models.py:79
+#: main/models.py:78
 msgid "Source type"
 msgstr "نوع المصدر"
 
-#: main/models.py:82
+#: main/models.py:81
 msgid "Added on"
 msgstr "أضيف في"
 
-#: main/models.py:82
+#: main/models.py:81
 msgid "Date and time of adding the text to the database"
 msgstr "تاريخ ووقت إضافة النص إلى قاعدة البيانات"
 
-#: main/models.py:85
+#: main/models.py:84
 msgid "Last updated on"
 msgstr "آخر تحديث في"
 
-#: main/models.py:86
+#: main/models.py:85
 msgid "Date and time of the last update of the text in the database"
 msgstr "تاريخ ووقت آخر تحديث للنص في قاعدة البيانات"
 
-#: main/models.py:90
+#: main/models.py:89
 msgid "Words indexed"
 msgstr "الكلمات مفهرسة"
 
-#: main/models.py:91
+#: main/models.py:90
 msgid "Indicates whether the words of this text are indexed or not"
 msgstr "يشير إلى ما إذا كانت كلمات هذا النص مفهرسة أم لا"
 
-#: main/models.py:106
+#: main/models.py:105
 #, python-format
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:108
+#: main/models.py:107
 #, python-format
 msgctxt "Male"
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:110
+#: main/models.py:109
 #, python-format
 msgctxt "Female"
 msgid "Student number %(number)d"
 msgstr "الطالبة رقم %(number)d"
 
-#: main/models.py:114
+#: main/models.py:113
 #, python-format
 msgid "Level %(level)d"
 msgstr "الصف %(level)d"
@@ -440,6 +468,12 @@ msgstr "شيوع الألفاظ في المدونات"
 msgid "No words found"
 msgstr "لم يتم العثور على أيّة ألفاظ"
 
+#~ msgid "Frequency"
+#~ msgstr "التكرار"
+
+#~ msgid "Number of times this word appears in this text"
+#~ msgstr "عدد مرات ظهور هذه الكلمة في هذا النص"
+
 #~ msgid "Indexing words..."
 #~ msgstr "جارٍ فهرسة الكلمات..."
 
@@ -502,9 +536,6 @@ msgstr "لم يتم العثور على أيّة ألفاظ"
 #~ msgid "Select the grade of the student studying this text."
 #~ msgstr "حدد المستوى الدراسي للطالب الذي يدرس هذا النص."
 
-#~ msgid "Part"
-#~ msgstr "الجزء"
-
 #~ msgid "Enter the title of the book part containing this text."
 #~ msgstr "أدخل عنوان الجزء من الكتاب الذي يحتوي على هذا النص."
 
@@ -537,6 +568,3 @@ msgstr "لم يتم العثور على أيّة ألفاظ"
 
 #~ msgid "The source document of the text"
 #~ msgstr "المستند المصدر للنص"
-
-#~ msgid "Editor of the book containing this text"
-#~ msgstr "محرر الكتاب الذي يحتوي على هذا النص"
