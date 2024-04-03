@@ -26,8 +26,11 @@ def normalize(text: str) -> str:
 def segment(word: str) -> tuple[str, str, str]:
     word = normalize(word)
     stem = ArabicLightStemmer().light_stem(word)
-    if stem:
-        prefix, suffix = word.split(stem)
-    else:
+    try:
+        if stem:
+            prefix, suffix = word.split(stem)
+        else:
+            prefix = suffix = ''
+    except ValueError:
         prefix = suffix = ''
     return prefix, stem, suffix

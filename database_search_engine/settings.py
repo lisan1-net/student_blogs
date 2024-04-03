@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.add_settings'
             ],
         },
     },
@@ -169,3 +170,8 @@ INTERNAL_IPS = [
     '127.0.0.1',
     'mdwn-ltlb.onrender.com'
 ]
+
+
+# Custom
+
+MAINTENANCE_MESSAGE = config('MAINTENANCE_MESSAGE', default=None)
