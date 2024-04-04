@@ -53,22 +53,3 @@ def find_search_results(query: str, texts: Iterable) -> tuple[list[dict], int]:
 @lru_cache(maxsize=1024)
 def normalize(text):
     return strip_tatweel(strip_diacritics(text.lower()))
-
-
-@lru_cache(maxsize=1024)
-def split_words(text):
-    return tokenize(text, conditions=is_arabic_word)
-
-
-def is_arabic_word(word):
-    return is_arabicword(word) and all(c not in word for c in (COMMA, SEMICOLON, QUESTION))
-
-
-def get_word_frequencies(texts):
-    frequencies = Counter()
-    if isinstance(texts, Iterable):
-        for text in texts:
-            frequencies.update(split_words(text.content_normalized))
-    else:
-        frequencies.update(split_words(texts.content_normalized))
-    return frequencies

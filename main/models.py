@@ -102,6 +102,21 @@ class Text(models.Model):
     def content_normalized(self):
         return normalize(self.content)
 
+    @property
+    def index_progress(self):
+        return TextWord.objects.filter(text=self).aggregate(models.Max('end')).get('end__max') or 0
+
+    @property
+    def max_index_progress(self):
+        return len(self.content)
+
+    @property
+    def index_progress_ratio(self):
+        try:
+            return self.index_progress / self.max_index_progress
+        except ZeroDivisionError:
+            return 0
+
     def get_student_number_display(self):
         translation = _('Student number %(number)d')
         if self.sex == 'M':

@@ -31,13 +31,13 @@ class TestGetWordsRanges(SimpleTestCase):
     def test_get_words_ranges_punctuation(self):
         # Test with an Arabic sentence with punctuation
         sentence = "الْحَمْدُ لِلَّهِ، رب الْعَالَمِينَ."
-        expected_ranges = [("الْحَمْدُ", (0, 9)), ("لِلَّهِ", (10, 17)), ("،", (17, 18)), ("رب", (19, 21)), ("الْعَالَمِينَ", (22, 35)), (".", (35, 36))]
+        expected_ranges = [("الْحَمْدُ", (0, 9)), ("لِلَّهِ", (10, 17)), ("رب", (19, 21)), ("الْعَالَمِينَ", (22, 35))]
         self.assertEqual(get_words_ranges(sentence), expected_ranges)
 
     def test_get_words_ranges_numbers(self):
         # Test with an Arabic sentence with numbers
         sentence = "الْحَمْدُ لِلَّهِ 123 رب الْعَالَمِينَ"
-        expected_ranges = [("الْحَمْدُ", (0, 9)), ("لِلَّهِ", (10, 17)), ("123", (18, 21)), ("رب", (22, 24)), ("الْعَالَمِينَ", (25, 38))]
+        expected_ranges = [("الْحَمْدُ", (0, 9)), ("لِلَّهِ", (10, 17)), ("رب", (22, 24)), ("الْعَالَمِينَ", (25, 38))]
         self.assertEqual(get_words_ranges(sentence), expected_ranges)
 
     def test_get_words_ranges_empty(self):
