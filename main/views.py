@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Count
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.db import connections
 
-from main.forms import *
-from main.models import *
+from indexes.models import TextWord
+from indexes.utils import normalize
+from main.forms import SearchForm, VocabularyForm
+from main.models import Text, Blog
 from main.utils import find_search_results
 
 
@@ -54,7 +56,7 @@ def home(request):
         if blog := form.cleaned_data['blog']:
             filter_query &= Q(blog=blog)
             form.advanced = True
-        query = form.cleaned_data['search_query']
+        query = normalize(form.cleaned_data['search_query'])
         texts = Text.objects.filter(filter_query).distinct()
         results, in_content_frequency = find_search_results(query, texts)
         matched_texts_count = len(set(r['text'] for r in results))
