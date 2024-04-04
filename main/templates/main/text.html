@@ -35,7 +35,10 @@
             </small>
         </div>
         <div class="card-body">
-            <div class="card-text">{{ text.content|paragraphs_wrap }}</div>
+            <div class="card-text">
+                {% highlight_range text.content_normalized request.GET.start request.GET.end surrounding_words=50 as content %}
+                {{ content|paragraphs_wrap|safe }}
+            </div>
         </div>
     </div>
 {% endblock %}

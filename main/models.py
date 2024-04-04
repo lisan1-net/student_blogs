@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _, pgettext
 from taggit.managers import TaggableManager
 
-from main.utils import normalize
+from indexes.utils import normalize
 from indexes.models import TextWord
 
 
