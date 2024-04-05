@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'main/base/base.html' %}
 {% load i18n %}
 {% load search %}
 {% block content %}
@@ -31,5 +31,5 @@
             <div class="lead text-muted text-center mb-3">{% translate 'No words found' %}</div>
         {% endif %}
     {% endif %}
-    {% include 'main/parts/pagination.html' with results=frequencies %}
+    {% include 'main/common/pagination.html' with results=frequencies %}
 {% endblock %}

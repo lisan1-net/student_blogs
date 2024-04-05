@@ -67,7 +67,7 @@ class SearchForm(forms.ModelForm):
         exclude = ['title', 'content', 'tags']
         formfield_callback = formfield_for_dbfield
 
-    template_name = 'main/parts/search_form.html'
+    template_name = 'main/search/search_form.html'
     error_css_class = 'is-invalid'
 
     def __init__(self, *args, **kwargs):
@@ -131,7 +131,7 @@ class VocabularyForm(SearchForm):
             'blog': _('The blog to search in'),
         }
 
-    template_name = 'main/parts/vocabulary_form.html'
+    template_name = 'main/vocabulary/vocabulary_form.html'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

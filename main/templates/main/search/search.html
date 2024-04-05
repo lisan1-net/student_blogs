@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'main/base/base.html' %}
 {% load i18n %}
 {% load search %}
 
@@ -67,7 +67,7 @@
         {%  translate 'Title' as title_name %}
         {%  translate 'Content' as content_name %}
         {% for result in results %}
-            {% include 'main/parts/result_card.html' with result=result%}
+            {% include 'main/search/result_card.html' with result=result%}
         {% empty %}
             <div class="row">
                 <div class="col-md-12">
@@ -75,6 +75,6 @@
                 </div>
             </div>
         {% endfor %}
-        {% include 'main/parts/pagination.html' with results=results %}
+        {% include 'main/common/pagination.html' with results=results %}
     {% endif %}
 {% endblock %}

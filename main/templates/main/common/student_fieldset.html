@@ -7,7 +7,7 @@
             {{ field.label_tag }}
             {{ field }}
         </div>
-        {% include 'main/parts/error_list.html' with errors=field.errors %}
+        {% include 'main/common/error_list.html' with errors=field.errors %}
     {% endfor %}
 </fieldset>
 <fieldset class="border border-secondary p-1 mb-2 form-row rounded">
@@ -17,6 +17,6 @@
             {{ field.label_tag }}
             {{ field }}
         </div>
-        {% include 'main/parts/error_list.html' with errors=field.errors %}
+        {% include 'main/common/error_list.html' with errors=field.errors %}
     {% endfor %}
 </fieldset>

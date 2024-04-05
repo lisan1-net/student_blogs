@@ -16,5 +16,5 @@
             <div class="form-text text-muted">{% translate 'No tags found' %}</div>
         {% endfor %}
     </div>
-    {% include 'main/parts/error_list.html' with errors=form.tags.errors %}
+    {% include 'main/common/error_list.html' with errors=form.tags.errors %}
 </fieldset>

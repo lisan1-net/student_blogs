@@ -7,7 +7,7 @@
 <html lang="{{ LANG_CODE }}" dir="{{ bidi|yesno:'rtl,ltr' }}">
 <head>
     <meta charset="UTF-8">
-    {% include 'main/parts/stylesheets.html' %}
+    {% include 'main/base/stylesheets.html' %}
     <title>{{ app_name }} - {% translate 'Search box' %}</title>
     <style>
         .card {
@@ -22,16 +22,16 @@
                 <label class="h3 text-secondary" for="search_query">{% translate 'Search in student blogs' %}</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">{% include 'main/parts/app_icon.html' %}</span>
+                        <span class="input-group-text">{% include 'main/base/app_icon.html' %}</span>
                     </div>
                     <input type="text" class="form-control" name="search_query" placeholder="{% translate 'Enter an expression' %}" id="search_query">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="submit">{% include 'main/parts/search_icon.html' %}</button>
+                        <button class="btn btn-outline-primary" type="submit">{% include 'main/common/search_icon.html' %}</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    {% include 'main/parts/scripts.html' %}
+    {% include 'main/base/scripts.html' %}
 </body>
 </html>

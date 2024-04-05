@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    {% include 'main/parts/stylesheets.html' %}
+    {% include 'main/base/stylesheets.html' %}
 
     <!-- SEO meta tags -->
     <title>{% block title %}{{ app_name }}{% endblock %}{% block extra_title %}{% endblock %}</title>
@@ -25,7 +25,7 @@
 </head>
 <body>
     <header>
-        {% include 'main/parts/navbar.html' %}
+        {% include 'main/base/navbar.html' %}
     </header>
 
     {% if settings.MAINTENANCE_MESSAGE %}
@@ -54,6 +54,6 @@
         </div>
     </footer>
 
-    {% include 'main/parts/scripts.html' %}
+    {% include 'main/base/scripts.html' %}
 </body>
 </html>

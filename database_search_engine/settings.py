@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import sys
 from pathlib import Path
 
 from decouple import config
@@ -81,7 +82,14 @@ WSGI_APPLICATION = 'database_search_engine.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if database_url := config('DATABASE_URL', default=None):
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
+    }
+elif database_url := config('DATABASE_URL', default=None):
     import dj_database_url
     DATABASES = {'default': dj_database_url.parse(database_url, conn_max_age=600)}
 else:

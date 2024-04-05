@@ -56,9 +56,13 @@ def search_url_for_word(request, word):
 
 
 @register.simple_tag
-def highlight_range(text: str, start: int | str, end: int | str, pk=None, surrounding_words=5):
-    start = int(start)
-    end = int(end)
+def highlight_range(text: str, start=None, end=None, pk=None, surrounding_words=5):
+    if start is None or end is None:
+        return text
+    if isinstance(start, str):
+        start = int(start)
+    if isinstance(end, str):
+        end = int(end)
     text_before = text[:start]
     highlighted_text = text[start:end]
     text_after = text[end:]

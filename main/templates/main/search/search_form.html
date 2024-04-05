@@ -1,16 +1,16 @@
 {% load i18n %}
 <form method="get">
-    {% include 'main/parts/error_list.html' with errors=form.non_field_errors %}
+    {% include 'main/common/error_list.html' with errors=form.non_field_errors %}
     <div class="form-group">
         <div class="input-group">
             {{ form.search_query }}
             <div class="input-group-append">
                 <button class="btn btn-outline-primary" type="submit" data-toggle="tooltip" data-placement="top"
                         title="{% translate 'Search' context 'Form action' %}">
-                    {% include 'main/parts/search_icon.html' %}
+                    {% include 'main/common/search_icon.html' %}
                 </button>
             </div>
-            {% include 'main/parts/error_list.html' with errors=form.search_query.errors %}
+            {% include 'main/common/error_list.html' with errors=form.search_query.errors %}
         </div>
     </div>
     <div class="form-group">
@@ -24,8 +24,8 @@
             <label for="{{ form.blog.id_for_label }}" class="col-form-label col-auto">{% translate 'Blog' %}</label>
             <div class="col">{{ form.blog }}</div>
         </div>
-        {% include 'main/parts/error_list.html' with errors=form.blog.errors %}
-        {% include 'main/parts/student_fieldset.html' %}
-        {% include 'main/parts/tags_fieldset.html' %}
+        {% include 'main/common/error_list.html' with errors=form.blog.errors %}
+        {% include 'main/common/student_fieldset.html' %}
+        {% include 'main/common/tags_fieldset.html' %}
     </div>
 </form>

@@ -62,7 +62,7 @@ def home(request):
         matched_texts_count = len(set(r['text'] for r in results))
         results = Paginator(results, 10).get_page(request.GET.get('page'))
     return render(
-        request, 'main/home.html',
+        request, 'main/search/search.html',
         context={'form': form, 'query': query, 'results': results, 'frequency': in_content_frequency,
                  'matched_text_count': matched_texts_count, 'blogs': Blog.objects.all()}
     )
@@ -70,7 +70,7 @@ def home(request):
 
 def text(request, pk):
     text = get_object_or_404(Text, pk=pk)
-    return render(request, 'main/text.html', context={'text': text})
+    return render(request, 'main/popups/text.html', context={'text': text})
 
 
 def vocabulary(request):
@@ -85,11 +85,11 @@ def vocabulary(request):
         ).order_by('-frequency').values_list('word__content', 'frequency')
         paginator = Paginator(word_frequencies, 60)
         page = paginator.get_page(request.GET.get('page'))
-    return render(request, 'main/vocabulary.html', context={'form': vocabulary_form, 'frequencies': page})
+    return render(request, 'main/vocabulary/vocabulary.html', context={'form': vocabulary_form, 'frequencies': page})
 
 
 def search_widget(request):
-    response = render(request, 'main/search_widget.html')
+    response = render(request, 'main/search/search_widget.html')
     response['Content-Security-Policy'] = "frame-ancestors *"  # Allow embedding in any website
     return response
 
