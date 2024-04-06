@@ -3,19 +3,20 @@
 from django.db import migrations
 from django.db.migrations import RunPython
 
+blog_titles = ['موسوعة التفسير', 'الموسوعة الفقهية', 'موسوعة اللغة العربية']
 
 def insert_blog_data(apps, schema_editor):
     Blog = apps.get_model('main', 'Blog')
     Blog.objects.bulk_create([
-        Blog(title='موسوعة التفسير', description='موسوعة تفسير القرآن الكريم'),
-        Blog(title='الموسوعة الفقهية', description='موسوعة الفقه الإسلامي'),
-        Blog(title='موسوعة اللغة العربية', description='موسوعة اللغة العربية')
+        Blog(title=blog_titles[0], description='موسوعة تفسير القرآن الكريم'),
+        Blog(title=blog_titles[1], description='موسوعة الفقه الإسلامي'),
+        Blog(title=blog_titles[2], description='موسوعة اللغة العربية')
     ])
 
 
 def remove_blog_data(apps, schema_editor):
     Blog = apps.get_model('main', 'Blog')
-    Blog.objects.all().delete()
+    Blog.objects.filter(title__in=blog_titles).delete()
 
 
 def insert_text_data(apps, schema_editor):
@@ -125,7 +126,7 @@ def insert_text_data(apps, schema_editor):
 
 def remove_text_data(apps, schema_editor):
     Text = apps.get_model('main', 'Text')
-    Text.objects.all().delete()
+    Text.objects.filter(blog__title__in=blog_titles).delete()
 
 
 class Migration(migrations.Migration):

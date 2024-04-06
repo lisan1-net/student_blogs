@@ -1,7 +1,7 @@
-from django.test import TestCase
-from django.shortcuts import reverse
 from django.apps import apps
 from django.core.management import call_command
+from django.shortcuts import reverse
+from django.test import TestCase
 
 
 class TestWebApp(TestCase):
@@ -50,7 +50,7 @@ class TestWebApp(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/vocabulary/vocabulary.html')
         self.assertContains(response, blog.title)
-        self.assertContains(response, blog.text_set.first().word_set.first().content)
+        self.assertContains(response, blog.text_set.first().tokens.first().content)
 
     def test_text_popup(self):
         text = self.Text.objects.first()

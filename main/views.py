@@ -1,10 +1,10 @@
-from django.shortcuts import render, get_object_or_404
-from django.db.models import Q, Count
 from django.core.paginator import Paginator
-from django.http import HttpResponse
 from django.db import connections
+from django.db.models import Q, Count
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 
-from indexes.models import TextWord
+from indexes.models import TextToken
 from indexes.utils import normalize
 from main.forms import SearchForm, VocabularyForm
 from main.models import Text, Blog
@@ -80,9 +80,9 @@ def vocabulary(request):
         filter_query = Q(blog=vocabulary_form.cleaned_data['blog'])
         filter_query &= build_common_filter_query(vocabulary_form)
         texts = Text.objects.filter(filter_query).distinct()
-        word_frequencies = TextWord.objects.filter(text__in=texts, word__part='STEM').values('word__content').annotate(
-            frequency=Count('word__content')
-        ).order_by('-frequency').values_list('word__content', 'frequency')
+        word_frequencies = TextToken.objects.filter(text__in=texts).values('token__content').annotate(
+            frequency=Count('token__content')
+        ).order_by('-frequency').values_list('token__content', 'frequency')
         paginator = Paginator(word_frequencies, 60)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/vocabulary/vocabulary.html', context={'form': vocabulary_form, 'frequencies': page})

@@ -1,9 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.translation import gettext as _
 
-from indexes.models import Word, TextWord
+from indexes.models import Token, TextToken
+from indexes.utils import normalize, get_words_ranges
 from main.models import Blog, Text
-from indexes.utils import *
 
 
 class Command(BaseCommand):
@@ -18,7 +18,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if options['clear']:
             self.stdout.write(self.style.WARNING(_('Clearing all indexed text words...')))
-            Word.objects.all().delete()
+            Token.objects.all().delete()
             return
         if not options['blogs']:
             options['blogs'] = Blog.objects.values_list('id', flat=True)
@@ -36,22 +36,12 @@ class Command(BaseCommand):
             for word_content, (start, end) in get_words_ranges(text.content):
                 if end < last_index_position:
                     continue
-                for t, w in zip(['PREFIX', 'STEM', 'SUFFIX'], segment(word_content)):
-                    if w == '':
-                        continue
-                    part = ''
-                    match t:
-                        case 'PREFIX':
-                            part = _('Prefix')
-                        case 'STEM':
-                            part = _('Stem')
-                        case 'SUFFIX':
-                            part = _('Suffix')
-                    self.stdout.write(_('Indexing %(part)s "%(word)s" [%(start)d:%(end)d]') % {
-                        'word': w, 'start': start, 'end': end, 'part': part
-                    })
-                    word, created = Word.objects.get_or_create(content=w, part=t)
-                    TextWord.objects.update_or_create(text=text, word=word, start=start, end=end)
+                word_content = normalize(word_content)
+                self.stdout.write(_('Indexing "%(token)s" [%(start)d:%(end)d]') % {
+                    'token': word_content, 'start': start, 'end': end,
+                })
+                token, created = Token.objects.get_or_create(content=word_content)
+                TextToken.objects.get_or_create(text=text, token=token, start=start, end=end)
             text.words_indexed = True
             text.save()
         self.stdout.write(self.style.SUCCESS(_('Finished indexing words')))
