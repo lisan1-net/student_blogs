@@ -14,7 +14,10 @@ def migrate_to_whole_tokens(apps, schema_editor):
     end = 0
     token_content = ''
     i = 1
-    for text_word in TextWord.objects.all():
+    for text_word in TextWord.objects.exclude(
+            text__in=TextToken.objects.values('text'), start__in=TextToken.objects.values('start'),
+            end__in=TextToken.objects.values('end')
+    ):
         logger.info('Migrating text word %d: %s', i, str(text_word))
         if text_word.start == start and text_word.end == end:
             token_content += text_word.word.content
