@@ -13,23 +13,19 @@ def migrate_to_whole_tokens(apps, schema_editor):
     start = 0
     end = 0
     token_content = ''
-    count = TextWord.objects.count()
     i = 1
-    logger.info('Number of TextWords: %d', count)
     for text_word in TextWord.objects.all():
+        logger.info('Migrating text word %d: %s', i, text_word)
         if text_word.start == start and text_word.end == end:
             token_content += text_word.word.content
         elif token_content:
             token, created = Token.objects.get_or_create(content=token_content)
-            TextToken.objects.get_or_create(text=text_word.text, token=token, start=start, end=end)
-            logger.info(
-                '(%d/%d) Token migrated: %s [%d:%d] from "%s"',
-                i, count, token_content, start, end, text_word.text
-            )
+            text_token, created = TextToken.objects.get_or_create(text=text_word.text, token=token, start=start, end=end)
+            logger.info('Migrated text token %d: %s', i, text_token)
             i += 1
-            start = text_word.start
-            end = text_word.end
             token_content = text_word.word.content
+        start = text_word.start
+        end = text_word.end
 
 
 class Migration(migrations.Migration):
