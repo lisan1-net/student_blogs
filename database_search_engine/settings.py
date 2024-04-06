@@ -176,6 +176,7 @@ LOGGING = {
         "django.migrations": {
             "handlers": ["console"],
             "level": "INFO",
+            "propagate": False,
         },
     },
 }
