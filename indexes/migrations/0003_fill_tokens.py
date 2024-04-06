@@ -30,6 +30,8 @@ def migrate_to_whole_tokens(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
+    atomic = False
+
     dependencies = [
         ('indexes', '0002_texttoken_token_texttoken_token_and_more'),
     ]
