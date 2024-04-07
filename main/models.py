@@ -31,6 +31,25 @@ class Blog(models.Model):
             'words': with_duplications, 'unique': without_duplications
         }
 
+    def text_count(self):
+        return self.text_set.count()
+
+    def school_count(self):
+        return self.text_set.values('school').distinct().count()
+
+    def student_count_per_level(self):
+        return self.text_set.values('level').annotate(student_count=models.Count('student_number')).values_list(
+            'level', 'student_count'
+        )
+
+    def most_frequent_words(self, limit=10):
+        return TextToken.objects.filter(text__blog=self).values('token').annotate(
+            count=models.Count('token')
+        ).order_by('-count')[:limit].values_list('token__content', 'count')
+
+    def is_fully_indexed(self):
+        return self.text_set.filter(words_indexed=False).count() == 0
+
 
 class Text(models.Model):
 

@@ -1,0 +1,74 @@
+{% load search %}
+{% load i18n %}
+<div class="col mb-3">
+    <div class="card">
+        <div class="card-header">
+            <h6 class="card-title mb-0">{{ blog.title }}</h6>
+        </div>
+        {% with blog.word_count as counts %}
+            {% with blog.is_fully_indexed|yesno:'primary,warning' as color %}
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{% translate 'Texts' %}</span>
+                        <span class="badge badge-primary pt-2">{{ blog.text_count }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{% translate 'Words with duplication' %}</span>
+                        <span class="badge badge-{{ color }} pt-2">
+                            {{ counts.0 }}
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{% translate 'Words without duplication' %}</span>
+                        <span class="badge badge-{{ color }} pt-2">
+                            {{ counts.1 }}
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{% translate 'Schools' %}</span>
+                        <span class="badge badge-primary pt-2">{{ blog.school_count }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <h6>{% translate 'Students' %}</h6>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            {% for level, count in blog.student_count_per_level %}
+                                <div class="card w-auto mr-2 my-1">
+                                    <div class="card-body p-2">
+                                        {% translate 'Unspecified' as no_level %}
+                                        <span>{% translate 'Level' %} {{ level|default_if_none:no_level }}</span>
+                                        <span class="badge badge-primary badge-pill pt-2 ml-2">{{ count }}</span>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p class="text-muted m-1">{% translate 'No students' %}</p>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <h6>{% translate 'Most frequent words' %}</h6>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            {% for word, count in blog.most_frequent_words %}
+                                <div class="card w-auto mr-2 my-1 border-primary list-group-item-action">
+                                    <div class="card-body p-2">
+                                        <a href="{{ request|search_url_for_word:word }}"
+                                           class="stretched-link text-decoration-none">
+                                            {{ word }}
+                                        </a>
+                                        <span class="badge badge-{{ color }} badge-pill pt-2">{{ count }}</span>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p class="text-{% if color == 'primary' %}muted{% else %}{{ color }}{% endif %} m-1">
+                                    {% translate 'No words' %}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </li>
+                </ul>
+            {% endwith %}
+        {% endwith %}
+        <a href="{% url 'vocabulary' %}?blog={{ blog.id }}" class="btn btn-outline-primary m-2">
+            {% translate 'Show vocabulary' %}
+        </a>
+    </div>
+</div>

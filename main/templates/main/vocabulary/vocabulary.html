@@ -11,6 +11,7 @@
         </div>
     </div>
     {% if form.is_bound %}
+        {% with blog.is_fully_indexed|yesno:'secondary,warning' as color %}
         {% if frequencies %}
         <div class="row row-cols-md-6 row-cols-sm-3 d-flex justify-content-center">
             {% for word, frequency in frequencies %}
@@ -21,15 +22,16 @@
                                class="stretched-link text-decoration-none">
                                 {{ word }}
                             </a>
-                            <span class="badge badge-secondary pt-2">{{ frequency }}</span>
+                            <span class="badge badge-{{ color }} pt-2">{{ frequency }}</span>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
         {% else %}
-            <div class="lead text-muted text-center mb-3">{% translate 'No words found' %}</div>
+            <div class="lead text-{{ color }} text-center mb-3">{% translate 'No words found' %}</div>
         {% endif %}
+        {% endwith %}
     {% endif %}
     {% include 'main/common/pagination.html' with results=frequencies %}
 {% endblock %}
