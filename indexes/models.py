@@ -82,7 +82,7 @@ class TextToken(models.Model):
     class Meta:
         verbose_name = _('Text Token')
         verbose_name_plural = _('Text Tokens')
-        unique_together = ('text', 'token', 'start', 'end')
+        unique_together = ('text', 'start', 'end')
 
     text = models.ForeignKey(
         'main.Text', on_delete=models.CASCADE, verbose_name=_('Text'), help_text=_('Text that contains this token'),
