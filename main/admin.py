@@ -1,6 +1,7 @@
 from django.apps import apps
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
+from django.utils.translation import gettext_lazy as _
 
 from main.models import Blog, Text
 
@@ -9,6 +10,7 @@ ModelAdmin.list_per_page = 50
 app = apps.get_app_config('main')
 admin.site.site_header = app.verbose_name
 admin.site.site_title = app.verbose_name
+admin.site.empty_value_display = _('Unspecified')
 
 
 @admin.register(Blog)
