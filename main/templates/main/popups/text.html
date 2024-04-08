@@ -32,6 +32,18 @@
                         {{ text.get_type_display }}
                     </span>
                 {% endif %}
+                {% if result.text.author_name %}
+                    <span class="col">
+                        <i class="fa-solid fa-user-pen"></i>
+                        {{ result.text.author_name }}
+                    </span>
+                {% endif %}
+                {% if result.text.source_type %}
+                    <span class="col">
+                        <i class="fa-solid fa-file"></i>
+                        {{ result.text.source_type }}
+                    </span>
+                {% endif %}
             </small>
         </div>
         <div class="card-body">
