@@ -3,8 +3,15 @@
 <div class="col mb-3">
     <div class="card">
         <div class="card-header">
-            <h6 class="card-title mb-0">{{ blog.title }}</h6>
+            <h5 class="card-title mb-0">
+                {{ blog.title }}
+            </h5>
         </div>
+        <a href="#collapse-{{blog.pk}}" class="btn btn-outline-primary mt-2 mx-2" data-toggle="collapse" role="button"
+           aria-expanded="false" aria-controls="collapse-{{blog.pk}}">
+            {% translate 'Show details' %}
+        </a>
+        <div class="collapse" id="collapse-{{blog.pk}}">
         {% with blog.word_count as counts %}
             {% with blog.is_fully_indexed|yesno:'primary,warning' as color %}
                 <ul class="list-group list-group-flush">
@@ -67,6 +74,7 @@
                 </ul>
             {% endwith %}
         {% endwith %}
+        </div>
         <a href="{% url 'vocabulary' %}?blog={{ blog.id }}" class="btn btn-outline-primary m-2">
             {% translate 'Show vocabulary' %}
         </a>

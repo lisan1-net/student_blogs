@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-08 07:42+0000\n"
+"POT-Creation-Date: 2024-04-08 08:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,7 +85,7 @@ msgid "Word that is found in texts"
 msgstr "الكلمة الموجودة في النصوص"
 
 #: indexes/models.py:16 indexes/models.py:72 main/models.py:68
-#: main/templates/main/common/blog_card.html:12
+#: main/templates/main/common/blog_card.html:19
 msgid "Texts"
 msgstr "النصوص"
 
@@ -204,7 +204,7 @@ msgstr "نهاية الوحدة في النص"
 msgid "\"%(token)s\" in \"%(text)s\" [%(start)d:%(end)d]"
 msgstr "\"%(token)s\" في \"%(text)s\" [%(start)d:%(end)d]"
 
-#: main/admin.py:13 main/templates/main/common/blog_card.html:37
+#: main/admin.py:13 main/templates/main/common/blog_card.html:44
 msgid "Unspecified"
 msgstr "غير محدد"
 
@@ -335,7 +335,7 @@ msgstr "الجنس"
 msgid "Student sex"
 msgstr "جنس الطالب"
 
-#: main/models.py:86 main/templates/main/common/blog_card.html:38
+#: main/models.py:86 main/templates/main/common/blog_card.html:45
 msgid "Level"
 msgstr "الصف"
 
@@ -446,35 +446,39 @@ msgstr "البحث"
 msgid "Vocabulary"
 msgstr "شيوع الألفاظ"
 
-#: main/templates/main/common/blog_card.html:16
+#: main/templates/main/common/blog_card.html:12
+msgid "Show details"
+msgstr "إظهار التفاصيل"
+
+#: main/templates/main/common/blog_card.html:23
 msgid "Words with duplication"
 msgstr "الكلمات بالتكرار"
 
-#: main/templates/main/common/blog_card.html:22
+#: main/templates/main/common/blog_card.html:29
 msgid "Words without duplication"
 msgstr "الكلمات بدون تكرار"
 
-#: main/templates/main/common/blog_card.html:28
+#: main/templates/main/common/blog_card.html:35
 msgid "Schools"
 msgstr "المدارس"
 
-#: main/templates/main/common/blog_card.html:32
+#: main/templates/main/common/blog_card.html:39
 msgid "Students"
 msgstr "الطلاب"
 
-#: main/templates/main/common/blog_card.html:43
+#: main/templates/main/common/blog_card.html:50
 msgid "No students"
 msgstr "لا يوجد طلاب"
 
-#: main/templates/main/common/blog_card.html:48
+#: main/templates/main/common/blog_card.html:55
 msgid "Most frequent words"
 msgstr "الكلمات الأكثر شيوعًا"
 
-#: main/templates/main/common/blog_card.html:62
+#: main/templates/main/common/blog_card.html:69
 msgid "No words"
 msgstr "لا توجد كلمات"
 
-#: main/templates/main/common/blog_card.html:71
+#: main/templates/main/common/blog_card.html:79
 msgid "Show vocabulary"
 msgstr "عرض شيوع الألفاظ"
 
