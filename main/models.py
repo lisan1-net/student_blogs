@@ -43,7 +43,8 @@ class Blog(models.Model):
         )
 
     def most_frequent_words(self, limit=10):
-        return TextToken.objects.filter(text__blog=self).values('token').annotate(
+        return TextToken.objects.filter(text__blog=self).exclude(
+            token__content__in=FunctionalWord.objects.values_list('content', flat=True)).values('token').annotate(
             count=models.Count('token')
         ).order_by('-count')[:limit].values_list('token__content', 'count')
 
@@ -146,3 +147,17 @@ class Text(models.Model):
 
     def get_level_display(self):
         return _('Level %(level)d') % {'level': self.level}
+
+
+class FunctionalWord(models.Model):
+
+    class Meta:
+        verbose_name = _('Functional Word')
+        verbose_name_plural = _('Functional Words')
+
+    content = models.CharField(
+        max_length=10, verbose_name=_('Content'), help_text=_('Content of the functional word'), unique=True
+    )
+
+    def __str__(self):
+        return self.content

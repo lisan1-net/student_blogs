@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from indexes.models import TextToken
 from indexes.utils import normalize
 from main.forms import SearchForm, VocabularyForm
-from main.models import Text, Blog
+from main.models import Text, Blog, FunctionalWord
 from main.utils import find_search_results
 
 
@@ -80,12 +80,18 @@ def vocabulary(request):
         filter_query = Q(blog=vocabulary_form.cleaned_data['blog'])
         filter_query &= build_common_filter_query(vocabulary_form)
         texts = Text.objects.filter(filter_query).distinct()
-        word_frequencies = TextToken.objects.filter(text__in=texts).values('token__content').annotate(
-            frequency=Count('token__content')
-        ).order_by('-frequency').values_list('token__content', 'frequency')
+        words = TextToken.objects.filter(text__in=texts).values('token__content')
+        include_functional_words = vocabulary_form.cleaned_data['include_functional_words']
+        if not include_functional_words:
+            words = words.exclude(token__content__in=FunctionalWord.objects.values_list('content', flat=True))
+        word_frequencies = words.annotate(frequency=Count('token__content')).order_by('-frequency').values_list(
+            'token__content', 'frequency'
+        )
         paginator = Paginator(word_frequencies, 60)
         page = paginator.get_page(request.GET.get('page'))
-    return render(request, 'main/vocabulary/vocabulary.html', context={'form': vocabulary_form, 'frequencies': page})
+    return render(request, 'main/vocabulary/vocabulary.html', context={
+        'form': vocabulary_form, 'frequencies': page
+    })
 
 
 def search_widget(request):

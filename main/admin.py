@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.utils.translation import gettext_lazy as _
 
-from main.models import Blog, Text
+from main.models import Blog, Text, FunctionalWord
 
 ModelAdmin.list_per_page = 50
 
@@ -28,3 +28,10 @@ class TextAdmin(admin.ModelAdmin):
     )
     list_filter = tuple(e for e in list_display if e not in ('author_name', 'title'))
     search_fields = ('title', 'content', 'school', 'city', 'author_name')
+
+
+@admin.register(FunctionalWord)
+class FunctionalWordAdmin(admin.ModelAdmin):
+
+    search_fields = ('content',)
+    list_display = ('content',)

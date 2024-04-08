@@ -15,6 +15,13 @@
         </div>
         {% include 'main/common/error_list.html' with errors=form.blog.errors %}
     </div>
+    <div class="form-group form-check">
+        {{ form.include_functional_words }}
+        <label class="form-check-label" for="{{ form.include_functional_words.id_for_label }}">
+            {{ form.include_functional_words.label }}
+        </label>
+    </div>
+    {% include 'main/common/error_list.html' with errors=form.include_functional_words.errors %}
     <div class="form-group">
         <a class="btn btn-link" data-toggle="collapse" href="#advanced-options" role="button" aria-expanded="false"
            aria-controls="advanced-options">

@@ -1,10 +1,12 @@
 from django import forms
+from django.db import models
 from django.forms import widgets
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
-
-from main.models import *
 from taggit.models import Tag
+
+from indexes.utils import normalize
+from main.models import Blog, Text
 
 
 def get_schools():
@@ -133,6 +135,12 @@ class VocabularyForm(SearchForm):
 
     template_name = 'main/vocabulary/vocabulary_form.html'
 
+    include_functional_words = forms.BooleanField(
+        required=False, label=_('Include functional words'),
+        help_text=_('Include the functional words in the search results.'),
+        widget=widgets.CheckboxInput
+    )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['blog'].required = True
@@ -140,5 +148,11 @@ class VocabularyForm(SearchForm):
         self.fields['blog'].widget.attrs.update({
             'class': 'custom-select',
             'title': self.fields['blog'].help_text,
+        })
+        self.fields['include_functional_words'].widget.attrs.update({
+            'class': 'form-check-input',
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+            'title': self.fields['include_functional_words'].help_text,
         })
         del self.fields['search_query']
