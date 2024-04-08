@@ -18,7 +18,7 @@
                 <div class="col mb-3">
                     <div class="card list-group-item-action">
                         <div class="card-body lead d-flex justify-content-between align-items-center p-2">
-                            <a href='{{ request|search_url_for_word:word }}'
+                            <a href='{% search_url request word %}'
                                class="stretched-link text-decoration-none">
                                 {{ word }}
                             </a>

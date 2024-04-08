@@ -1,8 +1,8 @@
 from django import template
-from django.template.defaultfilters import mark_safe
-from django.core.paginator import Paginator
-from django.urls import reverse
 from django.apps import apps
+from django.core.paginator import Paginator
+from django.template.defaultfilters import mark_safe
+from django.urls import reverse
 
 register = template.Library()
 
@@ -47,10 +47,12 @@ def url_with_page(request, page):
     return request.path + '?' + params.urlencode()
 
 
-@register.filter
-def search_url_for_word(request, word):
+@register.simple_tag
+def search_url(request, word, blog_pk=None):
     params = request.GET.copy()
-    params['search_query'] = word
+    params['search_query'] = f'"{word}"'
+    if blog_pk is not None:
+        params['blog_id'] = blog_pk
     params.pop('page', None)
     return reverse('home') + '?' + params.urlencode()
 
