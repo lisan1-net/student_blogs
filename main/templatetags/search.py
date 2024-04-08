@@ -52,7 +52,7 @@ def search_url(request, word, blog_pk=None):
     params = request.GET.copy()
     params['search_query'] = f'"{word}"'
     if blog_pk is not None:
-        params['blog_id'] = blog_pk
+        params['blog'] = blog_pk
     params.pop('page', None)
     return reverse('home') + '?' + params.urlencode()
 
