@@ -1,5 +1,6 @@
 from django.apps import apps
 from django.core.management import BaseCommand
+from django.db import reset_queries
 from django.db.utils import IntegrityError
 
 
@@ -26,7 +27,7 @@ class Command(BaseCommand):
             text_words = text_words[:options['max_instances']]
         self.stdout.write('Number of text words to migrate: %d' % text_words.count())
         text_word = None
-        for word_index, text_word in enumerate(text_words, 1):
+        for word_index, text_word in enumerate(text_words.iterator(), 1):  # Use iterator to fetch objects in chunks
             self.stdout.write('Migrating text word %d: %s' % (word_index, str(text_word)))
             if text_word.start == start and text_word.end == end:
                 token_content += text_word.word.content
@@ -41,6 +42,8 @@ class Command(BaseCommand):
                 token_content = text_word.word.content
             start = text_word.start
             end = text_word.end
+            if word_index % 5000 == 0:  # Clear the QuerySet cache every 5000 iterations
+                reset_queries()
         if token_content and text_word:
             try:
                 token, created = Token.objects.get_or_create(content=token_content)
