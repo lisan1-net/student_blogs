@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-08 08:28+0000\n"
+"POT-Creation-Date: 2024-04-09 13:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,183 +23,123 @@ msgstr ""
 msgid "Indexes"
 msgstr "الفهارس"
 
-#: indexes/management/commands/indexwords.py:11
+#: indexes/management/commands/indexwords.py:12
 msgid "Index words of the blog texts"
 msgstr "فهرسة كلمات نصوص المدونة"
 
-#: indexes/management/commands/indexwords.py:14
+#: indexes/management/commands/indexwords.py:15
 msgid "Blog IDs to index words"
 msgstr "معرفات المدونات لفهرسة الكلمات"
 
-#: indexes/management/commands/indexwords.py:15
+#: indexes/management/commands/indexwords.py:16
 msgid "Clear all indexed words"
 msgstr "مسح جميع الكلمات المفهرسة"
 
-#: indexes/management/commands/indexwords.py:16
+#: indexes/management/commands/indexwords.py:17
 msgid "Maximum number of texts to index words"
 msgstr "أقصى عدد من النصوص لفهرسة الكلمات"
 
-#: indexes/management/commands/indexwords.py:20
+#: indexes/management/commands/indexwords.py:21
 msgid "Clearing all indexed text words..."
 msgstr "جارٍ مسح جميع كلمات النص المفهرسة..."
 
-#: indexes/management/commands/indexwords.py:27
+#: indexes/management/commands/indexwords.py:28
 #, python-format
 msgid "Blog with ID %(id)d does not exist"
 msgstr "المدونة ذات المعرف %(id)d غير موجودة"
 
-#: indexes/management/commands/indexwords.py:28
+#: indexes/management/commands/indexwords.py:29
 #, python-format
 msgid "Number of texts that will be indexed: %(count)d"
 msgstr "عدد النصوص التي ستتم فهرستها: %(count)d"
 
-#: indexes/management/commands/indexwords.py:31
+#: indexes/management/commands/indexwords.py:32
 #, python-format
 msgid "Indexing words of \"%(text)s\"..."
 msgstr "جارٍ فهرسة كلمات \"%(text)s\"..."
 
-#: indexes/management/commands/indexwords.py:33
+#: indexes/management/commands/indexwords.py:34
 #, python-format
 msgid "Initial indexing progress: %(current)d/%(max)d"
 msgstr "التقدم الأولي للفهرسة: %(current)d/%(max)d"
 
-#: indexes/management/commands/indexwords.py:40
+#: indexes/management/commands/indexwords.py:41
 #, python-format
 msgid "Indexing \"%(token)s\" [%(start)d:%(end)d]"
 msgstr "جارٍ فهرسة \"%(token)s\" [%(start)d:%(end)d]"
 
-#: indexes/management/commands/indexwords.py:47
+#: indexes/management/commands/indexwords.py:48
+#, python-format
+msgid "Failed to index \"%(token)s\""
+msgstr "فشلت فهرسة \"%(token)s\""
+
+#: indexes/management/commands/indexwords.py:51
 msgid "Finished indexing words"
 msgstr "تمت فهرسة الكلمات"
 
-#: indexes/models.py:8 indexes/models.py:12 indexes/models.py:45
-msgid "Word"
-msgstr "الكلمة"
+#: indexes/models.py:8 indexes/models.py:36
+msgid "Token"
+msgstr "الوحدة"
 
 #: indexes/models.py:9
-msgid "Words"
-msgstr "الكلمات"
+msgid "Tokens"
+msgstr "الوحدات"
+
+#: indexes/models.py:12 main/models.py:74 main/models.py:159
+#: main/templates/main/search/search.html:49
+msgid "Content"
+msgstr "المحتوى"
 
 #: indexes/models.py:12
-msgid "Word that is found in texts"
-msgstr "الكلمة الموجودة في النصوص"
+msgid "Content of the token"
+msgstr "محتوى الوحدة"
 
-#: indexes/models.py:16 indexes/models.py:72 main/models.py:68
+#: indexes/models.py:16 main/models.py:68
 #: main/templates/main/common/blog_card.html:19
 msgid "Texts"
 msgstr "النصوص"
 
 #: indexes/models.py:16
-msgid "Texts that contain this word"
-msgstr "النصوص التي تحتوي على هذه الكلمة"
-
-#: indexes/models.py:20
-msgid "Stem"
-msgstr "الجذع"
-
-#: indexes/models.py:21
-msgid "Prefix"
-msgstr "السابقة"
-
-#: indexes/models.py:22
-msgid "Suffix"
-msgstr "اللاحقة"
-
-#: indexes/models.py:26
-msgid "Part"
-msgstr "الجزء"
-
-#: indexes/models.py:26
-msgid "Part of the word"
-msgstr "جزء الكلمة"
-
-#: indexes/models.py:37
-msgid "Text Word"
-msgstr "كلمة النص"
-
-#: indexes/models.py:38
-msgid "Text Words"
-msgstr "كلمات النص"
-
-#: indexes/models.py:41 indexes/models.py:88 main/models.py:67
-msgid "Text"
-msgstr "النص"
-
-#: indexes/models.py:41
-msgid "Text that contains this word"
-msgstr "النص الذي يحتوي على هذه الكلمة"
-
-#: indexes/models.py:45
-msgid "Word that is found in this text"
-msgstr "الكلمة الموجودة في هذا النص"
-
-#: indexes/models.py:49 indexes/models.py:96
-msgid "Start"
-msgstr "البداية"
-
-#: indexes/models.py:49
-msgid "Start position of the word in the text"
-msgstr "بداية الكلمة في النص"
-
-#: indexes/models.py:52 indexes/models.py:99
-msgid "End"
-msgstr "النهاية"
-
-#: indexes/models.py:52
-msgid "End position of the word in the text"
-msgstr "نهاية الكلمة في النص"
-
-#: indexes/models.py:56
-#, python-format
-msgid "\"%(word)s\" in \"%(text)s\" [%(start)d:%(end)d]"
-msgstr "\"%(word)s\" في \"%(text)s\" [%(start)d:%(end)d]"
-
-#: indexes/models.py:64 indexes/models.py:92
-msgid "Token"
-msgstr "الوحدة"
-
-#: indexes/models.py:65
-msgid "Tokens"
-msgstr "الوحدات"
-
-#: indexes/models.py:68 main/models.py:74 main/models.py:159
-#: main/templates/main/search/search.html:48
-msgid "Content"
-msgstr "المحتوى"
-
-#: indexes/models.py:68
-msgid "Content of the token"
-msgstr "محتوى الوحدة"
-
-#: indexes/models.py:72
 msgid "Texts that contain this token"
 msgstr "النصوص التي تحتوي على هذه الوحدة"
 
-#: indexes/models.py:83
+#: indexes/models.py:27
 msgid "Text Token"
 msgstr "وحدة النص"
 
-#: indexes/models.py:84
+#: indexes/models.py:28
 msgid "Text Tokens"
 msgstr "وحدات النص"
 
-#: indexes/models.py:88
+#: indexes/models.py:32 main/models.py:67
+msgid "Text"
+msgstr "النص"
+
+#: indexes/models.py:32
 msgid "Text that contains this token"
 msgstr "النص الذي يحتوي على هذه الوحدة"
 
-#: indexes/models.py:92
+#: indexes/models.py:36
 msgid "Token that is found in this text"
 msgstr "الوحدة الموجودة في هذا النص"
 
-#: indexes/models.py:96
+#: indexes/models.py:40
+msgid "Start"
+msgstr "البداية"
+
+#: indexes/models.py:40
 msgid "Start position of the token in the text"
 msgstr "بداية الوحدة في النص"
 
-#: indexes/models.py:99
+#: indexes/models.py:43
+msgid "End"
+msgstr "النهاية"
+
+#: indexes/models.py:43
 msgid "End position of the token in the text"
 msgstr "نهاية الوحدة في النص"
 
-#: indexes/models.py:103
+#: indexes/models.py:47
 #, python-format
 msgid "\"%(token)s\" in \"%(text)s\" [%(start)d:%(end)d]"
 msgstr "\"%(token)s\" في \"%(text)s\" [%(start)d:%(end)d]"
@@ -257,8 +197,8 @@ msgstr "المدونة"
 msgid "Blogs"
 msgstr "المدونات"
 
-#: main/models.py:16 main/models.py:73
-#: main/templates/main/search/search.html:47
+#: main/models.py:16 main/models.py:73 main/models.py:172
+#: main/templates/main/search/search.html:48
 msgid "Title"
 msgstr "العنوان"
 
@@ -266,7 +206,7 @@ msgstr "العنوان"
 msgid "Blog title"
 msgstr "عنوان المدونة"
 
-#: main/models.py:17
+#: main/models.py:17 main/models.py:174
 msgid "Description"
 msgstr "الوصف"
 
@@ -367,7 +307,7 @@ msgstr "اسم المؤلف"
 msgid "Source type"
 msgstr "نوع المصدر"
 
-#: main/models.py:102
+#: main/models.py:102 main/models.py:183
 msgid "Added on"
 msgstr "أضيف في"
 
@@ -424,6 +364,48 @@ msgstr "الكلمات الوظيفية"
 #: main/models.py:159
 msgid "Content of the functional word"
 msgstr "محتوى الكلمة الوظيفية"
+
+#: main/models.py:169
+msgid "Announcement"
+msgstr ""
+
+#: main/models.py:170
+msgid "Announcements"
+msgstr ""
+
+#: main/models.py:172
+#, fuzzy
+#| msgid "Title of the text"
+msgid "Title of the announcement"
+msgstr "عنوان النص"
+
+#: main/models.py:174
+msgid "Description of the announcement"
+msgstr ""
+
+#: main/models.py:177
+msgid "Image link"
+msgstr ""
+
+#: main/models.py:177
+#, fuzzy
+#| msgid "Enter the name of the author."
+msgid "Link to the image of the announcement"
+msgstr "أدخل اسم المؤلف."
+
+#: main/models.py:180
+msgid "Link"
+msgstr ""
+
+#: main/models.py:180
+msgid "Link to the announcement"
+msgstr ""
+
+#: main/models.py:183
+#, fuzzy
+#| msgid "Date and time of adding the text to the database"
+msgid "Date and time of adding the announcement"
+msgstr "تاريخ ووقت إضافة النص إلى قاعدة البيانات"
 
 #: main/templates/main/base/base.html:8
 msgid "Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi"
@@ -502,36 +484,36 @@ msgstr "خيارات مدونات الكتب والقصص"
 msgid "No tags found"
 msgstr "لم يتم العثور على وسوم"
 
-#: main/templates/main/search/search.html:8
+#: main/templates/main/search/search.html:9
 msgid "Search in the database"
 msgstr "البحث في قاعدة البيانات"
 
-#: main/templates/main/search/search.html:10
+#: main/templates/main/search/search.html:11
 msgid "Available blogs"
 msgstr "المدونات المتاحة"
 
-#: main/templates/main/search/search.html:21
+#: main/templates/main/search/search.html:22
 msgid "Search results"
 msgstr "نتائج البحث"
 
-#: main/templates/main/search/search.html:30
+#: main/templates/main/search/search.html:31
 msgid "Expression frequency"
 msgstr "تكرار العبارة"
 
-#: main/templates/main/search/search.html:31
+#: main/templates/main/search/search.html:32
 msgid "Matched documents"
 msgstr "المستندات المطابقة"
 
-#: main/templates/main/search/search.html:32
+#: main/templates/main/search/search.html:33
 msgid "Current page"
 msgstr "الصفحة الحالية"
 
-#: main/templates/main/search/search.html:39
+#: main/templates/main/search/search.html:40
 #, python-format
 msgid "Results from %(f)s to %(t)s of %(c)s"
 msgstr "النتائج من %(f)s إلى %(t)s من أصل %(c)s"
 
-#: main/templates/main/search/search.html:54
+#: main/templates/main/search/search.html:55
 msgid "Query did not match any texts."
 msgstr "الاستعلام لم يطابق أي نصوص."
 
@@ -568,6 +550,55 @@ msgstr "لم يتم العثور على أيّة ألفاظ"
 #: main/templates/main/vocabulary/vocabulary_form.html:28
 msgid "Advanced options"
 msgstr "خيارات متقدمة"
+
+#~ msgid "Word"
+#~ msgstr "الكلمة"
+
+#~ msgid "Words"
+#~ msgstr "الكلمات"
+
+#~ msgid "Word that is found in texts"
+#~ msgstr "الكلمة الموجودة في النصوص"
+
+#~ msgid "Texts that contain this word"
+#~ msgstr "النصوص التي تحتوي على هذه الكلمة"
+
+#~ msgid "Stem"
+#~ msgstr "الجذع"
+
+#~ msgid "Prefix"
+#~ msgstr "السابقة"
+
+#~ msgid "Suffix"
+#~ msgstr "اللاحقة"
+
+#~ msgid "Part"
+#~ msgstr "الجزء"
+
+#~ msgid "Part of the word"
+#~ msgstr "جزء الكلمة"
+
+#~ msgid "Text Word"
+#~ msgstr "كلمة النص"
+
+#~ msgid "Text Words"
+#~ msgstr "كلمات النص"
+
+#~ msgid "Text that contains this word"
+#~ msgstr "النص الذي يحتوي على هذه الكلمة"
+
+#~ msgid "Word that is found in this text"
+#~ msgstr "الكلمة الموجودة في هذا النص"
+
+#~ msgid "Start position of the word in the text"
+#~ msgstr "بداية الكلمة في النص"
+
+#~ msgid "End position of the word in the text"
+#~ msgstr "نهاية الكلمة في النص"
+
+#, python-format
+#~ msgid "\"%(word)s\" in \"%(text)s\" [%(start)d:%(end)d]"
+#~ msgstr "\"%(word)s\" في \"%(text)s\" [%(start)d:%(end)d]"
 
 #~ msgid "Frequency"
 #~ msgstr "التكرار"
@@ -609,9 +640,6 @@ msgstr "خيارات متقدمة"
 
 #~ msgid "Name"
 #~ msgstr "الاسم"
-
-#~ msgid "Enter the name of the author."
-#~ msgstr "أدخل اسم المؤلف."
 
 #~ msgid "Select the sex of the author."
 #~ msgstr "حدد جنس المؤلف."

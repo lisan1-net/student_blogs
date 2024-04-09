@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.db.utils import IntegrityError
 from django.utils.translation import gettext as _
 
 from indexes.models import Token, TextToken
@@ -40,8 +41,11 @@ class Command(BaseCommand):
                 self.stdout.write(_('Indexing "%(token)s" [%(start)d:%(end)d]') % {
                     'token': word_content, 'start': start, 'end': end,
                 })
-                token, created = Token.objects.get_or_create(content=word_content)
-                TextToken.objects.get_or_create(text=text, token=token, start=start, end=end)
+                try:
+                    token, created = Token.objects.get_or_create(content=word_content)
+                    TextToken.objects.get_or_create(text=text, token=token, start=start, end=end)
+                except IntegrityError:
+                    self.stdout.write(self.style.ERROR(_('Failed to index "%(token)s"') % {'token': word_content}))
             text.words_indexed = True
             text.save()
         self.stdout.write(self.style.SUCCESS(_('Finished indexing words')))
