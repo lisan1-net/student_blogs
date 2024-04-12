@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-09 13:59+0000\n"
+"POT-Creation-Date: 2024-04-12 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,11 +152,11 @@ msgstr "غير محدد"
 msgid "Students blog"
 msgstr "مدونة الطلاب"
 
-#: main/forms.py:93
+#: main/forms.py:104
 msgid "Search query"
 msgstr "استعلام البحث"
 
-#: main/forms.py:94
+#: main/forms.py:105
 msgid ""
 "Enter an expression to search in the texts. Any expression in double quotes "
 "will be searched as a whole word."
@@ -164,27 +164,27 @@ msgstr ""
 "أدخل تعبيرًا للبحث في النصوص. أي تعبير بين علامتي اقتباس مزدوجة سيتم البحث "
 "عنه ككلمة كاملة."
 
-#: main/forms.py:100
+#: main/forms.py:111
 msgid "Tags"
 msgstr "الوسوم"
 
-#: main/forms.py:100
+#: main/forms.py:111
 msgid "Select the tags of the text."
 msgstr "حدد الوسوم الخاصة بالنص."
 
-#: main/forms.py:133
+#: main/forms.py:144
 msgid "The blog to search in"
 msgstr "حدد مدونة للبحث فيها"
 
-#: main/forms.py:139
+#: main/forms.py:150
 msgid "Include functional words"
 msgstr "تضمين الكلمات الوظيفية"
 
-#: main/forms.py:140
+#: main/forms.py:151
 msgid "Include the functional words in the search results."
 msgstr "تضمين الكلمات الوظيفية ('في'، 'على'، 'من'، ...) في نتائج البحث."
 
-#: main/forms.py:147
+#: main/forms.py:158
 msgid "Select a blog"
 msgstr "حدد مدونة"
 
@@ -197,7 +197,7 @@ msgstr "المدونة"
 msgid "Blogs"
 msgstr "المدونات"
 
-#: main/models.py:16 main/models.py:73 main/models.py:172
+#: main/models.py:16 main/models.py:73
 #: main/templates/main/search/search.html:48
 msgid "Title"
 msgstr "العنوان"
@@ -206,7 +206,7 @@ msgstr "العنوان"
 msgid "Blog title"
 msgstr "عنوان المدونة"
 
-#: main/models.py:17 main/models.py:174
+#: main/models.py:17
 msgid "Description"
 msgstr "الوصف"
 
@@ -251,11 +251,11 @@ msgstr "عنوان النص"
 msgid "Content of the text"
 msgstr "محتوى النص"
 
-#: main/models.py:76
+#: main/models.py:76 main/models.py:96
 msgid "Type"
 msgstr "النوع"
 
-#: main/models.py:76
+#: main/models.py:76 main/models.py:96
 msgid "Type of the text"
 msgstr "نوع النص"
 
@@ -299,15 +299,15 @@ msgstr "المدينة"
 msgid "City of the student"
 msgstr "مدينة الطالب"
 
-#: main/models.py:96
-msgid "Author name"
-msgstr "اسم المؤلف"
+#: main/models.py:99
+msgid "Source"
+msgstr "المصدر"
 
 #: main/models.py:99
 msgid "Source type"
 msgstr "نوع المصدر"
 
-#: main/models.py:102 main/models.py:183
+#: main/models.py:102
 msgid "Added on"
 msgstr "أضيف في"
 
@@ -364,48 +364,6 @@ msgstr "الكلمات الوظيفية"
 #: main/models.py:159
 msgid "Content of the functional word"
 msgstr "محتوى الكلمة الوظيفية"
-
-#: main/models.py:169
-msgid "Announcement"
-msgstr ""
-
-#: main/models.py:170
-msgid "Announcements"
-msgstr ""
-
-#: main/models.py:172
-#, fuzzy
-#| msgid "Title of the text"
-msgid "Title of the announcement"
-msgstr "عنوان النص"
-
-#: main/models.py:174
-msgid "Description of the announcement"
-msgstr ""
-
-#: main/models.py:177
-msgid "Image link"
-msgstr ""
-
-#: main/models.py:177
-#, fuzzy
-#| msgid "Enter the name of the author."
-msgid "Link to the image of the announcement"
-msgstr "أدخل اسم المؤلف."
-
-#: main/models.py:180
-msgid "Link"
-msgstr ""
-
-#: main/models.py:180
-msgid "Link to the announcement"
-msgstr ""
-
-#: main/models.py:183
-#, fuzzy
-#| msgid "Date and time of adding the text to the database"
-msgid "Date and time of adding the announcement"
-msgstr "تاريخ ووقت إضافة النص إلى قاعدة البيانات"
 
 #: main/templates/main/base/base.html:8
 msgid "Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi"
@@ -550,6 +508,24 @@ msgstr "لم يتم العثور على أيّة ألفاظ"
 #: main/templates/main/vocabulary/vocabulary_form.html:28
 msgid "Advanced options"
 msgstr "خيارات متقدمة"
+
+#~ msgid "Author name"
+#~ msgstr "اسم المؤلف"
+
+#, fuzzy
+#~| msgid "Title of the text"
+#~ msgid "Title of the announcement"
+#~ msgstr "عنوان النص"
+
+#, fuzzy
+#~| msgid "Enter the name of the author."
+#~ msgid "Link to the image of the announcement"
+#~ msgstr "أدخل اسم المؤلف."
+
+#, fuzzy
+#~| msgid "Date and time of adding the text to the database"
+#~ msgid "Date and time of adding the announcement"
+#~ msgstr "تاريخ ووقت إضافة النص إلى قاعدة البيانات"
 
 #~ msgid "Word"
 #~ msgstr "الكلمة"

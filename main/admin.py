@@ -26,8 +26,8 @@ class TextAdmin(admin.ModelAdmin):
     list_display = (
         'title', 'type', 'student_number', 'sex', 'level', 'school', 'city', 'author_name', 'source_type',
     )
-    list_filter = tuple(e for e in list_display if e not in ('author_name', 'title'))
-    search_fields = ('title', 'content', 'school', 'city', 'author_name')
+    list_filter = tuple(e for e in list_display if e not in ('title', ))
+    search_fields = ('title', 'content', 'school', 'city')
 
 
 @admin.register(FunctionalWord)

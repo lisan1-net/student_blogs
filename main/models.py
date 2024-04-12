@@ -92,11 +92,11 @@ class Text(models.Model):
     city = models.CharField(
         max_length=100, verbose_name=_('City'), help_text=_('City of the student'), null=True, blank=True
     )
-    author_name = models.CharField(
-        max_length=100, verbose_name=_('Author name'), help_text=_('Author name'), null=True, blank=True,
+    author_name = models.CharField(  # Has been changed to type.
+        max_length=100, verbose_name=_('Type'), help_text=_('Type of the text'), null=True, blank=True,
     )
-    source_type = models.CharField(
-        max_length=100, verbose_name=_('Source type'), help_text=_('Source type'), null=True, blank=True,
+    source_type = models.CharField(  # Has been changed to source.
+        max_length=100, verbose_name=_('Source'), help_text=_('Source type'), null=True, blank=True,
     )
     added = models.DateTimeField(
         auto_now_add=True, verbose_name=_('Added on'), help_text=_('Date and time of adding the text to the database')

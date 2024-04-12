@@ -7,10 +7,12 @@
                     <i class="fa-solid fa-folder-open"></i>
                     {{ result.text.blog }}
                 </span>
-                <span class="badge badge-secondary mr-1">
-                    {{ result.text.sex|sex_icon }}
-                    {{ result.text.get_student_number_display }}
-                </span>
+                {% if result.text.sex and result.text.student_number %}
+                    <span class="badge badge-secondary mr-1">
+                        {{ result.text.sex|sex_icon }}
+                        {{ result.text.get_student_number_display }}
+                    </span>
+                {% endif %}
             </div>
             <div class="card-body lead">
                 <div class="card-text">
@@ -44,13 +46,13 @@
                     </span>
                 {% endif %}
                 {% if result.text.author_name %}
-                    <span class="badge badge-light mr-1">
+                    <span class="badge badge-info mr-1">
                         <i class="fa-solid fa-user-pen"></i>
                         {{ result.text.author_name }}
                     </span>
                 {% endif %}
                 {% if result.text.source_type %}
-                    <span class="badge badge-light mr-1">
+                    <span class="badge badge-info mr-1">
                         <i class="fa-solid fa-file"></i>
                         {{ result.text.source_type }}
                     </span>

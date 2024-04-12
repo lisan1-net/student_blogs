@@ -5,7 +5,9 @@
     <div class="card mt-3">
         <div class="card-header text-center">
             <h4>{{ text.title }}</h4>
+            {% if text.student_number and text.sex %}
             <h6 class="text-muted">{{ text.sex|sex_icon }} {{ text.get_student_number_display }}</h6>
+            {% endif %}
             <hr>
             <small class="text-muted row">
                 {% if text.city %}
@@ -32,16 +34,16 @@
                         {{ text.get_type_display }}
                     </span>
                 {% endif %}
-                {% if result.text.author_name %}
+                {% if text.author_name %}
                     <span class="col">
                         <i class="fa-solid fa-user-pen"></i>
-                        {{ result.text.author_name }}
+                        {{ text.author_name }}
                     </span>
                 {% endif %}
-                {% if result.text.source_type %}
+                {% if text.source_type %}
                     <span class="col">
                         <i class="fa-solid fa-file"></i>
-                        {{ result.text.source_type }}
+                        {{ text.source_type }}
                     </span>
                 {% endif %}
             </small>

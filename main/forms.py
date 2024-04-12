@@ -10,27 +10,34 @@ from main.models import Blog, Text
 
 
 def get_schools():
-    return Text.objects.values_list('school', 'school').distinct()
+    return Text.objects.values_list('school', 'school').distinct().order_by('school')
 
 
 def get_cities():
-    return Text.objects.values_list('city', 'city').distinct()
+    return Text.objects.values_list('city', 'city').distinct().order_by('city')
 
 
 def with_empty(choices_function):
     def wrapper():
-        return [(None, '')] + list(choices_function())
+        choices = list(map(lambda x: (None, '') if x[0] is None else x, choices_function()))
+        if all(map(lambda x: x[0], choices)):
+            choices.insert(0, (None, ''))
+        return choices
     return wrapper
 
 
 def get_blogs():
-    for _id, title in Blog.objects.values_list('id', 'title'):
+    for _id, title in Blog.objects.values_list('id', 'title').order_by('title'):
         blog = Blog.objects.get(id=_id)
         yield _id, f'{title} - {blog.get_word_count_display()}'
 
 
 def get_source_types():
-    return Text.objects.values_list('source_type', 'source_type').distinct()
+    return Text.objects.values_list('source_type', 'source_type').distinct().order_by('source_type')
+
+
+def get_author_names():
+    return Text.objects.values_list('author_name', 'author_name').distinct().order_by('author_name')
 
 
 class SearchForm(forms.ModelForm):
@@ -41,20 +48,24 @@ class SearchForm(forms.ModelForm):
         def formfield_for_dbfield(db_field, required=False, **kwargs):
             if isinstance(db_field, models.IntegerField):
                 kwargs['min_value'] = 1
-            if db_field.name == 'school':
-                form_field = forms.ChoiceField(choices=with_empty(get_schools), required=required,
-                                               label=db_field.verbose_name, help_text=db_field.help_text)
-            elif db_field.name == 'city':
-                form_field = forms.ChoiceField(choices=with_empty(get_cities), required=required,
-                                               label=db_field.verbose_name, help_text=db_field.help_text)
-            elif db_field.name == 'blog':
-                form_field = forms.ChoiceField(choices=with_empty(get_blogs), required=required,
-                                               label=db_field.verbose_name, help_text=db_field.help_text)
-            elif db_field.name == 'source_type':
-                form_field = forms.ChoiceField(choices=with_empty(get_source_types), required=required,
-                                               label=db_field.verbose_name, help_text=db_field.help_text)
-            else:
-                form_field = db_field.formfield(required=required, **kwargs)
+            match db_field.name:
+                case 'school':
+                    form_field = forms.ChoiceField(choices=with_empty(get_schools), required=required,
+                                                   label=db_field.verbose_name, help_text=db_field.help_text)
+                case 'city':
+                    form_field = forms.ChoiceField(choices=with_empty(get_cities), required=required,
+                                                   label=db_field.verbose_name, help_text=db_field.help_text)
+                case 'blog':
+                    form_field = forms.ChoiceField(choices=with_empty(get_blogs), required=required,
+                                                   label=db_field.verbose_name, help_text=db_field.help_text)
+                case 'source_type':
+                    form_field = forms.ChoiceField(choices=with_empty(get_source_types), required=required,
+                                                   label=db_field.verbose_name, help_text=db_field.help_text)
+                case 'author_name':
+                    form_field = forms.ChoiceField(choices=with_empty(get_author_names), required=required,
+                                                   label=db_field.verbose_name, help_text=db_field.help_text)
+                case other:
+                    form_field = db_field.formfield(required=required, **kwargs)
             if form_field:
                 form_field.widget.attrs.update({
                     'class': 'form-control',
