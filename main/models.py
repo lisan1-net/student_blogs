@@ -38,9 +38,9 @@ class Blog(models.Model):
         return self.text_set.values('school').distinct().count()
 
     def student_count_per_level(self):
-        return self.text_set.values('level').annotate(student_count=models.Count('student_number')).values_list(
-            'level', 'student_count'
-        )
+        return self.text_set.values('level').exclude(level__isnull=True).annotate(
+            student_count=models.Count('student_number')
+        ).order_by('level').values_list('level', 'student_count')
 
     def most_frequent_words(self, limit=10):
         return TextToken.objects.filter(text__blog=self).exclude(

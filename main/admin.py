@@ -26,7 +26,7 @@ class TextAdmin(admin.ModelAdmin):
     list_display = (
         'title', 'type', 'student_number', 'sex', 'level', 'school', 'city', 'author_name', 'source_type',
     )
-    list_filter = tuple(e for e in list_display if e not in ('title', ))
+    list_filter = tuple(e for e in list_display if e not in ('title', )) + ('blog', 'tags')
     search_fields = ('title', 'content', 'school', 'city')
 
 
