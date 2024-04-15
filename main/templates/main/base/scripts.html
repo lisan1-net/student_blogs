@@ -12,3 +12,17 @@
         $('[data-toggle="tooltip"]').tooltip()
     })
 </script>
+
+<script>
+$(function () {
+    $('form').submit(function () {
+        let $submitButton = $('button[type="submit"]');
+        $submitButton.children().addClass('searching');
+
+        setTimeout(function() {
+            $submitButton.attr('disabled', 'disabled');
+            $('input,select').attr('disabled', 'disabled');
+        }, 0);
+    });
+})
+</script>
