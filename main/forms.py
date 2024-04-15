@@ -111,16 +111,18 @@ class SearchForm(forms.ModelForm):
         label=_('Tags'), help_text=_('Select the tags of the text.')
     )
 
+    student_blog_field_names = ('type', 'student_number', 'sex', 'level', 'city', 'school')
+    story_blog_field_names = ('source_type', 'author_name')
+
     @property
     def student_blog_fields(self):
         for field_name in self.fields:
-            if field_name in ('search_query', 'blog', 'tags', 'author_name', 'source_type'):
-                continue
-            yield self[field_name]
+            if field_name in self.student_blog_field_names:
+                yield self[field_name]
 
     @property
     def story_blog_fields(self):
-        for field_name in filter(lambda f: f in ('author_name', 'source_type'), self.fields):
+        for field_name in filter(lambda f: f in self.story_blog_field_names, self.fields):
             yield self[field_name]
 
     def clean(self):
