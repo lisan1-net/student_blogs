@@ -38,6 +38,8 @@ class Command(BaseCommand):
                 if end < last_index_position:
                     continue
                 word_content = normalize(word_content)
+                if not word_content:
+                    continue
                 self.stdout.write(_('Indexing "%(token)s" [%(start)d:%(end)d]') % {
                     'token': word_content, 'start': start, 'end': end,
                 })
