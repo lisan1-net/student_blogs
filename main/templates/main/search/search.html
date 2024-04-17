@@ -3,6 +3,7 @@
 {% load search %}
 
 {% block content %}
+    {% include 'main/common/announcements.html' %}
     <div class="jumbotron mt-3 pt-3 pb-1 text-center">
         <h1 class="mb-3">{% get_app_name %}</h1>
         <h3 class="mb-3">{% translate 'Search in the database' %}</h3>

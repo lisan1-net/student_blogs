@@ -1,0 +1,51 @@
+{% load i18n %}
+{% load humanize %}
+<div class="carousel slide" data-ride="carousel" id="carouselExampleIndicators" data-interval="3000">
+    <ol class="carousel-indicators mb-1">
+        {% for announcement in announcements %}
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" class="bg-info {% if forloop.first %}active{% endif %}"></li>
+        {% endfor %}
+    </ol>
+    <div class="card bg-info text-white">
+        <div class="card-header p-2">
+            <h6 class="card-title m-0">
+                <i class="fas fa-bullhorn fa-flip-horizontal"></i>
+                {% translate "Announcements" %}
+                <span class="badge badge-light badge-pill pt-1">{{ announcements|length }}</span>
+            </h6>
+        </div>
+        <div class="carousel-inner">
+            {% for announcement in announcements %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="row no-gutters bg-light text-info overflow-auto" style="height: 125px">
+                        {% if announcement.image_link %}
+                            <div class="col-2 text-center">
+                                <img src="{{ announcement.image_link }}" class="card-img" alt="{{ announcement.title }}" style="aspect-ratio: 1; max-width: 125px">
+                            </div>
+                            <div class="col-10">
+                        {% else %}
+                            <div class="col-12">
+                        {% endif %}
+                                <div class="card-body p-2">
+                                    <h5 class="card-title d-flex justify-content-between">
+                                        <span>{{ announcement.title }}</span>
+                                        <small class="text-muted">{{ announcement.posted_on }}</small>
+                                    </h5>
+                                    {% if announcement.description %}
+                                    <p class="card-text">
+                                        {{ announcement.description }}
+                                        {% if announcement.link %}
+                                            <a href="{{ announcement.link }}" class="stretched-link btn btn-info btn-sm">
+                                                {% translate 'More details' %}
+                                            </a>
+                                        {% endif %}
+                                    </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

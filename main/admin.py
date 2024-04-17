@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.utils.translation import gettext_lazy as _
 
-from main.models import Blog, Text, FunctionalWord
+from main.models import Blog, Text, FunctionalWord, Announcement
 
 ModelAdmin.list_per_page = 50
 
@@ -35,3 +35,11 @@ class FunctionalWordAdmin(admin.ModelAdmin):
 
     search_fields = ('content',)
     list_display = ('content',)
+
+
+@admin.register(Announcement)
+class AnnouncementAdmin(admin.ModelAdmin):
+
+    search_fields = ('title', 'description')
+    list_display = ('title', 'link', 'posted_on', 'is_active')
+    list_filter = ('is_active', 'posted_on')

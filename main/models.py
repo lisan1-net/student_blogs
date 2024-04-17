@@ -1,5 +1,6 @@
 from django.core import validators
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _, pgettext
 from taggit.managers import TaggableManager
 
@@ -161,3 +162,32 @@ class FunctionalWord(models.Model):
 
     def __str__(self):
         return self.content
+
+
+class Announcement(models.Model):
+
+    class Meta:
+        verbose_name = _('Announcement')
+        verbose_name_plural = _('Announcements')
+        ordering = ('-posted_on',)
+
+    title = models.CharField(max_length=200, verbose_name=_('Title'), help_text=_('Title of the announcement'))
+    description = models.TextField(
+        verbose_name=_('Description'), help_text=_('Description of the announcement'), null=True, blank=True
+    )
+    image_link = models.URLField(
+        verbose_name=_('Image link'), help_text=_('Link to the image of the announcement'), null=True, blank=True
+    )
+    link = models.URLField(
+        verbose_name=_('Link'), help_text=_('Link to the announcement'), null=True, blank=True
+    )
+    posted_on = models.DateTimeField(
+        verbose_name=_('Added on'), help_text=_('Date and time of adding the announcement'),
+        default=timezone.now
+    )
+    is_active = models.BooleanField(
+        default=True, verbose_name=_('Active'), help_text=_('Indicates whether the announcement is shown or not')
+    )
+
+    def __str__(self):
+        return self.title

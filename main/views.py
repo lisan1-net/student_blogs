@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from indexes.models import TextToken
 from indexes.utils import normalize
 from main.forms import SearchForm, VocabularyForm
-from main.models import Text, Blog, FunctionalWord
+from main.models import Text, Blog, FunctionalWord, Announcement
 from main.utils import find_search_results
 
 
@@ -64,7 +64,9 @@ def home(request):
     return render(
         request, 'main/search/search.html',
         context={'form': form, 'query': query, 'results': results, 'frequency': in_content_frequency,
-                 'matched_text_count': matched_texts_count, 'blogs': Blog.objects.all()}
+                 'matched_text_count': matched_texts_count, 'blogs': Blog.objects.all(),
+                 'announcements': Announcement.objects.filter(is_active=True),
+        }
     )
 
 
@@ -76,8 +78,10 @@ def text(request, pk):
 def vocabulary(request):
     vocabulary_form = VocabularyForm(request.GET or None)
     page = None
+    blog = None
     if vocabulary_form.is_valid():
-        filter_query = Q(blog=vocabulary_form.cleaned_data['blog'])
+        blog = vocabulary_form.cleaned_data['blog']
+        filter_query = Q(blog=blog)
         filter_query &= build_common_filter_query(vocabulary_form)
         texts = Text.objects.filter(filter_query).distinct()
         words = TextToken.objects.filter(text__in=texts).values('token__content')
@@ -90,7 +94,7 @@ def vocabulary(request):
         paginator = Paginator(word_frequencies, 60)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/vocabulary/vocabulary.html', context={
-        'form': vocabulary_form, 'frequencies': page
+        'form': vocabulary_form, 'frequencies': page, 'blog': blog
     })
 
 
