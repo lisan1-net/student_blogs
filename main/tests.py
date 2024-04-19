@@ -21,7 +21,7 @@ class TestWebApp(TestCase):
 
     def test_perform_search(self):
         blog = self.Blog.objects.first()
-        query = 'العظيم'
+        query = 'العَظِيمُ'
         response = self.client.get('/', {'search_query': query, 'blog': blog.pk})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/search/search.html')
@@ -58,7 +58,7 @@ class TestWebApp(TestCase):
         text = self.Text.objects.first()
         start = 10
         end = 20
-        highlighted = text.content_normalized[start:end]
+        highlighted = text.content[start:end]
         response = self.client.get(
             f"{reverse('text', args=[text.pk])}?start={start}&end={end}"
         )

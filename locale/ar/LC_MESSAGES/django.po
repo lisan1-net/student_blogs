@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-17 14:51+0000\n"
+"POT-Creation-Date: 2024-04-19 10:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -409,6 +409,30 @@ msgstr "نشط"
 msgid "Indicates whether the announcement is shown or not"
 msgstr "يشير إلى ما إذا كان الإعلان معروضًا أم لا"
 
+#: main/models.py:199
+msgid "Dictionary Definition"
+msgstr "تعريف المعجم"
+
+#: main/models.py:200
+msgid "Dictionary Definitions"
+msgstr "تعاريف المعجم"
+
+#: main/models.py:202
+msgid "Term"
+msgstr "المصطلح"
+
+#: main/models.py:202
+msgid "Term in the dictionary"
+msgstr "المصطلح في المعجم"
+
+#: main/models.py:203
+msgid "Definition"
+msgstr "التعريف"
+
+#: main/models.py:203
+msgid "Definition of the term"
+msgstr "تعريف المصطلح"
+
 #: main/templates/main/base/base.html:8
 msgid "Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi"
 msgstr "حقوق النشر 2024. جميع الحقوق محفوظة. د. عبد العزيز عبد الله المهيوبي"
@@ -430,7 +454,7 @@ msgstr "البحث"
 msgid "Vocabulary"
 msgstr "شيوع الألفاظ"
 
-#: main/templates/main/common/announcements.html:38
+#: main/templates/main/common/announcements.html:39
 msgid "More details"
 msgstr "المزيد من التفاصيل"
 

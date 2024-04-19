@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _, pgettext
 from taggit.managers import TaggableManager
 
 from indexes.models import TextToken
-from indexes.utils import normalize
 
 
 class Blog(models.Model):
@@ -116,14 +115,6 @@ class Text(models.Model):
         return self.title
 
     @property
-    def title_normalized(self):
-        return normalize(self.title)
-
-    @property
-    def content_normalized(self):
-        return normalize(self.content)
-
-    @property
     def index_progress(self):
         return TextToken.objects.filter(text=self).aggregate(models.Max('end')).get('end__max') or 0
 
@@ -191,3 +182,16 @@ class Announcement(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class DictionaryDefinition(models.Model):
+
+    class Meta:
+        verbose_name = _('Dictionary Definition')
+        verbose_name_plural = _('Dictionary Definitions')
+
+    term = models.CharField(max_length=50, verbose_name=_('Term'), help_text=_('Term in the dictionary'))
+    definition = models.TextField(verbose_name=_('Definition'), help_text=_('Definition of the term'))
+
+    def __str__(self):
+        return self.term

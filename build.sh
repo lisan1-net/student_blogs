@@ -3,7 +3,7 @@
 set -o errexit
 
 # Install packages
-poetry install
+poetry install --without=dev
 
 # Convert static asset files
 python manage.py collectstatic --no-input

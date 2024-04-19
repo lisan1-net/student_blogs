@@ -1,17 +1,29 @@
 import re
-from typing import Iterable
 from functools import lru_cache
+from typing import Iterable
+
+from pyarabic.araby import DIACRITICS
+
+from indexes.utils import normalize
+
+
+@lru_cache(64)
+def get_diacritics_insensitive_regexp(query: str) -> re.Pattern:
+    query = normalize(query)
+    return re.compile(''.join(fr'{letter}[{"".join(DIACRITICS)}]*' for letter in query), re.IGNORECASE)
 
 
 def find_search_query_position(text: str, query: str, start_index=0) -> tuple[int, int]:
     start = -1
     if query.startswith('"') and query.endswith('"'):
         query = query[1:-1]
-        match = re.search(fr'\b{query}\b', text[start_index:])
+        match = re.search(fr'\b{get_diacritics_insensitive_regexp(query).pattern}\b', text[start_index:])
         if match:
             start = match.start() + start_index
     else:
-        start = text.find(query, start_index)
+        match = re.search(get_diacritics_insensitive_regexp(query), text[start_index:])
+        if match:
+            start = match.start() + start_index
     if start == -1:
         return -1, -1
     end = start + len(query)
@@ -34,13 +46,7 @@ def find_search_results(query: str, texts: Iterable) -> tuple[list[dict], int]:
     in_content_frequency = 0
     results = []
     for text in texts:
-        for positions in find_all_search_query_positions(text.content_normalized, query):
+        for positions in find_all_search_query_positions(text.content, query):
             results.append({'text': text, 'start': positions[0], 'end': positions[1]})
             in_content_frequency += 1
-    # words = split_words(query)
-    # if len(words) > 1:
-    #     for word in words:
-    #         r, c = find_search_results(word, texts)
-    #         results += r
-    #         in_content_frequency += c
     return results, in_content_frequency
