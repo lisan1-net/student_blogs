@@ -2,7 +2,6 @@ from functools import lru_cache
 
 from pyarabic.araby import (tokenize, strip_diacritics, strip_tatweel, strip_tashkeel, is_arabicword, COMMA, SEMICOLON,
                             QUESTION)
-from tashaphyne.stemming import ArabicLightStemmer
 
 
 @lru_cache(128)
@@ -32,17 +31,3 @@ def is_arabic_word(word):
 @lru_cache(256)
 def normalize(text: str) -> str:
     return strip_tashkeel(strip_tatweel(strip_diacritics(text.lower())))
-
-
-@lru_cache(256)
-def segment(word: str) -> tuple[str, str, str]:
-    word = normalize(word)
-    stem = ArabicLightStemmer().light_stem(word)
-    try:
-        if stem:
-            prefix, suffix = word.split(stem)
-        else:
-            prefix = suffix = ''
-    except ValueError:
-        prefix = suffix = ''
-    return prefix, stem, suffix
