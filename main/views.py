@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.db import connections
+from django.db import connections, OperationalError
 from django.db.models import Q, Count
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -104,5 +104,8 @@ def search_widget(request):
 
 
 def health_check(request):
-    connections['default'].cursor().execute('SELECT 1')
-    return HttpResponse('OK', content_type='text/plain', status=200)
+    try:
+        connections['default'].cursor().execute('SELECT 1')
+        return HttpResponse('OK', content_type='text/plain', status=200)
+    except OperationalError:
+        return HttpResponse('Database not available', content_type='text/plain', status=503)
