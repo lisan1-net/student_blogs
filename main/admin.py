@@ -49,4 +49,4 @@ class AnnouncementAdmin(admin.ModelAdmin):
 class DictionaryDefinitionAdmin(admin.ModelAdmin):
 
     search_fields = ('term', 'definition')
-    list_filter = search_fields
+    list_display = search_fields
