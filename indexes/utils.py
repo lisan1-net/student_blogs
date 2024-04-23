@@ -19,13 +19,14 @@ def get_words_ranges(text: str) -> list[tuple[str, tuple[int, int]]]:
     return words_ranges
 
 
-@lru_cache(maxsize=1024)
-def split_words(text):
-    return tokenize(text, conditions=is_arabic_word)
-
-
+@lru_cache(1024)
 def is_arabic_word(word):
     return is_arabicword(word) and all(c not in word for c in (COMMA, SEMICOLON, QUESTION))
+
+
+@lru_cache(maxsize=1024)
+def split_words(text, conditions=is_arabic_word):
+    return tokenize(text, conditions=conditions or [])
 
 
 @lru_cache(256)

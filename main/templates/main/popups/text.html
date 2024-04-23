@@ -50,7 +50,7 @@
         </div>
         <div class="card-body">
             <div class="card-text">
-                {% highlight_range text.content request.GET.start request.GET.end surrounding_words=50 as content %}
+                {% highlight_range text.content request.GET.start request.GET.end text.pk surrounding_words=50 link=False as content %}
                 {{ content|paragraphs_wrap|safe }}
             </div>
         </div>
