@@ -1,0 +1,7 @@
+<div class="form-group form-check">
+    {{ form.include_functional_words }}
+    <label class="form-check-label" for="{{ form.include_functional_words.id_for_label }}">
+        {{ form.include_functional_words.label }}
+    </label>
+</div>
+{% include 'main/common/error_list.html' with errors=form.include_functional_words.errors %}

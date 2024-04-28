@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-19 10:33+0000\n"
+"POT-Creation-Date: 2024-04-27 06:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,7 +85,7 @@ msgstr "الوحدة"
 msgid "Tokens"
 msgstr "الوحدات"
 
-#: indexes/models.py:12 main/models.py:75 main/models.py:160
+#: indexes/models.py:12 main/models.py:74 main/models.py:151
 #: main/templates/main/search/search.html:49
 msgid "Content"
 msgstr "المحتوى"
@@ -94,7 +94,7 @@ msgstr "المحتوى"
 msgid "Content of the token"
 msgstr "محتوى الوحدة"
 
-#: indexes/models.py:16 main/models.py:69
+#: indexes/models.py:16 main/models.py:68
 #: main/templates/main/common/blog_card.html:19
 msgid "Texts"
 msgstr "النصوص"
@@ -111,7 +111,7 @@ msgstr "وحدة النص"
 msgid "Text Tokens"
 msgstr "وحدات النص"
 
-#: indexes/models.py:32 main/models.py:68
+#: indexes/models.py:32 main/models.py:67
 msgid "Text"
 msgstr "النص"
 
@@ -188,248 +188,248 @@ msgstr "تضمين الكلمات الوظيفية ('في'، 'على'، 'من'،
 msgid "Select a blog"
 msgstr "حدد مدونة"
 
-#: main/models.py:14 main/models.py:72
+#: main/models.py:13 main/models.py:71
 #: main/templates/main/search/search_form.html:24
 msgid "Blog"
 msgstr "المدونة"
 
-#: main/models.py:15
+#: main/models.py:14
 msgid "Blogs"
 msgstr "المدونات"
 
-#: main/models.py:17 main/models.py:74 main/models.py:174
+#: main/models.py:16 main/models.py:73 main/models.py:165
 #: main/templates/main/search/search.html:48
 msgid "Title"
 msgstr "العنوان"
 
-#: main/models.py:17
+#: main/models.py:16
 msgid "Blog title"
 msgstr "عنوان المدونة"
 
-#: main/models.py:18 main/models.py:176
+#: main/models.py:17 main/models.py:167
 msgid "Description"
 msgstr "الوصف"
 
-#: main/models.py:18
+#: main/models.py:17
 msgid "Blog description"
 msgstr "وصف المدونة"
 
-#: main/models.py:31
+#: main/models.py:30
 #, python-format
 msgid "Words: %(words)d, Unique words: %(unique)d"
 msgstr "الكلمات: %(words)d، الكلمات بدون تكرار: %(unique)d"
 
-#: main/models.py:60
+#: main/models.py:59
 msgid "Spoken"
 msgstr "منطوق"
 
-#: main/models.py:61
+#: main/models.py:60
 msgid "Written"
 msgstr "مكتوب"
 
-#: main/models.py:62
+#: main/models.py:61
 msgid "Notebooks"
 msgstr "كراسات"
 
-#: main/models.py:65
+#: main/models.py:64
 msgid "Male"
 msgstr "ذكر"
 
-#: main/models.py:65
+#: main/models.py:64
 msgid "Female"
 msgstr "أنثى"
 
-#: main/models.py:72
+#: main/models.py:71
 msgid "Blog that contains this text"
 msgstr "المدونة التي تحتوي على هذا النص"
 
-#: main/models.py:74
+#: main/models.py:73
 msgid "Title of the text"
 msgstr "عنوان النص"
 
-#: main/models.py:75
+#: main/models.py:74
 msgid "Content of the text"
 msgstr "محتوى النص"
 
-#: main/models.py:77 main/models.py:97
+#: main/models.py:76 main/models.py:96
 msgid "Type"
 msgstr "النوع"
 
-#: main/models.py:77 main/models.py:97
+#: main/models.py:76 main/models.py:96
 msgid "Type of the text"
 msgstr "نوع النص"
 
-#: main/models.py:80
+#: main/models.py:79
 msgid "Number"
 msgstr "الرقم"
 
-#: main/models.py:80
+#: main/models.py:79
 msgid "Number of the student"
 msgstr "رقم الطالب"
 
-#: main/models.py:84
+#: main/models.py:83
 msgid "Sex"
 msgstr "الجنس"
 
-#: main/models.py:84
+#: main/models.py:83
 msgid "Student sex"
 msgstr "جنس الطالب"
 
-#: main/models.py:87 main/templates/main/common/blog_card.html:45
+#: main/models.py:86 main/templates/main/common/blog_card.html:45
 msgid "Level"
 msgstr "الصف"
 
-#: main/models.py:87
+#: main/models.py:86
 msgid "Level of the student"
 msgstr "صف الطالب"
 
-#: main/models.py:91
+#: main/models.py:90
 msgid "School"
 msgstr "المدرسة"
 
-#: main/models.py:91
+#: main/models.py:90
 msgid "School of the student"
 msgstr "مدرسة الطالب"
 
-#: main/models.py:94
+#: main/models.py:93
 msgid "City"
 msgstr "المدينة"
 
-#: main/models.py:94
+#: main/models.py:93
 msgid "City of the student"
 msgstr "مدينة الطالب"
 
-#: main/models.py:100
+#: main/models.py:99
 msgid "Source"
 msgstr "المصدر"
 
-#: main/models.py:100
+#: main/models.py:99
 msgid "Source type"
 msgstr "نوع المصدر"
 
-#: main/models.py:103 main/models.py:185
+#: main/models.py:102 main/models.py:176
 msgid "Added on"
 msgstr "أضيف في"
 
-#: main/models.py:103
+#: main/models.py:102
 msgid "Date and time of adding the text to the database"
 msgstr "تاريخ ووقت إضافة النص إلى قاعدة البيانات"
 
-#: main/models.py:106
+#: main/models.py:105
 msgid "Last updated on"
 msgstr "آخر تحديث في"
 
-#: main/models.py:107
+#: main/models.py:106
 msgid "Date and time of the last update of the text in the database"
 msgstr "تاريخ ووقت آخر تحديث للنص في قاعدة البيانات"
 
-#: main/models.py:111
+#: main/models.py:110
 msgid "Words indexed"
 msgstr "الكلمات مفهرسة"
 
-#: main/models.py:112
+#: main/models.py:111
 msgid "Indicates whether the words of this text are indexed or not"
 msgstr "يشير إلى ما إذا كانت كلمات هذا النص مفهرسة أم لا"
 
-#: main/models.py:142
+#: main/models.py:133
 #, python-format
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:144
+#: main/models.py:135
 #, python-format
 msgctxt "Male"
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:146
+#: main/models.py:137
 #, python-format
 msgctxt "Female"
 msgid "Student number %(number)d"
 msgstr "الطالبة رقم %(number)d"
 
-#: main/models.py:150
+#: main/models.py:141
 #, python-format
 msgid "Level %(level)d"
 msgstr "الصف %(level)d"
 
-#: main/models.py:156
+#: main/models.py:147
 msgid "Functional Word"
 msgstr "الكلمة الوظيفية"
 
-#: main/models.py:157
+#: main/models.py:148
 msgid "Functional Words"
 msgstr "الكلمات الوظيفية"
 
-#: main/models.py:160
+#: main/models.py:151
 msgid "Content of the functional word"
 msgstr "محتوى الكلمة الوظيفية"
 
-#: main/models.py:170
+#: main/models.py:161
 msgid "Announcement"
 msgstr "الإعلان"
 
-#: main/models.py:171 main/templates/main/common/announcements.html:13
+#: main/models.py:162 main/templates/main/common/announcements.html:13
 msgid "Announcements"
 msgstr "الإعلانات"
 
-#: main/models.py:174
+#: main/models.py:165
 msgid "Title of the announcement"
 msgstr "عنوان الإعلان"
 
-#: main/models.py:176
+#: main/models.py:167
 msgid "Description of the announcement"
 msgstr "وصف الإعلان"
 
-#: main/models.py:179
+#: main/models.py:170
 msgid "Image link"
 msgstr "رابط الصورة"
 
-#: main/models.py:179
+#: main/models.py:170
 msgid "Link to the image of the announcement"
 msgstr "رابط صورة الإعلان"
 
-#: main/models.py:182
+#: main/models.py:173
 msgid "Link"
 msgstr "الرابط"
 
-#: main/models.py:182
+#: main/models.py:173
 msgid "Link to the announcement"
 msgstr "رابط الإعلان"
 
-#: main/models.py:185
+#: main/models.py:176
 msgid "Date and time of adding the announcement"
 msgstr "تاريخ ووقت إضافة الإعلان"
 
-#: main/models.py:189
+#: main/models.py:180
 msgid "Active"
 msgstr "نشط"
 
-#: main/models.py:189
+#: main/models.py:180
 msgid "Indicates whether the announcement is shown or not"
 msgstr "يشير إلى ما إذا كان الإعلان معروضًا أم لا"
 
-#: main/models.py:199
+#: main/models.py:190
 msgid "Dictionary Definition"
 msgstr "تعريف المعجم"
 
-#: main/models.py:200
+#: main/models.py:191
 msgid "Dictionary Definitions"
 msgstr "تعاريف المعجم"
 
-#: main/models.py:202
+#: main/models.py:193
 msgid "Term"
 msgstr "المصطلح"
 
-#: main/models.py:202
+#: main/models.py:193
 msgid "Term in the dictionary"
 msgstr "المصطلح في المعجم"
 
-#: main/models.py:203
+#: main/models.py:194
 msgid "Definition"
 msgstr "التعريف"
 
-#: main/models.py:203
+#: main/models.py:194
 msgid "Definition of the term"
 msgstr "تعريف المصطلح"
 
@@ -453,6 +453,10 @@ msgstr "البحث"
 #: main/templates/main/base/navbar.html:3
 msgid "Vocabulary"
 msgstr "شيوع الألفاظ"
+
+#: main/templates/main/base/navbar.html:4
+msgid "N-grams"
+msgstr "المتلازمات اللفظية"
 
 #: main/templates/main/common/announcements.html:39
 msgid "More details"
@@ -513,6 +517,10 @@ msgstr "خيارات مدونات الكتب والقصص"
 #: main/templates/main/common/tags_fieldset.html:16
 msgid "No tags found"
 msgstr "لم يتم العثور على وسوم"
+
+#: main/templates/main/ngrams/blog_ngrams.html:7
+msgid "Extraction of the n-grams"
+msgstr "استخراج المتلازمات اللفظية"
 
 #: main/templates/main/search/search.html:9
 msgid "Search in the database"
@@ -577,7 +585,7 @@ msgstr "شيوع الألفاظ في المدونات"
 msgid "No words found"
 msgstr "لم يتم العثور على أيّة ألفاظ"
 
-#: main/templates/main/vocabulary/vocabulary_form.html:28
+#: main/templates/main/vocabulary/vocabulary_form.html:24
 msgid "Advanced options"
 msgstr "خيارات متقدمة"
 

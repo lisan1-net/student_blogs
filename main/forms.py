@@ -169,3 +169,15 @@ class VocabularyForm(SearchForm):
             'title': self.fields['include_functional_words'].help_text,
         })
         del self.fields['search_query']
+
+
+class NgramsForm(VocabularyForm):
+
+    class Meta(VocabularyForm.Meta):
+        pass
+
+    template_name = 'main/ngrams/blog_ngrams_form.html'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        del self.fields['include_functional_words']

@@ -1,27 +1,41 @@
 {% load i18n %}
 {% translate 'Search' context 'Navbar' as search%}
 {% translate 'Vocabulary' as word_frequencies %}
+{% translate 'N-grams' as ngrams %}
 {% url 'home' as home_path %}
 {% url 'vocabulary' as vocabulary_path %}
+{% url 'blog_ngrams' as ngrams_path %}
 <nav class="navbar navbar-dark bg-primary navbar-expand">
     <a class="navbar-brand" href="{% url 'home' %}">
         {% include 'main/base/app_icon.html' with style='font-size:2em' %}
         <span class="h4">{{ app_name }}</span>
     </a>
-    <ul class="navbar-nav lead">
-        <li class="nav-item">
-            {% if request.path == home_path %}
-                <a class="nav-link active" href="{{ home_path }}">{{ search }}</a>
-            {% else %}
-                <a class="nav-link" href="{{ home_path }}">{{ search }}</a>
-            {% endif %}
-        </li>
-        <li class="nav-item">
-            {% if request.path == vocabulary_path %}
-                <a class="nav-link active" href="{{ vocabulary_path }}">{{ word_frequencies }}</a>
-            {% else %}
-                <a class="nav-link" href="{{ vocabulary_path }}">{{ word_frequencies }}</a>
-            {% endif %}
-        </li>
-    </ul>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav lead">
+            <li class="nav-item">
+                {% if request.path == home_path %}
+                    <a class="nav-link active" href="{{ home_path }}">{{ search }}</a>
+                {% else %}
+                    <a class="nav-link" href="{{ home_path }}">{{ search }}</a>
+                {% endif %}
+            </li>
+            <li class="nav-item">
+                {% if request.path == vocabulary_path %}
+                    <a class="nav-link active" href="{{ vocabulary_path }}">{{ word_frequencies }}</a>
+                {% else %}
+                    <a class="nav-link" href="{{ vocabulary_path }}">{{ word_frequencies }}</a>
+                {% endif %}
+            </li>
+            <li class="nav-item">
+                {% if request.path == ngrams_path %}
+                    <a class="nav-link active" href="{{ ngrams_path }}">{{ ngrams }}</a>
+                {% else %}
+                    <a class="nav-link" href="{{ ngrams_path }}">{{ ngrams }}</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
 </nav>
