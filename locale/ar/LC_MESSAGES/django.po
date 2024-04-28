@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-27 06:43+0000\n"
+"POT-Creation-Date: 2024-04-28 14:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,17 +23,63 @@ msgstr ""
 msgid "Indexes"
 msgstr "الفهارس"
 
-#: indexes/management/commands/indexwords.py:12
-msgid "Index words of the blog texts"
-msgstr "فهرسة كلمات نصوص المدونة"
+#: indexes/management/commands/indexbigrams.py:11
+msgid "Index bigrams from the indexed words of the blog texts"
+msgstr "فهرسة المتلازمات اللفظية الثنائية من الكلمات المفهرسة لنصوص المدونة"
 
+#: indexes/management/commands/indexbigrams.py:14
 #: indexes/management/commands/indexwords.py:15
 msgid "Blog IDs to index words"
 msgstr "معرفات المدونات لفهرسة الكلمات"
 
+#: indexes/management/commands/indexbigrams.py:15
 #: indexes/management/commands/indexwords.py:16
 msgid "Clear all indexed words"
 msgstr "مسح جميع الكلمات المفهرسة"
+
+#: indexes/management/commands/indexbigrams.py:16
+msgid "Maximum number of texts to index bigrams"
+msgstr "أقصى عدد من النصوص لفهرسة المتلازمات اللفظية الثنائية"
+
+#: indexes/management/commands/indexbigrams.py:20
+msgid "Clearing all indexed bigrams..."
+msgstr "جارٍ مسح جميع المتلازمات اللفظية الثنائية المفهرسة..."
+
+#: indexes/management/commands/indexbigrams.py:27
+#: indexes/management/commands/indexwords.py:28
+#, python-format
+msgid "Blog with ID %(id)d does not exist"
+msgstr "المدونة ذات المعرف %(id)d غير موجودة"
+
+#: indexes/management/commands/indexbigrams.py:28
+#: indexes/management/commands/indexwords.py:29
+#, python-format
+msgid "Number of texts that will be indexed: %(count)d"
+msgstr "عدد النصوص التي ستتم فهرستها: %(count)d"
+
+#: indexes/management/commands/indexbigrams.py:31
+#, python-format
+msgid "Indexing bigrams of \"%(text)s\"..."
+msgstr "جارٍ فهرسة المتلازمات اللفظية الثنائية لـ\"%(text)s\"..."
+
+#: indexes/management/commands/indexbigrams.py:33
+#: indexes/management/commands/indexwords.py:34
+#, python-format
+msgid "Initial indexing progress: %(current)d/%(max)d"
+msgstr "التقدم الأولي للفهرسة: %(current)d/%(max)d"
+
+#: indexes/management/commands/indexbigrams.py:42
+#, python-format
+msgid "Indexed \"%(bigram)s\""
+msgstr "تمت فهرسة \"%(bigram)s\""
+
+#: indexes/management/commands/indexbigrams.py:47
+msgid "Finished indexing bigrams"
+msgstr "تمت فهرسة المتلازمات اللفظية الثنائية"
+
+#: indexes/management/commands/indexwords.py:12
+msgid "Index words of the blog texts"
+msgstr "فهرسة كلمات نصوص المدونة"
 
 #: indexes/management/commands/indexwords.py:17
 msgid "Maximum number of texts to index words"
@@ -43,25 +89,10 @@ msgstr "أقصى عدد من النصوص لفهرسة الكلمات"
 msgid "Clearing all indexed text words..."
 msgstr "جارٍ مسح جميع كلمات النص المفهرسة..."
 
-#: indexes/management/commands/indexwords.py:28
-#, python-format
-msgid "Blog with ID %(id)d does not exist"
-msgstr "المدونة ذات المعرف %(id)d غير موجودة"
-
-#: indexes/management/commands/indexwords.py:29
-#, python-format
-msgid "Number of texts that will be indexed: %(count)d"
-msgstr "عدد النصوص التي ستتم فهرستها: %(count)d"
-
 #: indexes/management/commands/indexwords.py:32
 #, python-format
 msgid "Indexing words of \"%(text)s\"..."
 msgstr "جارٍ فهرسة كلمات \"%(text)s\"..."
-
-#: indexes/management/commands/indexwords.py:34
-#, python-format
-msgid "Initial indexing progress: %(current)d/%(max)d"
-msgstr "التقدم الأولي للفهرسة: %(current)d/%(max)d"
 
 #: indexes/management/commands/indexwords.py:43
 #, python-format
@@ -85,7 +116,7 @@ msgstr "الوحدة"
 msgid "Tokens"
 msgstr "الوحدات"
 
-#: indexes/models.py:12 main/models.py:74 main/models.py:151
+#: indexes/models.py:12 main/models.py:74 main/models.py:162
 #: main/templates/main/search/search.html:49
 msgid "Content"
 msgstr "المحتوى"
@@ -144,6 +175,30 @@ msgstr "نهاية الوحدة في النص"
 msgid "\"%(token)s\" in \"%(text)s\" [%(start)d:%(end)d]"
 msgstr "\"%(token)s\" في \"%(text)s\" [%(start)d:%(end)d]"
 
+#: indexes/models.py:55
+msgid "Bigram"
+msgstr "المتلازمة اللفظية الثنائية"
+
+#: indexes/models.py:56
+msgid "Bigrams"
+msgstr "المتلازمات اللفظية الثنائية"
+
+#: indexes/models.py:60
+msgid "First Text Token"
+msgstr "وحدة النص الأولى"
+
+#: indexes/models.py:61
+msgid "First text token of the bigram"
+msgstr "وحدة النص الأولى من المتلازمة اللفظية الثنائية"
+
+#: indexes/models.py:64
+msgid "Second Text Token"
+msgstr "وحدة النص الثانية"
+
+#: indexes/models.py:65
+msgid "Second text token of the bigram"
+msgstr "وحدة النص الثانية من المتلازمة اللفظية الثنائية"
+
 #: main/admin.py:13 main/templates/main/common/blog_card.html:44
 msgid "Unspecified"
 msgstr "غير محدد"
@@ -197,7 +252,7 @@ msgstr "المدونة"
 msgid "Blogs"
 msgstr "المدونات"
 
-#: main/models.py:16 main/models.py:73 main/models.py:165
+#: main/models.py:16 main/models.py:73 main/models.py:176
 #: main/templates/main/search/search.html:48
 msgid "Title"
 msgstr "العنوان"
@@ -206,7 +261,7 @@ msgstr "العنوان"
 msgid "Blog title"
 msgstr "عنوان المدونة"
 
-#: main/models.py:17 main/models.py:167
+#: main/models.py:17 main/models.py:178
 msgid "Description"
 msgstr "الوصف"
 
@@ -307,7 +362,7 @@ msgstr "المصدر"
 msgid "Source type"
 msgstr "نوع المصدر"
 
-#: main/models.py:102 main/models.py:176
+#: main/models.py:102 main/models.py:187
 msgid "Added on"
 msgstr "أضيف في"
 
@@ -331,105 +386,113 @@ msgstr "الكلمات مفهرسة"
 msgid "Indicates whether the words of this text are indexed or not"
 msgstr "يشير إلى ما إذا كانت كلمات هذا النص مفهرسة أم لا"
 
-#: main/models.py:133
+#: main/models.py:114
+msgid "Bigrams indexed"
+msgstr "المتلازمات اللفظية الثنائية مفهرسة"
+
+#: main/models.py:115
+msgid "Indicates whether the bigrams of this text are indexed or not"
+msgstr "يشير إلى ما إذا كانت المتلازمات اللفظية الثنائية لهذا النص مفهرسة أم لا"
+
+#: main/models.py:130
 #, python-format
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:135
+#: main/models.py:132
 #, python-format
 msgctxt "Male"
 msgid "Student number %(number)d"
 msgstr "الطالب رقم %(number)d"
 
-#: main/models.py:137
+#: main/models.py:134
 #, python-format
 msgctxt "Female"
 msgid "Student number %(number)d"
 msgstr "الطالبة رقم %(number)d"
 
-#: main/models.py:141
+#: main/models.py:138
 #, python-format
 msgid "Level %(level)d"
 msgstr "الصف %(level)d"
 
-#: main/models.py:147
+#: main/models.py:158
 msgid "Functional Word"
 msgstr "الكلمة الوظيفية"
 
-#: main/models.py:148
+#: main/models.py:159
 msgid "Functional Words"
 msgstr "الكلمات الوظيفية"
 
-#: main/models.py:151
+#: main/models.py:162
 msgid "Content of the functional word"
 msgstr "محتوى الكلمة الوظيفية"
 
-#: main/models.py:161
+#: main/models.py:172
 msgid "Announcement"
 msgstr "الإعلان"
 
-#: main/models.py:162 main/templates/main/common/announcements.html:13
+#: main/models.py:173 main/templates/main/common/announcements.html:13
 msgid "Announcements"
 msgstr "الإعلانات"
 
-#: main/models.py:165
+#: main/models.py:176
 msgid "Title of the announcement"
 msgstr "عنوان الإعلان"
 
-#: main/models.py:167
+#: main/models.py:178
 msgid "Description of the announcement"
 msgstr "وصف الإعلان"
 
-#: main/models.py:170
+#: main/models.py:181
 msgid "Image link"
 msgstr "رابط الصورة"
 
-#: main/models.py:170
+#: main/models.py:181
 msgid "Link to the image of the announcement"
 msgstr "رابط صورة الإعلان"
 
-#: main/models.py:173
+#: main/models.py:184
 msgid "Link"
 msgstr "الرابط"
 
-#: main/models.py:173
+#: main/models.py:184
 msgid "Link to the announcement"
 msgstr "رابط الإعلان"
 
-#: main/models.py:176
+#: main/models.py:187
 msgid "Date and time of adding the announcement"
 msgstr "تاريخ ووقت إضافة الإعلان"
 
-#: main/models.py:180
+#: main/models.py:191
 msgid "Active"
 msgstr "نشط"
 
-#: main/models.py:180
+#: main/models.py:191
 msgid "Indicates whether the announcement is shown or not"
 msgstr "يشير إلى ما إذا كان الإعلان معروضًا أم لا"
 
-#: main/models.py:190
+#: main/models.py:201
 msgid "Dictionary Definition"
 msgstr "تعريف المعجم"
 
-#: main/models.py:191
+#: main/models.py:202
 msgid "Dictionary Definitions"
 msgstr "تعاريف المعجم"
 
-#: main/models.py:193
+#: main/models.py:204
 msgid "Term"
 msgstr "المصطلح"
 
-#: main/models.py:193
+#: main/models.py:204
 msgid "Term in the dictionary"
 msgstr "المصطلح في المعجم"
 
-#: main/models.py:194
+#: main/models.py:205
 msgid "Definition"
 msgstr "التعريف"
 
-#: main/models.py:194
+#: main/models.py:205
 msgid "Definition of the term"
 msgstr "تعريف المصطلح"
 
@@ -522,6 +585,11 @@ msgstr "لم يتم العثور على وسوم"
 msgid "Extraction of the n-grams"
 msgstr "استخراج المتلازمات اللفظية"
 
+#: main/templates/main/ngrams/blog_ngrams.html:23
+#: main/templates/main/vocabulary/vocabulary.html:24
+msgid "No words found"
+msgstr "لم يتم العثور على أيّة ألفاظ"
+
 #: main/templates/main/search/search.html:9
 msgid "Search in the database"
 msgstr "البحث في قاعدة البيانات"
@@ -580,10 +648,6 @@ msgstr "أدخل تعبيرًا"
 #: main/templates/main/vocabulary/vocabulary.html:8
 msgid "Vocabulary of the database"
 msgstr "شيوع الألفاظ في المدونات"
-
-#: main/templates/main/vocabulary/vocabulary.html:32
-msgid "No words found"
-msgstr "لم يتم العثور على أيّة ألفاظ"
 
 #: main/templates/main/vocabulary/vocabulary_form.html:24
 msgid "Advanced options"

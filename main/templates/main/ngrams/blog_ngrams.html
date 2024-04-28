@@ -10,7 +10,7 @@
         </div>
     </div>
     {% if form.is_bound %}
-        {% with blog.is_fully_indexed|yesno:'secondary,warning' as color %}
+        {% with blog.is_bigram_fully_indexed|yesno:'secondary,warning' as color %}
             {% if frequencies %}
                 <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1 row-cols-lg-5 row-cols-xl-6 d-flex justify-content-center">
                     {% for word, frequency in frequencies %}

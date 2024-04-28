@@ -47,3 +47,23 @@ class TextToken(models.Model):
         return _('"%(token)s" in "%(text)s" [%(start)d:%(end)d]') % {
             'token': self.token, 'text': self.text, 'start': self.start, 'end': self.end
         }
+
+
+class Bigram(models.Model):
+
+    class Meta:
+        verbose_name = _('Bigram')
+        verbose_name_plural = _('Bigrams')
+        unique_together = ('first_text_token', 'second_text_token')
+
+    first_text_token = models.ForeignKey(
+        TextToken, on_delete=models.CASCADE, verbose_name=_('First Text Token'),
+        help_text=_('First text token of the bigram'), related_name='first_bigrams'
+    )
+    second_text_token = models.ForeignKey(
+        TextToken, on_delete=models.CASCADE, verbose_name=_('Second Text Token'),
+        help_text=_('Second text token of the bigram'), related_name='second_bigrams'
+    )
+
+    def __str__(self):
+        return '%(first)s %(second)s' % {'first': self.first_text_token.token, 'second': self.second_text_token.token}

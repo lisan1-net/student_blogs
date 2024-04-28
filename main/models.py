@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _, pgettext
 from taggit.managers import TaggableManager
 
-from indexes.models import TextToken
+from indexes.models import TextToken, Bigram
 
 
 class Blog(models.Model):
@@ -50,6 +50,9 @@ class Blog(models.Model):
 
     def is_fully_indexed(self):
         return self.text_set.filter(words_indexed=False).count() == 0
+
+    def is_bigram_fully_indexed(self):
+        return self.text_set.filter(bigrams_indexed=False).count() == 0
 
 
 class Text(models.Model):
@@ -110,24 +113,21 @@ class Text(models.Model):
         default=False, verbose_name=_('Words indexed'), editable=False,
         help_text=_('Indicates whether the words of this text are indexed or not')
     )
+    bigrams_indexed = models.BooleanField(
+        default=False, verbose_name=_('Bigrams indexed'), editable=False,
+        help_text=_('Indicates whether the bigrams of this text are indexed or not')
+    )
 
     def __str__(self):
         return self.title
 
     @property
-    def index_progress(self):
+    def word_index_progress(self):
         return TextToken.objects.filter(text=self).aggregate(models.Max('end')).get('end__max') or 0
 
     @property
-    def max_index_progress(self):
+    def word_max_index_progress(self):
         return len(self.content)
-
-    @property
-    def index_progress_ratio(self):
-        try:
-            return self.index_progress / self.max_index_progress
-        except ZeroDivisionError:
-            return 0
 
     def get_student_number_display(self):
         translation = _('Student number %(number)d')
@@ -145,6 +145,14 @@ class Text(models.Model):
         for t1, t2 in zip(text_tokens, text_tokens[1:]):
             if t2.start - t1.end <= 1:
                 yield t1.token.content + ' ' + t2.token.content
+
+    @property
+    def bigram_index_progress(self):
+        return Bigram.objects.filter(first_text_token__text=self).count()
+
+    @property
+    def bigram_max_index_progress(self):
+        return TextToken.objects.filter(text=self).count() - 1
 
 
 class FunctionalWord(models.Model):

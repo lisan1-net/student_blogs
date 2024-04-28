@@ -30,9 +30,9 @@ class Command(BaseCommand):
         texts = Text.objects.filter(blog__in=options['blogs'], words_indexed=False)[:options['max_texts']]
         for text in texts:
             self.stdout.write(_('Indexing words of "%(text)s"...') % {'text': text})
-            last_index_position = text.index_progress
+            last_index_position = text.word_index_progress
             self.stdout.write(_('Initial indexing progress: %(current)d/%(max)d' % {
-                'current': last_index_position, 'max': text.max_index_progress
+                'current': last_index_position, 'max': text.word_max_index_progress
             }))
             for word_content, (start, end) in get_words_ranges(text.content):
                 if end < last_index_position:
