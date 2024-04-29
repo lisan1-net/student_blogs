@@ -11,7 +11,7 @@
     </div>
     {% if form.is_bound %}
         {% if not frequencies %}
-            <div class="lead text-{{ color }} text-center mb-3">{% translate 'No N-grams found' %}</div>
+            <div class="lead text-center {% if not blog.is_bigram_fully_indexed or not blog.is_trigram_fully_indexed %}text-warning{% endif %} mb-3">{% translate 'No N-grams found' %}</div>
         {% else %}
             {% if request.GET.ngram_type == 'bigram' %}
                 {% with blog.is_bigram_fully_indexed|yesno:'secondary,warning' as color %}
