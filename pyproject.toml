@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "database_search_engine"
-version = "0.12.1"
+version = "0.13.0"
 description = ""
 authors = ["Hamza <hamza.abbad@gmail.com>"]
 readme = "README.md"

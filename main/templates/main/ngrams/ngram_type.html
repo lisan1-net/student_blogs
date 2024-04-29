@@ -1,0 +1,11 @@
+<div class="form-group form-check">
+    {% for ngram_type_radio in form.ngram_type %}
+        <div class="custom-control custom-radio custom-control-inline">
+            {{ ngram_type_radio.tag }}
+            <label class="custom-control-label" for="{{ ngram_type_radio.id_for_label }}">
+                {{ ngram_type_radio.choice_label }}
+            </label>
+        </div>
+    {% endfor %}
+</div>
+{% include 'main/common/error_list.html' with errors=form.include_functional_words.errors %}

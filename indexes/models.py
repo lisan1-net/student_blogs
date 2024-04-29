@@ -77,3 +77,37 @@ class Bigram(models.Model):
         return _('"%(first)s %(second)s" in "%(text)s"') % {
             'first': self.first_token, 'second': self.second_token, 'text': self.text
         }
+
+
+class Trigram(models.Model):
+
+    class Meta:
+        verbose_name = _('Trigram')
+        verbose_name_plural = _('Trigrams')
+        unique_together = ('first_token', 'second_token', 'third_token', 'text')
+
+    first_token = models.ForeignKey(
+        Token, on_delete=models.CASCADE, verbose_name=_('First Token'),
+        help_text=_('First token of the trigram'), related_name='first_trigrams'
+    )
+    second_token = models.ForeignKey(
+        Token, on_delete=models.CASCADE, verbose_name=_('Second Token'),
+        help_text=_('Second token of the trigram'), related_name='second_trigrams'
+    )
+    third_token = models.ForeignKey(
+        Token, on_delete=models.CASCADE, verbose_name=_('Third Token'),
+        help_text=_('Third token of the trigram'), related_name='third_trigrams'
+    )
+    text = models.ForeignKey(
+        'main.Text', on_delete=models.CASCADE, verbose_name=_('Text'), help_text=_('Text that contains this trigram'),
+        related_name='trigrams'
+    )
+    frequency = models.PositiveIntegerField(
+        verbose_name=_('Frequency'), help_text=_('Number of occurrences of the trigram in the text'),
+        default=0
+    )
+
+    def __str__(self):
+        return _('"%(first)s %(second)s %(third)s" in "%(text)s"') % {
+            'first': self.first_token, 'second': self.second_token, 'third': self.third_token, 'text': self.text
+        }

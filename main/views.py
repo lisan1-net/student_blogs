@@ -1,10 +1,10 @@
 from django.core.paginator import Paginator
 from django.db import connections, OperationalError
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from indexes.models import TextToken, Bigram
+from indexes.models import *
 from main.forms import *
 from main.models import Text, Blog, FunctionalWord, Announcement
 from main.utils import find_search_results
@@ -120,10 +120,24 @@ def blog_ngrams(request):
         filter_query = Q(blog=blog)
         filter_query &= build_common_filter_query(ngrams_form)
         texts = Text.objects.filter(filter_query).distinct()
-        bigrams = Bigram.objects.filter(text__in=texts).prefetch_related('first_token', 'second_token').order_by(
-            '-frequency'
-        ).values_list('first_token__content', 'second_token__content', 'frequency')
-        paginator = Paginator(bigrams, 60)
+        ngram_type = ngrams_form.cleaned_data['ngram_type']
+        ngrams = []
+        match ngram_type:
+            case 'bigram':
+                ngrams = Bigram.objects.filter(text__in=texts).prefetch_related('first_token', 'second_token').values(
+                    'first_token__content', 'second_token__content'
+                ).annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
+                    'first_token__content', 'second_token__content', 'frequency'
+                )
+            case 'trigram':
+                ngrams = Trigram.objects.filter(text__in=texts).prefetch_related(
+                    'first_token', 'second_token', 'third_token'
+                ).values(
+                    'first_token__content', 'second_token__content', 'third_token__content'
+                ).annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
+                    'first_token__content', 'second_token__content', 'third_token__content', 'frequency'
+                )
+        paginator = Paginator(ngrams, 60)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/ngrams/blog_ngrams.html', context={
         'form': ngrams_form, 'frequencies': page, 'blog': blog

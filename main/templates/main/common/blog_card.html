@@ -13,7 +13,7 @@
         </a>
         <div class="collapse" id="collapse-{{blog.pk}}">
         {% with blog.word_count as counts %}
-            {% with blog.is_fully_indexed|yesno:'primary,warning' as color %}
+            {% with blog.is_word_fully_indexed|yesno:'primary,warning' as color %}
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span>{% translate 'Texts' %}</span>

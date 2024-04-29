@@ -178,6 +178,17 @@ class NgramsForm(VocabularyForm):
 
     template_name = 'main/ngrams/blog_ngrams_form.html'
 
+    ngram_type = forms.ChoiceField(
+        choices=[('bigram', _('Bigrams')), ('trigram', _('Trigrams'))], required=True, label=_('N-gram type'),
+        help_text=_('Select the type of n-gram to search for.'), widget=widgets.RadioSelect, initial='bigram'
+    )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         del self.fields['include_functional_words']
+        self.fields['ngram_type'].widget.attrs.update({
+            'class': 'custom-control-input',
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+            'title': self.fields['ngram_type'].help_text,
+        })

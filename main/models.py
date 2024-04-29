@@ -48,11 +48,14 @@ class Blog(models.Model):
             count=models.Count('token')
         ).order_by('-count')[:limit].values_list('token__content', 'count')
 
-    def is_fully_indexed(self):
+    def is_word_fully_indexed(self):
         return self.text_set.filter(words_indexed=False).count() == 0
 
     def is_bigram_fully_indexed(self):
         return self.text_set.filter(bigrams_indexed=False).count() == 0
+
+    def is_trigram_fully_indexed(self):
+        return self.text_set.filter(trigrams_indexed=False).count() == 0
 
 
 class Text(models.Model):
@@ -116,6 +119,10 @@ class Text(models.Model):
     bigrams_indexed = models.BooleanField(
         default=False, verbose_name=_('Bigrams indexed'), editable=False,
         help_text=_('Indicates whether the bigrams of this text are indexed or not')
+    )
+    trigrams_indexed = models.BooleanField(
+        default=False, verbose_name=_('Trigrams indexed'), editable=False,
+        help_text=_('Indicates whether the trigrams of this text are indexed or not')
     )
 
     def __str__(self):

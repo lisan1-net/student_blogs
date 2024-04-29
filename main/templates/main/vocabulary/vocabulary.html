@@ -11,7 +11,7 @@
         </div>
     </div>
     {% if form.is_bound %}
-        {% with blog.is_fully_indexed|yesno:'secondary,warning' as color %}
+        {% with blog.is_word_fully_indexed|yesno:'secondary,warning' as color %}
         {% if frequencies %}
         <div class="row row-cols-md-6 row-cols-sm-3 d-flex justify-content-center">
             {% for word, frequency in frequencies %}
