@@ -28,20 +28,21 @@ class Command(BaseCommand):
         self.stdout.write(_('Number of texts that will be indexed: %(count)d') % {'count': options['max_texts']})
         texts = Text.objects.filter(blog__in=options['blogs'], bigrams_indexed=False)[:options['max_texts']]
         for text in texts:
-            self.stdout.write(_('Indexing bigrams of "%(text)s"...') % {'text': text})
-            last_index_position = text.bigram_index_progress
-            self.stdout.write(_('Initial indexing progress: %(current)d/%(max)d' % {
-                'current': last_index_position, 'max': text.bigram_max_index_progress
-            }))
-            text_tokens = text.text_tokens.all()
+            text_tokens = text.text_tokens.all().order_by('start')
             for word1, word2 in zip(text_tokens, text_tokens[1:]):
-                if word2.start < last_index_position:
-                    continue
                 try:
-                    bigram, created = Bigram.objects.get_or_create(first_text_token=word1, second_text_token=word2)
-                    self.stdout.write(_('Indexed "%(bigram)s"') % {'bigram': bigram})
+                    if word2.start - word1.end > 1:
+                        continue
+                    bigram, created = Bigram.objects.get_or_create(
+                        first_token=word1.token, second_token=word2.token, text=text
+                    )
+                    bigram.frequency += 1
+                    bigram.save()
+                    self.stdout.write(_('Indexed %(bigram)s') % {'bigram': bigram})
                 except IntegrityError:
-                    pass
+                    self.stdout.write(self.style.WARNING(_('Bigram "%(word1)s %(word2)s" already exists') % {
+                        'word1': word1.token, 'word2': word2.token
+                    }))
             text.bigrams_indexed = True
             text.save()
         self.stdout.write(self.style.SUCCESS(_('Finished indexing bigrams')))

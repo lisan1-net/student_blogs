@@ -54,16 +54,26 @@ class Bigram(models.Model):
     class Meta:
         verbose_name = _('Bigram')
         verbose_name_plural = _('Bigrams')
-        unique_together = ('first_text_token', 'second_text_token')
+        unique_together = ('first_token', 'second_token', 'text')
 
-    first_text_token = models.ForeignKey(
-        TextToken, on_delete=models.CASCADE, verbose_name=_('First Text Token'),
-        help_text=_('First text token of the bigram'), related_name='first_bigrams'
+    first_token = models.ForeignKey(
+        Token, on_delete=models.CASCADE, verbose_name=_('First Token'),
+        help_text=_('First token of the bigram'), related_name='first_bigrams'
     )
-    second_text_token = models.ForeignKey(
-        TextToken, on_delete=models.CASCADE, verbose_name=_('Second Text Token'),
-        help_text=_('Second text token of the bigram'), related_name='second_bigrams'
+    second_token = models.ForeignKey(
+        Token, on_delete=models.CASCADE, verbose_name=_('Second Token'),
+        help_text=_('Second token of the bigram'), related_name='second_bigrams'
+    )
+    text = models.ForeignKey(
+        'main.Text', on_delete=models.CASCADE, verbose_name=_('Text'), help_text=_('Text that contains this bigram'),
+        related_name='bigrams'
+    )
+    frequency = models.PositiveIntegerField(
+        verbose_name=_('Frequency'), help_text=_('Number of occurrences of the bigram in the text'),
+        default=0
     )
 
     def __str__(self):
-        return '%(first)s %(second)s' % {'first': self.first_text_token.token, 'second': self.second_text_token.token}
+        return _('"%(first)s %(second)s" in "%(text)s"') % {
+            'first': self.first_token, 'second': self.second_token, 'text': self.text
+        }

@@ -140,20 +140,6 @@ class Text(models.Model):
     def get_level_display(self):
         return _('Level %(level)d') % {'level': self.level}
 
-    def get_bigrams(self):
-        text_tokens = TextToken.objects.filter(text=self).order_by('start')
-        for t1, t2 in zip(text_tokens, text_tokens[1:]):
-            if t2.start - t1.end <= 1:
-                yield t1.token.content + ' ' + t2.token.content
-
-    @property
-    def bigram_index_progress(self):
-        return Bigram.objects.filter(first_text_token__text=self).count()
-
-    @property
-    def bigram_max_index_progress(self):
-        return TextToken.objects.filter(text=self).count() - 1
-
 
 class FunctionalWord(models.Model):
 

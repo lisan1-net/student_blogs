@@ -1,12 +1,10 @@
-from collections import Counter
-
 from django.core.paginator import Paginator
 from django.db import connections, OperationalError
 from django.db.models import Q, Count
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from indexes.models import TextToken
+from indexes.models import TextToken, Bigram
 from main.forms import *
 from main.models import Text, Blog, FunctionalWord, Announcement
 from main.utils import find_search_results
@@ -122,10 +120,9 @@ def blog_ngrams(request):
         filter_query = Q(blog=blog)
         filter_query &= build_common_filter_query(ngrams_form)
         texts = Text.objects.filter(filter_query).distinct()
-        bigrams = Counter()
-        for text in texts:
-            bigrams.update(text.get_bigrams())
-        bigrams = bigrams.most_common(len(bigrams))
+        bigrams = Bigram.objects.filter(text__in=texts).prefetch_related('first_token', 'second_token').order_by(
+            '-frequency'
+        ).values_list('first_token__content', 'second_token__content', 'frequency')
         paginator = Paginator(bigrams, 60)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/ngrams/blog_ngrams.html', context={
