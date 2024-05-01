@@ -1,10 +1,11 @@
 from django.core import validators
 from django.db import models
+from django.db.models import Sum
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _, pgettext
 from taggit.managers import TaggableManager
 
-from indexes.models import TextToken, Bigram
+from indexes.models import TextToken, Bigram, Trigram
 
 
 class Blog(models.Model):
@@ -56,6 +57,26 @@ class Blog(models.Model):
 
     def is_trigram_fully_indexed(self):
         return self.text_set.filter(trigrams_indexed=False).count() == 0
+
+    def most_frequent_bigrams(self, count=100):
+        return Bigram.objects.filter(text__blog=self).prefetch_related(
+            'first_token', 'second_token'
+        ).values('first_token__content', 'second_token__content').annotate(
+            frequency=Sum('frequency')
+        ).order_by('-frequency')[:count].values_list('first_token__content', 'second_token__content', 'frequency')
+
+    def most_frequent_trigrams(self, count=100):
+        return Trigram.objects.filter(text__blog=self).prefetch_related(
+            'first_token', 'second_token', 'third_token'
+        ).values('first_token__content', 'second_token__content', 'third_token__content').annotate(
+            frequency=Sum('frequency')
+        ).order_by('-frequency')[:count].values_list(
+            'first_token__content', 'second_token__content', 'third_token__content', 'frequency'
+        )
+
+    @property
+    def most_frequent_words_extended(self):
+        return self.most_frequent_words(200)
 
 
 class Text(models.Model):

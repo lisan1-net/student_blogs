@@ -2,10 +2,12 @@
 {% translate 'Search' context 'Navbar' as search%}
 {% translate 'Vocabulary' as word_frequencies %}
 {% translate 'N-grams' as ngrams %}
+{% translate 'Blog comparison' as blog_comparison %}
 {% url 'home' as home_path %}
 {% url 'vocabulary' as vocabulary_path %}
 {% url 'blog_ngrams' as ngrams_path %}
-<nav class="navbar navbar-dark bg-primary navbar-expand">
+{% url 'blog_comparison' as comparison_path %}
+<nav class="navbar navbar-dark bg-primary navbar-expand-md">
     <a class="navbar-brand" href="{% url 'home' %}">
         {% include 'main/base/app_icon.html' with style='font-size:2em' %}
         <span class="h4">{{ app_name }}</span>
@@ -34,6 +36,13 @@
                     <a class="nav-link active" href="{{ ngrams_path }}">{{ ngrams }}</a>
                 {% else %}
                     <a class="nav-link" href="{{ ngrams_path }}">{{ ngrams }}</a>
+                {% endif %}
+            </li>
+            <li class="nav-item">
+                {% if request.path == comparison_path %}
+                    <a class="nav-link active" href="{{ comparison_path }}">{{ blog_comparison }}</a>
+                {% else %}
+                    <a class="nav-link" href="{{ comparison_path }}">{{ blog_comparison }}</a>
                 {% endif %}
             </li>
         </ul>

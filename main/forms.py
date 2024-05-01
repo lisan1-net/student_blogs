@@ -187,8 +187,26 @@ class NgramsForm(VocabularyForm):
         super().__init__(*args, **kwargs)
         del self.fields['include_functional_words']
         self.fields['ngram_type'].widget.attrs.update({
-            'class': 'custom-control-input',
+            'class': 'form-check-input',
             'data-toggle': 'tooltip',
             'data-placement': 'top',
             'title': self.fields['ngram_type'].help_text,
+        })
+
+
+class BlogComparisonForm(forms.Form):
+
+    blogs = forms.ModelMultipleChoiceField(
+        queryset=Blog.objects.all(), required=True, label=_('Blogs'),
+        help_text=_('Select the blogs to compare.'),
+        widget=widgets.CheckboxSelectMultiple
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['blogs'].widget.attrs.update({
+            'class': 'form-check-input',
+            'title': self.fields['blogs'].help_text,
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
         })

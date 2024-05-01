@@ -1,0 +1,43 @@
+{% extends 'main/base/base.html' %}
+{% load i18n %}
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <form class="jumbotron p-3 text-center" method="get">
+                <h1>{% translate 'Blog comparison' %}</h1>
+                <p class="lead">
+                    {% translate 'Compare the selected blogs by the most frequent words and ngrams.' %}
+                </p>
+                <fieldset class="form-group border border-secondary p-1 mb-2 form-row rounded row-cols-2 row-cols-sm-3 row-cols-md-4">
+                    <legend class="w-auto h6">{{ form.blogs.label }}</legend>
+                    {% for checkbox in form.blogs %}
+                        <div class="form-check col">
+                        {{ checkbox }}
+                        </div>
+                    {% endfor %}
+                </fieldset>
+                {% for checkbox in form.blogs %}
+                    {% include 'main/common/error_list.html' with errors=checkbox.errors %}
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">
+                    <span class="material-icons">compare</span>
+                    {% translate 'Compare' %}
+                </button>
+                {% include 'main/common/error_list.html' with errors=form.non_field_errors %}
+            </form>
+        </div>
+    </div>
+    {% if form.is_bound %}
+        {% for blog in blogs %}
+            <div class="row">
+                <div class="col-12">
+                    {% include 'main/comparison/blog_most_frequent_card.html' %}
+                </div>
+            </div>
+        {% empty %}
+            <p class="lead text-muted text-center">
+        	    {% translate 'No results' %}
+            </p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
