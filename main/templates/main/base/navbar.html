@@ -7,7 +7,7 @@
 {% url 'vocabulary' as vocabulary_path %}
 {% url 'blog_ngrams' as ngrams_path %}
 {% url 'blog_comparison' as comparison_path %}
-<nav class="navbar navbar-dark bg-primary navbar-expand-md">
+<nav class="navbar navbar-dark bg-primary navbar-expand-md mb-3 shadow">
     <a class="navbar-brand" href="{% url 'home' %}">
         {% include 'main/base/app_icon.html' with style='font-size:2em' %}
         <span class="h4">{{ app_name }}</span>
