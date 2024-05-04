@@ -8,11 +8,32 @@
         <h1 class="mb-3">{% get_app_name %}</h1>
         <h3 class="mb-3">{% translate 'Search in the database' %}</h3>
         {{ form }}
-        <h4 class="mb-3">{% translate 'Available blogs' %}</h4>
-        <div class="row row-cols-md-3 row-cols-sm-1 d-flex justify-content-center">
-        {% for blog in blogs %}
-            {% include 'main/common/blog_card.html' with blog=blog %}
-        {% endfor %}
+        <h4 class="mb-3 d-flex align-items-center justify-content-center">
+            {% translate 'Available blogs' %}
+            <span class="spinner-border spinner-border-sm ml-2 text-secondary"></span>
+        </h4>
+        <div class="row row-cols-md-3 row-cols-sm-1 d-flex justify-content-center" id="blog-cards">
+            <script type="text/javascript">
+                const blog_cards = $('#blog-cards');
+                const spinner_span = blog_cards.prev().find('.spinner-border');
+                const error_icon = $('<span class="material-icons small text-danger">error</span>');
+                $.ajax("{% url 'blog_ids' %}").done(
+                    function (blog_ids) {
+                        let loaded = 0;
+                        blog_ids.forEach(function (blog_id) {
+                            $.ajax(`/api/blog_card/${blog_id}/`).done(
+                                (blog_card) => blog_cards.append(blog_card)
+                            ).always(() => {
+                                loaded++;
+                                if (loaded === blog_ids.length) spinner_span.removeClass("spinner-border spinner-border-sm");
+                            }).fail(() => {
+                                blog_cards.append(error_icon);
+                                spinner_span.replaceWith(error_icon);
+                            })
+                        });
+                    }
+                ).fail(() => spinner_span.replaceWith(error_icon));
+            </script>
         </div>
     </div>
     {% if query %}

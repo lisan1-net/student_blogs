@@ -2,6 +2,7 @@ import re
 from functools import lru_cache
 from typing import Iterable
 
+from django.db.models import Q
 from pyarabic.araby import DIACRITICS
 
 from indexes.utils import normalize
@@ -42,6 +43,7 @@ def find_all_search_query_positions(text: str, query: str) -> list[tuple[int, in
     return positions
 
 
+@lru_cache(64)
 def find_search_results(query: str, texts: Iterable) -> tuple[list[dict], int]:
     in_content_frequency = 0
     results = []
@@ -50,3 +52,37 @@ def find_search_results(query: str, texts: Iterable) -> tuple[list[dict], int]:
             results.append({'text': text, 'start': positions[0], 'end': positions[1]})
             in_content_frequency += 1
     return results, in_content_frequency
+
+
+def build_common_filter_query(form):
+    advanced_search = False
+    filter_query = Q()
+    if student_number := form.cleaned_data['student_number']:
+        filter_query &= Q(student_number=student_number)
+        advanced_search = True
+    if sex := form.cleaned_data['sex']:
+        filter_query &= Q(sex=sex)
+        advanced_search = True
+    if level := form.cleaned_data['level']:
+        filter_query &= Q(level=level)
+        advanced_search = True
+    if city := form.cleaned_data['city']:
+        filter_query &= Q(city=city)
+        advanced_search = True
+    if school := form.cleaned_data['school']:
+        filter_query &= Q(school=school)
+        advanced_search = True
+    if type_ := form.cleaned_data['type']:
+        filter_query &= Q(type=type_)
+        advanced_search = True
+    if source_type := form.cleaned_data['source_type']:
+        filter_query &= Q(source_type=source_type)
+        advanced_search = True
+    if author_name := form.cleaned_data['author_name']:
+        filter_query &= Q(author_name__icontains=author_name)
+        advanced_search = True
+    if tags := form.cleaned_data['tags']:
+        filter_query &= Q(tags__in=tags)
+        advanced_search = True
+    form.advanced = advanced_search
+    return filter_query
