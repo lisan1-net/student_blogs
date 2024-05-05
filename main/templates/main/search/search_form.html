@@ -20,12 +20,20 @@
         </a>
     </div>
     <div class="collapse {{ form.advanced|yesno:"show," }}" id="advanced-search">
-        <div class="form-group form-row">
-            <label for="{{ form.blog.id_for_label }}" class="col-form-label col-auto">{% translate 'Blog' %}</label>
-            <div class="col">{{ form.blog }}</div>
+        <div class="text-center mb-3">
+            <div class="spinner-border text-secondary" role="status"></div>
         </div>
-        {% include 'main/common/error_list.html' with errors=form.blog.errors %}
-        {% include 'main/common/student_fieldset.html' %}
-        {% include 'main/common/tags_fieldset.html' %}
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            const advancedSearch = $('#advanced-search');
+            function retrieveAdvancedSearchPart() {
+                if (advancedSearch.has('.spinner-border').length) {
+                    advancedSearch.load('{% url 'advanced_search_form' %}' + window.location.search);
+                }
+            }
+            if (advancedSearch.hasClass('show')) retrieveAdvancedSearchPart();
+            advancedSearch.on('show.bs.collapse', retrieveAdvancedSearchPart);
+        });
+    </script>
 </form>

@@ -1,0 +1,8 @@
+{% load i18n %}
+<div class="form-group form-row">
+    <label for="{{ form.blog.id_for_label }}" class="col-form-label col-auto">{% translate 'Blog' %}</label>
+    <div class="col">{{ form.blog }}</div>
+</div>
+{% include 'main/common/error_list.html' with errors=form.blog.errors %}
+{% include 'main/common/student_fieldset.html' %}
+{% include 'main/common/tags_fieldset.html' %}

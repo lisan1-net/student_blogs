@@ -11,13 +11,15 @@ class TestWebApp(TestCase):
         cls.Blog = apps.get_model('main', 'Blog')
         cls.Text = apps.get_model('main', 'Text')
         call_command('indexwords')
+        call_command('indexbigrams')
+        call_command('indextrigrams')
 
     def test_search_page(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/search/search.html')
         self.assertTemplateUsed(response, 'main/search/search_form.html')
-        self.assertContains(response, self.Blog.objects.last().title)
+        self.assertContains(response, '$(')
 
     def test_perform_search(self):
         blog = self.Blog.objects.first()
