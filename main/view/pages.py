@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 from indexes.models import *
 from main.forms import *
-from main.models import Text, FunctionalWord, Announcement
+from main.models import Text, FunctionalWord
 from main.utils import find_search_results, build_common_filter_query
 
 
@@ -29,8 +29,7 @@ def home(request):
     return render(
         request, 'main/search/search.html',
         context={'form': form, 'query': query, 'results': results, 'frequency': in_content_frequency,
-                 'matched_text_count': matched_texts_count,  # 'blogs': Blog.objects.all(),
-                 'announcements': Announcement.objects.filter(is_active=True),
+                 'matched_text_count': matched_texts_count
         }
     )
 

@@ -9,10 +9,16 @@
     </ol>
     <div class="card bg-info text-white">
         <div class="card-header p-2">
-            <h6 class="card-title m-0">
-                <i class="fas fa-bullhorn fa-flip-horizontal"></i>
+            <h6 class="card-title m-0 d-flex align-items-center">
+                <i class="fas fa-bullhorn fa-flip-horizontal mr-2"></i>
                 {% translate "Announcements" %}
-                <span class="badge badge-light badge-pill pt-1">{{ announcements|length }}</span>
+                <span class="badge badge-light badge-pill pt-1 ml-2">
+                    {% if announcements %}
+                        {{ announcements|length }}
+                    {% else %}
+                        <span class="spinner-border spinner-border-sm text-info"></span>
+                    {% endif %}
+                </span>
             </h6>
         </div>
         <div class="carousel-inner">
@@ -47,7 +53,26 @@
                     </div>
                     </div>
                 </div>
+            {% empty %}
+                <div class="d-flex justify-content-center align-items-center" style="height: 125px">
+                    <div class="spinner-border text-light"></div>
+                </div>
             {% endfor %}
             </div>
         </div>
     </div>
+{% if not announcements %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax("{% url 'announcements' %}").done(
+                function(data) {
+                    $('#carouselExampleIndicators').replaceWith(data);
+                    setTimeout(() => $('#carouselExampleIndicators').carousel(), 0);
+                }
+            ).fail(() => $('#carouselExampleIndicators').find('.spinner-border').replaceWith(
+                        '<span class="material-icons text-danger">error</span>'
+                    )
+            );
+        });
+    </script>
+{% endif %}
