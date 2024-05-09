@@ -2,10 +2,12 @@ import re
 from functools import lru_cache
 from typing import Iterable
 
-from django.db.models import Q
+from django.core.paginator import Paginator
+from django.db.models import Q, Model
 from pyarabic.araby import DIACRITICS
 
 from indexes.utils import normalize
+from main.models import Text
 
 
 @lru_cache(64)
@@ -14,6 +16,7 @@ def get_diacritics_insensitive_regexp(query: str) -> re.Pattern:
     return re.compile(''.join(fr'{letter}[{"".join(DIACRITICS)}]*' for letter in query), re.IGNORECASE)
 
 
+@lru_cache(64)
 def find_search_query_position(text: str, query: str, start_index=0) -> tuple[int, int]:
     start = -1
     end = -1
@@ -43,46 +46,64 @@ def find_all_search_query_positions(text: str, query: str) -> list[tuple[int, in
     return positions
 
 
-@lru_cache(64)
-def find_search_results(query: str, texts: Iterable) -> tuple[list[dict], int]:
-    in_content_frequency = 0
+def find_search_results(query: str, texts: Iterable) -> list[dict]:
     results = []
     for text in texts:
         for positions in find_all_search_query_positions(text.content, query):
             results.append({'text': text, 'start': positions[0], 'end': positions[1]})
-            in_content_frequency += 1
-    return results, in_content_frequency
+    return results
 
 
-def build_common_filter_query(form):
+def build_common_filter_query(cleaned_data: dict) -> (Q, bool):
     advanced_search = False
     filter_query = Q()
-    if student_number := form.cleaned_data['student_number']:
+    if student_number := cleaned_data['student_number']:
         filter_query &= Q(student_number=student_number)
         advanced_search = True
-    if sex := form.cleaned_data['sex']:
+    if sex := cleaned_data['sex']:
         filter_query &= Q(sex=sex)
         advanced_search = True
-    if level := form.cleaned_data['level']:
+    if level := cleaned_data['level']:
         filter_query &= Q(level=level)
         advanced_search = True
-    if city := form.cleaned_data['city']:
+    if city := cleaned_data['city']:
         filter_query &= Q(city=city)
         advanced_search = True
-    if school := form.cleaned_data['school']:
+    if school := cleaned_data['school']:
         filter_query &= Q(school=school)
         advanced_search = True
-    if type_ := form.cleaned_data['type']:
+    if type_ := cleaned_data['type']:
         filter_query &= Q(type=type_)
         advanced_search = True
-    if source_type := form.cleaned_data['source_type']:
+    if source_type := cleaned_data['source_type']:
         filter_query &= Q(source_type=source_type)
         advanced_search = True
-    if author_name := form.cleaned_data['author_name']:
+    if author_name := cleaned_data['author_name']:
         filter_query &= Q(author_name__icontains=author_name)
         advanced_search = True
-    if tags := form.cleaned_data['tags']:
+    if tags := cleaned_data['tags']:
         filter_query &= Q(tags__in=tags)
         advanced_search = True
-    form.advanced = advanced_search
-    return filter_query
+    return filter_query, advanced_search
+
+
+@lru_cache(64)
+def get_search_paginator_and_counts(**cleaned_data) -> (Paginator, int, bool):
+    filter_query, advanced = build_common_filter_query(cleaned_data)
+    if blog := cleaned_data['blog']:
+        filter_query &= Q(blog=blog)
+        advanced = True
+    query = cleaned_data['search_query']
+    texts = Text.objects.filter(filter_query).distinct().iterator()
+    results = find_search_results(query, texts)
+    matched_texts_count = len(set(r['text'] for r in results))
+    return Paginator(results, 15), matched_texts_count, advanced
+
+
+def clean_form_data(form_data: dict) -> dict:
+    for k, v in form_data.items():
+        if isinstance(v, Iterable) and not isinstance(v, str):
+            form_data[k] = tuple(v)
+        elif isinstance(v, Model):
+            form_data[k] = v.pk
+    return form_data

@@ -1,0 +1,27 @@
+{% load i18n %}
+<div style="position: relative">
+    <div class="progress border border-secondary rounded" style="height: 2rem">
+        <div class="progress-bar" role="progressbar" style="width: 0"></div>
+    </div>
+    <div class="progress-text align-middle text-dark d-flex align-items-center justify-content-center" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; line-height: 2rem">
+        {% translate 'Loading...' %}
+    </div>
+</div>
+<script type="text/javascript">
+    function setProgress(progress, total) {
+        const progress_bar = $('.progress-bar');
+        const progress_text = $('.progress-text');
+        if (progress < 0) {
+            progress_bar.addClass('bg-danger');
+            return;
+        }
+        progress_bar.css('width', `${progress / total * 100}%`);
+        progress_text.html(`<span>${progress} / ${total}</span>`);
+        if (progress < total) {
+            progress_text.prepend('<span class="spinner-border spinner-border-sm mr-1"></span>')
+        } else if (progress === total) {
+            progress_bar.addClass('bg-success');
+            setTimeout(() => progress_bar.parent().parent().fadeOut(), 1000);
+        }
+    }
+</script>

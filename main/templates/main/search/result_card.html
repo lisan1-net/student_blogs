@@ -3,6 +3,10 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header d-flex align-items-center">
+                <span class="badge badge-success mr-1">
+                    <i class="fa-solid fa-newspaper"></i>
+                    {{ result.text.title }}
+                </span>
                 <span class="badge badge-primary mr-1">
                     <i class="fa-solid fa-folder-open"></i>
                     {{ result.text.blog }}
@@ -46,8 +50,8 @@
                     </span>
                 {% endif %}
                 {% if result.text.author_name %}
-                    <span class="badge badge-info mr-1">
-                        <i class="fa-solid fa-user-pen"></i>
+                    <span class="badge badge-dark mr-1">
+                        <i class="fa-solid fa-quote-right"></i>
                         {{ result.text.author_name }}
                     </span>
                 {% endif %}

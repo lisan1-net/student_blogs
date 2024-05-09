@@ -7,30 +7,14 @@ from django.shortcuts import render
 from indexes.models import *
 from main.forms import *
 from main.models import Text, FunctionalWord
-from main.utils import find_search_results, build_common_filter_query
+from main.utils import build_common_filter_query
 
 
 def home(request):
     form = SearchForm(request.GET or None)
-    results = None
-    query = None
-    in_content_frequency = 0
-    matched_texts_count = None
-    if form.is_valid():
-        filter_query = build_common_filter_query(form)
-        if blog := form.cleaned_data['blog']:
-            filter_query &= Q(blog=blog)
-            form.advanced = True
-        query = form.cleaned_data['search_query']
-        texts = Text.objects.filter(filter_query).distinct().iterator()
-        results, in_content_frequency = find_search_results(query, texts)
-        matched_texts_count = len(set(r['text'] for r in results))
-        results = Paginator(results, 10).get_page(request.GET.get('page'))
     return render(
         request, 'main/search/search.html',
-        context={'form': form, 'query': query, 'results': results, 'frequency': in_content_frequency,
-                 'matched_text_count': matched_texts_count
-        }
+        context={'form': form, 'query': request.GET.get('search_query')}
     )
 
 
@@ -46,7 +30,8 @@ def vocabulary(request):
     if vocabulary_form.is_valid():
         blog = vocabulary_form.cleaned_data['blog']
         filter_query = Q(blog=blog)
-        filter_query &= build_common_filter_query(vocabulary_form)
+        q, vocabulary_form.advanced = build_common_filter_query(vocabulary_form.cleaned_data)
+        filter_query &= q
         texts = Text.objects.filter(filter_query).distinct()
         words = TextToken.objects.filter(text__in=texts).values('token__content')
         include_functional_words = vocabulary_form.cleaned_data['include_functional_words']
@@ -83,7 +68,8 @@ def blog_ngrams(request):
     if ngrams_form.is_valid():
         blog = ngrams_form.cleaned_data['blog']
         filter_query = Q(blog=blog)
-        filter_query &= build_common_filter_query(ngrams_form)
+        q, ngrams_form.advanced = build_common_filter_query(ngrams_form.cleaned_data)
+        filter_query &= q
         texts = Text.objects.filter(filter_query).distinct()
         ngram_type = ngrams_form.cleaned_data['ngram_type']
         ngrams = []

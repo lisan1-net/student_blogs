@@ -3,80 +3,95 @@
 {% load search %}
 
 {% block content %}
+    {% include 'main/common/toast.html' %}
     {% include 'main/common/announcements.html' %}
     <div class="jumbotron pt-3 pb-1 text-center">
         <h1 class="mb-3">{% get_app_name %}</h1>
         <h3 class="mb-3">{% translate 'Search in the database' %}</h3>
         {{ form }}
-        <h4 class="mb-3 d-flex align-items-center justify-content-center">
+        <h4 class="mb-1 d-flex align-items-center justify-content-center">
             {% translate 'Available blogs' %}
-            <span class="spinner-border spinner-border-sm ml-2 text-secondary"></span>
         </h4>
-        <div class="row row-cols-md-3 row-cols-sm-1 d-flex justify-content-center" id="blog-cards">
+        {% include 'main/common/progress_bar.html' %}
+        <div class="row row-cols-md-3 row-cols-sm-1 d-flex justify-content-center mt-2" id="blog-cards">
             <script type="text/javascript">
+                function showBlogErrorNotification() {
+                    const notification = $('#notification');
+                    notification.find('.toast-title').text('{% translate 'An error occurred' %}');
+                    notification.find('.toast-icon').text('error');
+                    notification.find('.toast-body').html(
+                        '<p class="text-danger text-center">' +
+                        '{% translate 'An error occurred while loading the blog cards.' %}' +
+                        '</p>'
+                    );
+                    notification.toast('show');
+                    setProgress(0, -1);
+                }
                 const blog_cards = $('#blog-cards');
-                const spinner_span = blog_cards.prev().find('.spinner-border');
-                const error_icon = $('<span class="material-icons small text-danger">error</span>');
                 $.ajax("{% url 'blog_ids' %}").done(
                     function (blog_ids) {
                         let loaded = 0;
+                        setProgress(0, blog_ids.length);
                         blog_ids.forEach(function (blog_id) {
-                            $.ajax(`/api/blog_card/${blog_id}/`).done(
+                            $.ajax("{% url 'blog_card' 0 %}".replace('0', `${blog_id}`)).done(
                                 (blog_card) => blog_cards.append(blog_card)
                             ).always(() => {
                                 loaded++;
-                                if (loaded === blog_ids.length) spinner_span.removeClass("spinner-border spinner-border-sm");
-                            }).fail(() => {
-                                blog_cards.append(error_icon);
-                                spinner_span.replaceWith(error_icon);
-                            })
+                                setProgress(loaded, blog_ids.length);
+                            }).fail(showBlogErrorNotification);
                         });
                     }
-                ).fail(() => spinner_span.replaceWith(error_icon));
+                ).fail(showBlogErrorNotification);
             </script>
         </div>
     </div>
-    {% if query %}
-        <div class="row">
-            <div class="col-12">
-                <div class="list-group-item rounded-top pb-0 bg-secondary text-light">
-                    <h4 class="text-center">{% translate 'Search results' %}</h4>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-bordered text-center table-secondary">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">{% translate 'Expression frequency' %}</th>
-                        <th scope="col">{% translate 'Matched documents' %}</th>
-                        <th scope="col">{% translate 'Current page' %}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>{{ frequency }}</td>
-                        <td>{{ matched_text_count }}</td>
-                        <td>{% blocktranslate trimmed with f=results.start_index t=results.end_index c=results.paginator.count%}
-                        	Results from {{ f }} to {{ t }} of {{ c }}
-                        {% endblocktranslate %}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        {%  translate 'Title' as title_name %}
-        {%  translate 'Content' as content_name %}
-        {% for result in results %}
-            {% include 'main/search/result_card.html' with result=result%}
-        {% empty %}
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="text-muted">{% translate 'Query did not match any texts.' %}</p>
-                </div>
-            </div>
-        {% endfor %}
-        {% include 'main/common/pagination.html' with results=results %}
-    {% endif %}
+    <div id="results"></div>
+    <script type="text/javascript">
+        function loadSearchResults(search_api_url) {
+            const notification = $('#notification');
+            const loading_spinner = $(
+                '<div class="text-center my-2">' +
+                '<div class="spinner-border text-secondary" role="status"></div>' +
+                '</div>'
+            );
+            notification.find('.toast-title').text('{% translate 'Search in progress' %}');
+            notification.find('.toast-icon').text('search');
+            notification.find('.toast-body').html(loading_spinner);
+            notification.toast('show');
+            $.ajax(search_api_url).done(
+                function (response) {
+                    const results = $('#results');
+                    results.html(response);
+                    results[0].scrollIntoView({behavior: "smooth"});
+                    notification.toast('hide');
+                }
+            ).fail(
+                function () {
+                    notification.find('.toast-title').text('{% translate 'An error occurred' %}');
+                    notification.find('.toast-icon').text('error');
+                    notification.find('.toast-body').html(
+                        '<p class="text-danger text-center">' +
+                        '{% translate 'An error occurred while processing the search query.' %}' +
+                        '</p>'
+                    );
+                    notification.toast('show')
+                }
+            ).always(enableForms);
+        }
+        $('form').on('submit', function(event) {
+            event.preventDefault();
+            const fields = $(this).serializeArray();
+            const queryString = $.param(fields);
+            const search_page_url = window.location.pathname + '?' + queryString;
+            window.history.pushState(null, null, search_page_url);
+            const search_api_url = '{% url 'search_results' %}' + '?' + queryString;
+            loadSearchResults(search_api_url);
+        });
+        $(document).ready(function() {
+            if (window.location.search) {
+                const search_api_url = '{% url 'search_results' %}' + window.location.search;
+                loadSearchResults(search_api_url);
+            }
+        });
+    </script>
 {% endblock %}

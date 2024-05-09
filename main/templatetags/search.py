@@ -1,5 +1,6 @@
 import re
 from functools import lru_cache
+from urllib.parse import *
 
 from django import template
 from django.apps import apps
@@ -59,10 +60,11 @@ def paragraphs_wrap(content):
 
 
 @register.filter
-def url_with_page(request, page):
-    params = request.GET.copy()
+def url_with_page(url, page):
+    parsed_url = urlparse(url)
+    params = parse_qs(parsed_url.query)
     params['page'] = page
-    return request.path + '?' + params.urlencode()
+    return parsed_url._replace(query=urlencode(params, doseq=True)).geturl()
 
 
 @register.simple_tag

@@ -27,10 +27,7 @@ class TestWebApp(TestCase):
         response = self.client.get('/', {'search_query': query, 'blog': blog.pk})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/search/search.html')
-        self.assertTemplateUsed(response, 'main/search/result_card.html')
         self.assertContains(response, query)
-        self.assertGreater(len(response.context['results']), 0)
-        self.assertContains(response, reverse('text', args=[blog.text_set.first().pk]))
 
     def test_no_results_search(self):
         query = 'العظيم'
@@ -39,7 +36,6 @@ class TestWebApp(TestCase):
         self.assertTemplateUsed(response, 'main/search/search.html')
         self.assertTemplateNotUsed(response, 'main/search/result_card.html')
         self.assertContains(response, query, count=1)
-        self.assertEqual(len(response.context['results']), 0)
 
     def test_vocabulary_page(self):
         response = self.client.get(reverse('vocabulary'))

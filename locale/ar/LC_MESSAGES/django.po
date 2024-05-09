@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-01 01:51+0000\n"
+"POT-Creation-Date: 2024-05-09 08:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,7 +144,7 @@ msgid "Tokens"
 msgstr "الوحدات"
 
 #: indexes/models.py:12 main/models.py:101 main/models.py:179
-#: main/templates/main/search/search.html:49
+#: main/templates/main/search/search_results.html:32
 msgid "Content"
 msgstr "المحتوى"
 
@@ -342,12 +342,12 @@ msgid "Select the blogs to compare."
 msgstr "حدد المدونات للمقارنة."
 
 #: main/models.py:14 main/models.py:98
-#: main/templates/main/search/search_form.html:24
+#: main/templates/main/search/advanced_search_form.html:3
 msgid "Blog"
 msgstr "المدونة"
 
 #: main/models.py:17 main/models.py:100 main/models.py:193
-#: main/templates/main/search/search.html:48
+#: main/templates/main/search/search_results.html:31
 msgid "Title"
 msgstr "العنوان"
 
@@ -536,7 +536,7 @@ msgstr "محتوى الكلمة الوظيفية"
 msgid "Announcement"
 msgstr "الإعلان"
 
-#: main/models.py:190 main/templates/main/common/announcements.html:13
+#: main/models.py:190 main/templates/main/common/announcements.html:14
 msgid "Announcements"
 msgstr "الإعلانات"
 
@@ -604,11 +604,11 @@ msgstr "تعريف المصطلح"
 msgid "Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi"
 msgstr "حقوق النشر 2024. جميع الحقوق محفوظة. د. عبد العزيز عبد الله المهيوبي"
 
-#: main/templates/main/base/base.html:21
+#: main/templates/main/base/base.html:24
 msgid "Search engine in the blogs of students"
 msgstr "محرك بحث في مدونات الطلاب"
 
-#: main/templates/main/base/base.html:22
+#: main/templates/main/base/base.html:25
 msgid "search, blogs, students"
 msgstr "بحث، مدونات، طلاب"
 
@@ -630,7 +630,7 @@ msgstr "المتلازمات اللفظية"
 msgid "Blog comparison"
 msgstr "مقارنة المدونات"
 
-#: main/templates/main/common/announcements.html:39
+#: main/templates/main/common/announcements.html:47
 msgid "More details"
 msgstr "المزيد من التفاصيل"
 
@@ -659,7 +659,7 @@ msgid "No students"
 msgstr "لا يوجد طلاب"
 
 #: main/templates/main/common/blog_card.html:55
-#: main/templates/main/comparison/blog_most_frequent_card.html:7
+#: main/templates/main/comparison/blog_most_frequent_card.html:8
 msgid "Most frequent words"
 msgstr "الكلمات الأكثر شيوعًا"
 
@@ -674,6 +674,10 @@ msgstr "عرض شيوع الألفاظ"
 #: main/templates/main/common/pagination.html:4
 msgid "ٍSearch pages"
 msgstr "صفحات البحث"
+
+#: main/templates/main/common/progress_bar.html:7
+msgid "Loading..."
+msgstr "جارٍ التحميل..."
 
 #: main/templates/main/common/student_fieldset.html:2
 msgid "Text information"
@@ -700,17 +704,17 @@ msgid "Compare"
 msgstr "قارن"
 
 #: main/templates/main/comparison/blog_comparison.html:39
-#: main/templates/main/comparison/blog_most_frequent_card.html:26
-#: main/templates/main/comparison/blog_most_frequent_card.html:39
-#: main/templates/main/comparison/blog_most_frequent_card.html:52
+#: main/templates/main/comparison/blog_most_frequent_card.html:35
+#: main/templates/main/comparison/blog_most_frequent_card.html:48
+#: main/templates/main/comparison/blog_most_frequent_card.html:61
 msgid "No results"
 msgstr "لا توجد نتائج"
 
-#: main/templates/main/comparison/blog_most_frequent_card.html:10
+#: main/templates/main/comparison/blog_most_frequent_card.html:14
 msgid "Most frequent bigrams"
 msgstr "المتلازمات الثنائية الأكثر شيوعًا"
 
-#: main/templates/main/comparison/blog_most_frequent_card.html:13
+#: main/templates/main/comparison/blog_most_frequent_card.html:20
 msgid "Most frequent trigrams"
 msgstr "المتلازمات الثلاثية الأكثر شيوعًا"
 
@@ -726,38 +730,30 @@ msgstr "استخراج المتلازمات اللفظية من النصوص"
 msgid "No N-grams found"
 msgstr "لم يتم العثور على متلازمات لفظية"
 
-#: main/templates/main/search/search.html:9
+#: main/templates/main/search/search.html:10
 msgid "Search in the database"
 msgstr "البحث في قاعدة البيانات"
 
-#: main/templates/main/search/search.html:11
+#: main/templates/main/search/search.html:13
 msgid "Available blogs"
 msgstr "المدونات المتاحة"
 
-#: main/templates/main/search/search.html:22
-msgid "Search results"
-msgstr "نتائج البحث"
+#: main/templates/main/search/search.html:20
+#: main/templates/main/search/search.html:70
+msgid "An error occurred"
+msgstr "حدث خطأ"
 
-#: main/templates/main/search/search.html:31
-msgid "Expression frequency"
-msgstr "تكرار العبارة"
+#: main/templates/main/search/search.html:24
+msgid "An error occurred while loading the blog cards."
+msgstr "حدث خطأ أثناء تحميل بطاقات المدونات."
 
-#: main/templates/main/search/search.html:32
-msgid "Matched documents"
-msgstr "المستندات المطابقة"
+#: main/templates/main/search/search.html:57
+msgid "Search in progress"
+msgstr "البحث جارٍ"
 
-#: main/templates/main/search/search.html:33
-msgid "Current page"
-msgstr "الصفحة الحالية"
-
-#: main/templates/main/search/search.html:40
-#, python-format
-msgid "Results from %(f)s to %(t)s of %(c)s"
-msgstr "النتائج من %(f)s إلى %(t)s من أصل %(c)s"
-
-#: main/templates/main/search/search.html:55
-msgid "Query did not match any texts."
-msgstr "الاستعلام لم يطابق أي نصوص."
+#: main/templates/main/search/search.html:74
+msgid "An error occurred while processing the search query."
+msgstr "حدث خطأ أثناء معالجة استعلام البحث."
 
 #: main/templates/main/search/search_form.html:9
 #: main/templates/main/vocabulary/vocabulary_form.html:11
@@ -768,6 +764,31 @@ msgstr "ابحث"
 #: main/templates/main/search/search_form.html:19
 msgid "Advanced search"
 msgstr "بحث متقدم"
+
+#: main/templates/main/search/search_results.html:5
+msgid "Search results"
+msgstr "نتائج البحث"
+
+#: main/templates/main/search/search_results.html:14
+msgid "Expression frequency"
+msgstr "تكرار العبارة"
+
+#: main/templates/main/search/search_results.html:15
+msgid "Matched documents"
+msgstr "المستندات المطابقة"
+
+#: main/templates/main/search/search_results.html:16
+msgid "Current page"
+msgstr "الصفحة الحالية"
+
+#: main/templates/main/search/search_results.html:23
+#, python-format
+msgid "Results from %(f)s to %(t)s of %(c)s"
+msgstr "النتائج من %(f)s إلى %(t)s من أصل %(c)s"
+
+#: main/templates/main/search/search_results.html:38
+msgid "Query did not match any texts."
+msgstr "الاستعلام لم يطابق أي نصوص."
 
 #: main/templates/main/search/search_widget.html:11
 msgid "Search box"

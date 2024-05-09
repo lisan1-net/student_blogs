@@ -18,15 +18,21 @@
 </script>
 
 <script>
-$(function () {
-    $('form').submit(function () {
+    function disableForms() {
         let $submitButton = $('button[type="submit"]');
         $submitButton.children().addClass('searching');
 
         setTimeout(function() {
             $submitButton.attr('disabled', 'disabled');
-            $('input,select').attr('disabled', 'disabled');
+            $('input, select').attr('disabled', 'disabled');
         }, 0);
-    });
-})
+    }
+    function enableForms() {
+        const form = $('form');
+        form.find('button[type="submit"], input, select').removeAttr('disabled');
+        form.find('.searching').removeClass('searching');
+    }
+$(document).ready(function () {
+    $('form').on('submit', disableForms);
+ })
 </script>

@@ -36,7 +36,7 @@ class Blog(models.Model):
         return self.text_set.count()
 
     def school_count(self):
-        return self.text_set.values('school').distinct().count()
+        return self.text_set.values('school').exclude(school__isnull=True).distinct().count()
 
     def student_count_per_level(self):
         return self.text_set.values('level').exclude(level__isnull=True).annotate(

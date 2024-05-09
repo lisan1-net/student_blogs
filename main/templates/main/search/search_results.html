@@ -1,0 +1,42 @@
+{% load i18n %}
+<div class="row">
+    <div class="col-12">
+        <div class="list-group-item rounded-top pb-0 bg-secondary text-light">
+            <h4 class="text-center">{% translate 'Search results' %}</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered text-center table-secondary">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">{% translate 'Expression frequency' %}</th>
+                <th scope="col">{% translate 'Matched documents' %}</th>
+                <th scope="col">{% translate 'Current page' %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ results.paginator.count }}</td>
+                <td>{{ matched_text_count }}</td>
+                <td>{% blocktranslate trimmed with f=results.start_index t=results.end_index c=results.paginator.count%}
+                    Results from {{ f }} to {{ t }} of {{ c }}
+                {% endblocktranslate %}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{%  translate 'Title' as title_name %}
+{%  translate 'Content' as content_name %}
+{% for result in results %}
+    {% include 'main/search/result_card.html' with result=result%}
+{% empty %}
+    <div class="row">
+        <div class="col-md-12">
+            <p class="text-muted">{% translate 'Query did not match any texts.' %}</p>
+        </div>
+    </div>
+{% endfor %}
+{% include 'main/common/pagination.html' %}
