@@ -18,7 +18,11 @@
         progress_bar.css('width', `${progress / total * 100}%`);
         progress_text.html(`<span>${progress} / ${total}</span>`);
         if (progress < total) {
-            progress_text.prepend('<span class="spinner-border spinner-border-sm mr-1"></span>')
+            progress_text.prepend('<span class="spinner-border spinner-border-sm mr-1"></span>');
+            if (progress > total / 2) {
+                progress_text.removeClass('text-dark');
+                progress_text.addClass('text-white');
+            }
         } else if (progress === total) {
             progress_bar.addClass('bg-success');
             setTimeout(() => progress_bar.parent().parent().fadeOut(), 1000);

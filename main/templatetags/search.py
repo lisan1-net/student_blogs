@@ -120,10 +120,12 @@ def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None
             end = start + len(word)
             if found_indexes := close_indexes(pos_defs, (start, end)):
                 terms_definitions = pos_defs[found_indexes]
-                popover_words.append(format_html('\
-                <span data-toggle="popover" data-trigger="hover" title="{word}" data-content="{content}" tabindex="0">\
-                    <b>{word}</b>\
-                </span>', word=word, content='\n'.join(terms_definitions[y]['definition'] for y in range(len(terms_definitions))))
+                popover_words.append(
+                    format_html(
+                        '<span data-toggle="popover" data-trigger="hover" title="{word}" data-content="{content}"\
+                 tabindex="0" class="font-weight-bold" data-html="true" data-boundary="viewport">{word}</span>',
+                        word=word,
+                        content='<br>'.join(terms_definitions[y]['definition'] for y in range(len(terms_definitions))))
                 )
             else:
                 popover_words.append(word)
@@ -140,7 +142,7 @@ def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None
 
     if link and pk is not None:
         href = reverse('text', args=[pk]) + f'?start={highlight_start}&end={highlight_end}'
-        onclick = f"window.open('{href}', 'newwindow', 'width=800,height=600'); return false;"
+        onclick = f"window.open('{href}', 'newwindow', 'width=800,height=500'); return false;"
         a = f'<a class="text-warning text-decoration-none" href="{href}" onclick="{onclick}">{highlighted_text}</a>'
         markup = (get_generated_text(visible_words_before, prefix=prefix)
                   + a +

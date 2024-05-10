@@ -35,8 +35,9 @@
 {% empty %}
     <div class="row">
         <div class="col-md-12">
-            <p class="text-muted">{% translate 'Query did not match any texts.' %}</p>
+            <p class="text-muted text-center">{% translate 'Query did not match any texts.' %}</p>
         </div>
     </div>
 {% endfor %}
 {% include 'main/common/pagination.html' %}
+{% include 'main/common/popovers.html' %}
