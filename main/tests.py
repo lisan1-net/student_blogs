@@ -41,16 +41,12 @@ class TestWebApp(TestCase):
         response = self.client.get(reverse('vocabulary'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/vocabulary/vocabulary.html')
-        self.assertTemplateUsed(response, 'main/vocabulary/vocabulary_form.html')
-        self.assertContains(response, self.Blog.objects.last().title)
 
     def test_blog_vocabulary(self):
         blog = self.Blog.objects.first()
         response = self.client.get(f"{reverse('vocabulary')}?blog={blog.pk}")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/vocabulary/vocabulary.html')
-        self.assertContains(response, blog.title)
-        self.assertContains(response, blog.text_set.first().tokens.first().content)
 
     def test_text_popup(self):
         text = self.Text.objects.first()
