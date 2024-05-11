@@ -6,24 +6,24 @@
         <div class="col-12">
             <div class="jumbotron p-3 text-center">
                 <h1>{% translate 'Vocabulary of the database' %}</h1>
-                {{ form }}
+                <div id="form">
+                    <div class="spinner-border text-secondary" role="status"></div>
+                </div>
+                <script type="text/javascript">
+                    $('#form').load('{% url 'vocabulary_form' %}' + window.location.search, function() {
+                        addFormSubmitLogic('{% url 'vocabulary_results' %}');
+                    });
+                </script>
             </div>
         </div>
     </div>
-    {% if form.is_bound %}
-        {% with blog.is_word_fully_indexed|yesno:'secondary,warning' as color %}
-        {% if frequencies %}
-        <div class="row row-cols-md-6 row-cols-sm-3 d-flex justify-content-center">
-            {% for word, frequency in frequencies %}
-                <div class="col mb-3">
-                    {% include 'main/common/word_frequency_card.html' %}
-                </div>
-            {% endfor %}
-        </div>
-        {% else %}
-            <div class="lead text-{{ color }} text-center mb-3">{% translate 'No words found' %}</div>
-        {% endif %}
-        {% endwith %}
-    {% endif %}
-    {% include 'main/common/pagination.html' with results=frequencies %}
+    <div id="results"></div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if (window.location.search) {
+                const vocabulary_api_url = '{% url 'vocabulary_results' %}' + window.location.search;
+                loadSearchResults(vocabulary_api_url);
+            }
+        });
+    </script>
 {% endblock %}

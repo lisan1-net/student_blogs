@@ -3,11 +3,12 @@ from functools import lru_cache
 from typing import Iterable
 
 from django.core.paginator import Paginator
-from django.db.models import Q, Model
+from django.db.models import Q, Model, Count
 from pyarabic.araby import DIACRITICS
 
+from indexes.models import TextToken
 from indexes.utils import normalize
-from main.models import Text
+from main.models import Text, FunctionalWord
 
 
 @lru_cache(64)
@@ -98,6 +99,22 @@ def get_search_paginator_and_counts(**cleaned_data) -> (Paginator, int, bool):
     results = find_search_results(query, texts)
     matched_texts_count = len(set(r['text'] for r in results))
     return Paginator(results, 15), matched_texts_count, advanced
+
+
+@lru_cache(64)
+def get_vocabulary_paginator(**cleaned_data) -> Paginator:
+    filter_query, advanced = build_common_filter_query(cleaned_data)
+    if blog_id := cleaned_data['blog']:
+        filter_query &= Q(blog_id=blog_id)
+    texts = Text.objects.filter(filter_query).distinct()
+    words = TextToken.objects.filter(text__in=texts).values('token__content')
+    include_functional_words = cleaned_data['include_functional_words']
+    if not include_functional_words:
+        words = words.exclude(token__content__in=FunctionalWord.objects.values_list('content', flat=True))
+    word_frequencies = words.annotate(frequency=Count('token__content')).order_by('-frequency').values_list(
+        'token__content', 'frequency'
+    )
+    return Paginator(word_frequencies, 60)
 
 
 def clean_form_data(form_data: dict) -> dict:

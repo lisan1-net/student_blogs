@@ -7,5 +7,8 @@ urlpatterns = [
     path('blog_card/<int:pk>/', api.blog_card, name='blog_card'),
     path('advanced_search_form/', api.advanced_search_form, name='advanced_search_form'),
     path('announcements/', api.announcements, name='announcements'),
-    path('search_results/', api.search_results, name='search_results')
+    path('search_results/', api.search_results, name='search_results'),
+    path('advanced_vocabulary_form/', api.advanced_vocabulary_form, name='advanced_vocabulary_form'),
+    path('vocabulary_form/', api.vocabulary_form, name='vocabulary_form'),
+    path('vocabulary_results/', api.vocabulary_results, name='vocabulary_results'),
 ]

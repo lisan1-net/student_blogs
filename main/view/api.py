@@ -1,9 +1,9 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, reverse
 
-from main.forms import SearchForm
+from main.forms import SearchForm, VocabularyForm
 from main.models import Blog, Announcement
-from main.utils import get_search_paginator_and_counts, clean_form_data
+from main.utils import get_search_paginator_and_counts, clean_form_data, get_vocabulary_paginator
 
 
 def blog_ids(request):
@@ -35,6 +35,33 @@ def search_results(request):
         paginator, text_count, form.advanced = get_search_paginator_and_counts(**cleaned_data)
         results = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/search/search_results.html', context={
-        'results': results, 'matched_text_count': text_count, 'page_url': request.get_full_path()[len(request.path):],
+        'results': results, 'matched_text_count': text_count,
+        'page_url': reverse('home') + request.get_full_path()[len(request.path):],
         'api_url': reverse('search_results')
+    })
+
+
+def advanced_vocabulary_form(request):
+    form = VocabularyForm(request.GET or None)
+    return render(request, 'main/vocabulary/advanced_vocabulary_form.html', context={'form': form})
+
+
+def vocabulary_form(request):
+    form = VocabularyForm(request.GET or None)
+    return render(request, 'main/vocabulary/vocabulary_form.html', context={'form': form})
+
+
+def vocabulary_results(request):
+    form = VocabularyForm(request.GET or None)
+    page = None
+    blog = None
+    if form.is_valid():
+        cleaned_data = clean_form_data(form.cleaned_data)
+        blog = cleaned_data['blog']
+        paginator = get_vocabulary_paginator(**cleaned_data)
+        page = paginator.get_page(request.GET.get('page'))
+    return render(request, 'main/vocabulary/vocabulary_results.html', context={
+        'frequencies': page, 'blog': blog,
+        'page_url': reverse('vocabulary') + request.get_full_path()[len(request.path):],
+        'api_url': reverse('vocabulary_results')
     })

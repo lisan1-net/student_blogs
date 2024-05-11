@@ -25,7 +25,16 @@
         </a>
     </div>
     <div class="collapse {{ form.advanced|yesno:"show," }}" id="advanced-options">
-        {% include 'main/common/student_fieldset.html' %}
-        {% include 'main/common/tags_fieldset.html' %}
+        <div class="text-center mb-3">
+            <div class="spinner-border text-secondary" role="status"></div>
+        </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            const advancedOptions = $('#advanced-options');
+            if (advancedOptions.hasClass('show'))
+                retrieveAdvancedPart('{% url 'advanced_vocabulary_form' %}', advancedOptions);
+            advancedOptions.on('show.bs.collapse', () => retrieveAdvancedPart('{% url 'advanced_vocabulary_form' %}', advancedOptions));
+        });
+    </script>
 </form>

@@ -27,13 +27,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             const advancedSearch = $('#advanced-search');
-            function retrieveAdvancedSearchPart() {
-                if (advancedSearch.has('.spinner-border').length) {
-                    advancedSearch.load('{% url 'advanced_search_form' %}' + window.location.search);
-                }
-            }
-            if (advancedSearch.hasClass('show')) retrieveAdvancedSearchPart();
-            advancedSearch.on('show.bs.collapse', retrieveAdvancedSearchPart);
+            if (advancedSearch.hasClass('show'))
+                retrieveAdvancedPart('{% url 'advanced_search_form' %}', advancedSearch)
+            advancedSearch.on('show.bs.collapse', () => retrieveAdvancedPart('{% url 'advanced_search_form' %}', advancedSearch));
         });
     </script>
 </form>

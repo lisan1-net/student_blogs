@@ -28,8 +28,7 @@ def with_empty(choices_function):
 
 def get_blogs():
     for _id, title in Blog.objects.values_list('id', 'title').order_by('title'):
-        blog = Blog.objects.get(id=_id)
-        yield _id, f'{title} - {blog.get_word_count_display()}'
+        yield _id, title
 
 
 def get_source_types():

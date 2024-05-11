@@ -3,7 +3,6 @@
 {% load search %}
 
 {% block content %}
-    {% include 'main/common/toast.html' %}
     {% include 'main/common/announcements.html' %}
     <div class="jumbotron pt-3 pb-1 text-center">
         <h1 class="mb-3">{% get_app_name %}</h1>
@@ -47,51 +46,12 @@
     </div>
     <div id="results"></div>
     <script type="text/javascript">
-        function loadSearchResults(search_api_url) {
-            const notification = $('#notification');
-            const loading_spinner = $(
-                '<div class="text-center my-2">' +
-                '<div class="spinner-border text-secondary" role="status"></div>' +
-                '</div>'
-            );
-            notification.find('.toast-title').text('{% translate 'Search in progress' %}');
-            notification.find('.toast-icon').text('search');
-            notification.find('.toast-body').html(loading_spinner);
-            notification.toast('show');
-            $.ajax(search_api_url).done(
-                function (response) {
-                    const results = $('#results');
-                    results.html(response);
-                    results[0].scrollIntoView({behavior: "smooth"});
-                    notification.toast('hide');
-                }
-            ).fail(
-                function () {
-                    notification.find('.toast-title').text('{% translate 'An error occurred' %}');
-                    notification.find('.toast-icon').text('error');
-                    notification.find('.toast-body').html(
-                        '<p class="text-danger text-center">' +
-                        '{% translate 'An error occurred while processing the search query.' %}' +
-                        '</p>'
-                    );
-                    notification.toast('show')
-                }
-            ).always(enableForms);
-        }
-        $('form').on('submit', function(event) {
-            event.preventDefault();
-            const fields = $(this).serializeArray();
-            const queryString = $.param(fields);
-            const search_page_url = window.location.pathname + '?' + queryString;
-            window.history.pushState(null, null, search_page_url);
-            const search_api_url = '{% url 'search_results' %}' + '?' + queryString;
-            loadSearchResults(search_api_url);
-        });
         $(document).ready(function() {
             if (window.location.search) {
                 const search_api_url = '{% url 'search_results' %}' + window.location.search;
                 loadSearchResults(search_api_url);
             }
+            addFormSubmitLogic('{% url 'search_results' %}');
         });
     </script>
 {% endblock %}

@@ -1,21 +1,19 @@
 from django.core.paginator import Paginator
 from django.db import connections, OperationalError
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Sum
 from django.http import HttpResponse
 from django.shortcuts import render
 
 from indexes.models import *
 from main.forms import *
-from main.models import Text, FunctionalWord
+from main.models import Text
 from main.utils import build_common_filter_query
 
 
 def home(request):
     form = SearchForm(request.GET or None)
-    return render(
-        request, 'main/search/search.html',
-        context={'form': form, 'query': request.GET.get('search_query')}
-    )
+    form.advanced = form.is_valid() and any(v for k, v in form.cleaned_data.items() if k != 'search_query')
+    return render(request, 'main/search/search.html', context={'form': form})
 
 
 def text(request, pk):
@@ -24,27 +22,7 @@ def text(request, pk):
 
 
 def vocabulary(request):
-    vocabulary_form = VocabularyForm(request.GET or None)
-    page = None
-    blog = None
-    if vocabulary_form.is_valid():
-        blog = vocabulary_form.cleaned_data['blog']
-        filter_query = Q(blog=blog)
-        q, vocabulary_form.advanced = build_common_filter_query(vocabulary_form.cleaned_data)
-        filter_query &= q
-        texts = Text.objects.filter(filter_query).distinct()
-        words = TextToken.objects.filter(text__in=texts).values('token__content')
-        include_functional_words = vocabulary_form.cleaned_data['include_functional_words']
-        if not include_functional_words:
-            words = words.exclude(token__content__in=FunctionalWord.objects.values_list('content', flat=True))
-        word_frequencies = words.annotate(frequency=Count('token__content')).order_by('-frequency').values_list(
-            'token__content', 'frequency'
-        )
-        paginator = Paginator(word_frequencies, 60)
-        page = paginator.get_page(request.GET.get('page'))
-    return render(request, 'main/vocabulary/vocabulary.html', context={
-        'form': vocabulary_form, 'frequencies': page, 'blog': blog
-    })
+    return render(request, 'main/vocabulary/vocabulary.html')
 
 
 def search_widget(request):

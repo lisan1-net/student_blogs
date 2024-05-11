@@ -788,7 +788,7 @@ msgstr "النتائج من %(f)s إلى %(t)s من أصل %(c)s"
 
 #: main/templates/main/search/search_results.html:38
 msgid "Query did not match any texts."
-msgstr "الاستعلام لم يطابق أي نصوص."
+msgstr "الاستعلام لم يطابق أية نصوص."
 
 #: main/templates/main/search/search_widget.html:11
 msgid "Search box"
