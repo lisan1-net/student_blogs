@@ -24,10 +24,10 @@
         <div class="carousel-inner">
             {% for announcement in announcements %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <div class="row no-gutters bg-light text-info overflow-auto" style="height: 125px">
+                <div class="row no-gutters bg-light text-info overflow-auto" style="height: 135px">
                     {% if announcement.image_link %}
-                        <div class="col-2 text-center">
-                            <img src="{{ announcement.image_link }}" class="card-img" alt="{{ announcement.title }}"
+                        <div class="col-2 text-center pt-1">
+                            <img src="{{ announcement.image_link }}" class="card-img img-thumbnail rounded" alt="{{ announcement.title }}"
                                  style="aspect-ratio: 1; max-width: 125px">
                         </div>
                         <div class="col-10">

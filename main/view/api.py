@@ -1,14 +1,14 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, reverse
 
-from main.forms import SearchForm, VocabularyForm
+from main.forms import SearchForm, VocabularyForm, NgramsForm
 from main.models import Blog, Announcement
-from main.utils import get_search_paginator_and_counts, clean_form_data, get_vocabulary_paginator
+from main.utils import *
 
 
 def blog_ids(request):
-    blog_ids = Blog.objects.values_list('id', flat=True)
-    return JsonResponse(list(blog_ids), safe=False)
+    ids = Blog.objects.values_list('id', flat=True)
+    return JsonResponse(list(ids), safe=False)
 
 
 def blog_card(request, pk):
@@ -22,8 +22,8 @@ def advanced_search_form(request):
 
 
 def announcements(request):
-    announcements = Announcement.objects.filter(is_active=True).order_by('-posted_on')
-    return render(request, 'main/common/announcements.html', context={'announcements': announcements})
+    ancs = Announcement.objects.filter(is_active=True).order_by('-posted_on')
+    return render(request, 'main/common/announcements.html', context={'announcements': ancs})
 
 
 def search_results(request):
@@ -64,4 +64,25 @@ def vocabulary_results(request):
         'frequencies': page, 'blog': blog,
         'page_url': reverse('vocabulary') + request.get_full_path()[len(request.path):],
         'api_url': reverse('vocabulary_results')
+    })
+
+
+def blog_ngrams_form(request):
+    form = NgramsForm(request.GET or None)
+    return render(request, 'main/ngrams/blog_ngrams_form.html', context={'form': form})
+
+
+def blog_ngrams_results(request):
+    form = NgramsForm(request.GET or None)
+    page = None
+    blog = None
+    if form.is_valid():
+        cleaned_data = clean_form_data(form.cleaned_data)
+        blog = cleaned_data['blog']
+        paginator = get_ngrams_paginator(**cleaned_data)
+        page = paginator.get_page(request.GET.get('page'))
+    return render(request, 'main/ngrams/blog_ngrams_results.html', context={
+        'frequencies': page, 'blog': blog,
+        'page_url': reverse('blog_ngrams') + request.get_full_path()[len(request.path):],
+        'api_url': reverse('blog_ngrams_results')
     })

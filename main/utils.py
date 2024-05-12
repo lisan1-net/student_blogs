@@ -3,10 +3,10 @@ from functools import lru_cache
 from typing import Iterable
 
 from django.core.paginator import Paginator
-from django.db.models import Q, Model, Count
+from django.db.models import Q, Model, Count, Sum
 from pyarabic.araby import DIACRITICS
 
-from indexes.models import TextToken
+from indexes.models import TextToken, Bigram, Trigram
 from indexes.utils import normalize
 from main.models import Text, FunctionalWord
 
@@ -115,6 +115,33 @@ def get_vocabulary_paginator(**cleaned_data) -> Paginator:
         'token__content', 'frequency'
     )
     return Paginator(word_frequencies, 60)
+
+
+@lru_cache(64)
+def get_ngrams_paginator(**cleaned_data) -> Paginator:
+    blog_id = cleaned_data['blog']
+    filter_query = Q(blog_id=blog_id)
+    q, advanced = build_common_filter_query(cleaned_data)
+    filter_query &= q
+    texts = Text.objects.filter(filter_query).distinct()
+    ngram_type = cleaned_data['ngram_type']
+    ngrams = []
+    match ngram_type:
+        case 'bigram':
+            ngrams = Bigram.objects.filter(text__in=texts).prefetch_related('first_token', 'second_token').values(
+                'first_token__content', 'second_token__content'
+            ).annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
+                'first_token__content', 'second_token__content', 'frequency'
+            )
+        case 'trigram':
+            ngrams = Trigram.objects.filter(text__in=texts).prefetch_related(
+                'first_token', 'second_token', 'third_token'
+            ).values(
+                'first_token__content', 'second_token__content', 'third_token__content'
+            ).annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
+                'first_token__content', 'second_token__content', 'third_token__content', 'frequency'
+            )
+    return Paginator(ngrams, 60)
 
 
 def clean_form_data(form_data: dict) -> dict:

@@ -142,6 +142,8 @@ USE_TZ = True
 
 USE_THOUSAND_SEPARATOR = True
 
+DATETIME_FORMAT = 'l j F Y - P'
+
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]

@@ -11,4 +11,6 @@ urlpatterns = [
     path('advanced_vocabulary_form/', api.advanced_vocabulary_form, name='advanced_vocabulary_form'),
     path('vocabulary_form/', api.vocabulary_form, name='vocabulary_form'),
     path('vocabulary_results/', api.vocabulary_results, name='vocabulary_results'),
+    path('blog_ngrams_form/', api.blog_ngrams_form, name='blog_ngrams_form'),
+    path('blog_ngrams_results/', api.blog_ngrams_results, name='blog_ngrams_results'),
 ]

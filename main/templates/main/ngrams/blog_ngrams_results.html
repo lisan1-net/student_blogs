@@ -1,0 +1,27 @@
+{% load i18n %}
+{% if not frequencies %}
+    <div class="lead text-center {% if not blog.is_bigram_fully_indexed or not blog.is_trigram_fully_indexed %}text-warning{% endif %} mb-3">{% translate 'No N-grams found' %}</div>
+{% else %}
+    {% if request.GET.ngram_type == 'bigram' %}
+        {% with blog.is_bigram_fully_indexed|yesno:'secondary,warning' as color %}
+            <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1 row-cols-lg-5 row-cols-xl-6 d-flex justify-content-center">
+                {% for first_word, second_word, frequency in frequencies %}
+                    <div class="col mb-3">
+                        {% include 'main/common/word_frequency_card.html' with word=first_word|add:' '|add:second_word%}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endwith %}
+    {% else %}
+        {% with blog.is_trigram_fully_indexed|yesno:'secondary,warning' as color %}
+            <div class="row row-cols-md-3 row-cols-sm-2 row-cols-1 row-cols-lg-4 row-cols-xl-5 d-flex justify-content-center">
+                {% for first_word, second_word, third_word, frequency in frequencies %}
+                    <div class="col mb-3">
+                        {% include 'main/common/word_frequency_card.html' with word=first_word|add:' '|add:second_word|add:' '|add:third_word %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endwith %}
+    {% endif %}
+{% endif %}
+{% include 'main/common/pagination.html' with results=frequencies %}
