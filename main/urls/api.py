@@ -13,4 +13,9 @@ urlpatterns = [
     path('vocabulary_results/', api.vocabulary_results, name='vocabulary_results'),
     path('blog_ngrams_form/', api.blog_ngrams_form, name='blog_ngrams_form'),
     path('blog_ngrams_results/', api.blog_ngrams_results, name='blog_ngrams_results'),
+    path('blog_comparison_form/', api.blog_comparison_form, name='blog_comparison_form'),
+    path('blog_comparison_results/', api.blog_comparison_results, name='blog_comparison_results'),
+    path('most_frequent_words/<int:blog_id>/', api.most_frequent_words, name='most_frequent_words'),
+    path('most_frequent_bigrams/<int:blog_id>/', api.most_frequent_bigrams, name='most_frequent_bigrams'),
+    path('most_frequent_trigrams/<int:blog_id>/', api.most_frequent_trigrams, name='most_frequent_trigrams'),
 ]

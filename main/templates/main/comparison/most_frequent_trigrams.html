@@ -1,0 +1,10 @@
+{% load i18n %}
+{% with blog.is_trigram_fully_indexed|yesno:'primary,warning' as color %}
+    {% for first_word, second_word, third_word, frequency in blog.most_frequent_trigrams %}
+        <div class="col mb-1">
+            {% include 'main/common/word_frequency_card.html' with word=first_word|add:' '|add:second_word|add:' '|add:third_word %}
+        </div>
+    {% empty %}
+        <p class="card-text text-{% if color == 'primary' %}muted{% else %}{{ color }}{% endif %}">{% translate 'No results' %}</p>
+    {% endfor %}
+{% endwith %}

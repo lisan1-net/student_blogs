@@ -6,19 +6,25 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" data-target="#blog{{ blog.pk }}-tab1" data-toggle="tab" role="tab">
                     {% translate 'Most frequent words' %}
-                    <span class="badge badge-secondary pt-2">{{ blog.most_frequent_words_extended|length }}</span>
+                    <span class="badge badge-secondary pt-2">
+                        <span class="spinner-border spinner-border-sm text-light" role="status"></span>
+                    </span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" data-target="#blog{{ blog.pk }}-tab2" data-toggle="tab" role="tab">
                     {% translate 'Most frequent bigrams' %}
-                    <span class="badge badge-secondary pt-2">{{ blog.most_frequent_bigrams|length }}</span>
+                    <span class="badge badge-secondary pt-2">
+                        <span class="spinner-border spinner-border-sm text-light" role="status"></span>
+                    </span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" data-target="#blog{{ blog.pk }}-tab3" data-toggle="tab" role="tab">
                     {% translate 'Most frequent trigrams' %}
-                    <span class="badge badge-secondary pt-2">{{ blog.most_frequent_trigrams|length }}</span>
+                    <span class="badge badge-secondary pt-2">
+                        <span class="spinner-border spinner-border-sm text-light" role="status"></span>
+                    </span>
                 </button>
             </li>
         </ul>
@@ -26,42 +32,46 @@
     <div class="tab-content overflow-auto" style="max-height: 25rem">
         <div class="card-body tab-pane fade show active" id="blog{{ blog.pk }}-tab1">
             <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6">
-                {% with blog.is_word_fully_indexed|yesno:'primary,warning' as color %}
-                    {% for word, frequency in blog.most_frequent_words_extended %}
-                        <div class="col mb-1">
-                            {% include 'main/common/word_frequency_card.html' with color=blog.is_word_fully_indexed|yesno:'primary,warning' %}
-                        </div>
-                    {% empty %}
-                        <p class="card-text text-{% if color == 'primary' %}muted{% else %}{{ color }}{% endif %}">{% translate 'No results' %}</p>
-                    {% endfor %}
-                {% endwith %}
+                <div class="d-flex justify-content-center align-items-center">
+                    <span class="spinner spinner-border text-secondary" role="status"></span>
+                </div>
             </div>
         </div>
         <div class="card-body tab-pane fade" id="blog{{ blog.pk }}-tab2">
             <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-                {% with blog.is_bigram_fully_indexed|yesno:'primary,warning' as color %}
-                    {% for first_word, second_word, frequency in blog.most_frequent_bigrams %}
-                        <div class="col mb-1">
-                            {% include 'main/common/word_frequency_card.html' with word=first_word|add:' '|add:second_word color=blog.is_bigram_fully_indexed|yesno:'primary,warning'%}
-                        </div>
-                    {% empty %}
-                        <p class="card-text text-{% if color == 'primary' %}muted{% else %}{{ color }}{% endif %}">{% translate 'No results' %}</p>
-                    {% endfor %}
-                {% endwith %}
+                <div class="d-flex justify-content-center align-items-center">
+                    <span class="spinner spinner-border text-secondary" role="status"></span>
+                </div>
             </div>
         </div>
         <div class="card-body tab-pane fade" id="blog{{ blog.pk }}-tab3">
-            {% with blog.is_trigram_fully_indexed|yesno:'primary,warning' as color %}
-                <div class="row row-cols-sm-1 row-cols-md-3 row-cols-lg-4">
-                    {% for first_word, second_word, third_word, frequency in blog.most_frequent_trigrams %}
-                        <div class="col mb-1">
-                            {% include 'main/common/word_frequency_card.html' with word=first_word|add:' '|add:second_word|add:' '|add:third_word %}
-                        </div>
-                    {% empty %}
-                        <p class="card-text text-{% if color == 'primary' %}muted{% else %}{{ color }}{% endif %}">{% translate 'No results' %}</p>
-                    {% endfor %}
+            <div class="row row-cols-sm-1 row-cols-md-3 row-cols-lg-4">
+                <div class="d-flex justify-content-center align-items-center">
+                    <span class="spinner spinner-border text-secondary" role="status"></span>
                 </div>
-            {% endwith %}
+            </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            const tab1 = $('#blog{{ blog.pk }}-tab1');
+            tab1.find('.row').load('{% url 'most_frequent_words' blog.pk %}', function() {
+                $('[data-target="#blog{{ blog.pk }}-tab1"] .badge').text(
+                    tab1.find('.list-group-item-action').length.toString()
+                )
+            });
+            const tab2 = $('#blog{{ blog.pk }}-tab2');
+            tab2.find('.row').load('{% url 'most_frequent_bigrams' blog.pk %}', function() {
+                $('[data-target="#blog{{ blog.pk }}-tab2"] .badge').text(
+                    tab2.find('.list-group-item-action').length.toString()
+                )
+            });
+            const tab3 = $('#blog{{ blog.pk }}-tab3');
+            tab3.find('.row').load('{% url 'most_frequent_trigrams' blog.pk %}', function() {
+                $('[data-target="#blog{{ blog.pk }}-tab3"] .badge').text(
+                    tab3.find('.list-group-item-action').length.toString()
+                )
+            });
+        });
+    </script>
 </div>

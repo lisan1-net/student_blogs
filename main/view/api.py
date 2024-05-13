@@ -1,7 +1,7 @@
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, reverse
 
-from main.forms import SearchForm, VocabularyForm, NgramsForm
+from main.forms import *
 from main.models import Blog, Announcement
 from main.utils import *
 
@@ -86,3 +86,31 @@ def blog_ngrams_results(request):
         'page_url': reverse('blog_ngrams') + request.get_full_path()[len(request.path):],
         'api_url': reverse('blog_ngrams_results')
     })
+
+
+def blog_comparison_form(request):
+    form = BlogComparisonForm(request.GET or None)
+    return render(request, 'main/comparison/blog_comparison_form.html', context={'form': form})
+
+
+def blog_comparison_results(request):
+    form = BlogComparisonForm(request.GET or None)
+    blogs = None
+    if form.is_valid():
+        blogs = form.cleaned_data['blogs']
+    return render(request, 'main/comparison/blog_comparison_results.html', context={'blogs': blogs})
+
+
+def most_frequent_words(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    return render(request, 'main/comparison/most_frequent_words.html', context={'blog': blog})
+
+
+def most_frequent_bigrams(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    return render(request, 'main/comparison/most_frequent_bigrams.html', context={'blog': blog})
+
+
+def most_frequent_trigrams(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    return render(request, 'main/comparison/most_frequent_trigrams.html', context={'blog': blog})

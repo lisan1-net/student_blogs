@@ -40,10 +40,4 @@ def blog_ngrams(request):
 
 
 def blog_comparison(request):
-    blog_comparison_form = BlogComparisonForm(request.GET or None)
-    blogs = None
-    if blog_comparison_form.is_valid():
-        blogs = blog_comparison_form.cleaned_data['blogs']
-    return render(request, 'main/comparison/blog_comparison.html', context={
-        'form': blog_comparison_form, 'blogs': blogs
-    })
+    return render(request, 'main/comparison/blog_comparison.html')

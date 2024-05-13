@@ -1,0 +1,12 @@
+{% load i18n %}
+{% for blog in blogs %}
+    <div class="row">
+        <div class="col-12">
+            {% include 'main/comparison/blog_most_frequent_card.html' %}
+        </div>
+    </div>
+{% empty %}
+    <p class="lead text-muted text-center">
+        {% translate 'No results' %}
+    </p>
+{% endfor %}

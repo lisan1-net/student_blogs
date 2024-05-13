@@ -1,0 +1,19 @@
+{% load i18n %}
+<form method="get">
+    <fieldset class="form-group border border-secondary p-1 mb-2 form-row rounded row-cols-2 row-cols-sm-3 row-cols-md-4">
+        <legend class="w-auto h6">{{ form.blogs.label }}</legend>
+        {% for checkbox in form.blogs %}
+            <div class="form-check col">
+                {{ checkbox }}
+            </div>
+        {% endfor %}
+    </fieldset>
+    {% for checkbox in form.blogs %}
+        {% include 'main/common/error_list.html' with errors=checkbox.errors %}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">
+        <span class="material-icons">compare</span>
+        {% translate 'Compare' %}
+    </button>
+    {% include 'main/common/error_list.html' with errors=form.non_field_errors %}
+</form>
