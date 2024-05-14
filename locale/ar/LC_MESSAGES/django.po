@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-14 03:35+0000\n"
+"POT-Creation-Date: 2024-05-14 06:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -709,7 +709,7 @@ msgstr "خيارات مدونات الكتب والقصص"
 msgid "No tags found"
 msgstr "لم يتم العثور على وسوم"
 
-#: main/templates/main/common/word_frequency_card.html:11
+#: main/templates/main/common/word_frequency_card.html:12
 msgid "Appearance ratio in the texts"
 msgstr "نسبة الظهور في النصوص"
 
@@ -741,10 +741,10 @@ msgid "Extraction of the n-grams"
 msgstr "استخراج المتلازمات اللفظية"
 
 #: main/templates/main/ngrams/blog_ngrams.html:8
-msgid "Extract the n-grams from the texts"
-msgstr "استخراج المتلازمات اللفظية من النصوص"
+msgid "Extract the n-grams from the texts with their apparition ratios."
+msgstr "استخراج المتلازمات اللفظية من النصوص مع نسب ظهورها."
 
-#: main/templates/main/ngrams/blog_ngrams_results.html:3
+#: main/templates/main/ngrams/blog_ngrams_results.html:4
 msgid "No N-grams found"
 msgstr "لم يتم العثور على متلازمات لفظية"
 
@@ -813,9 +813,9 @@ msgstr "شيوع الألفاظ في المدونات"
 
 #: main/templates/main/vocabulary/vocabulary.html:10
 msgid ""
-"Search for the most frequent vocabulary with the respective frequencies and appearance ratios in the texts."
-msgstr ""
-"البحث عن الألفاظ الأكثر شيوعًا مع التكرارات ونسب الظهور في النصوص."
+"Search for the most frequent vocabulary with the respective frequencies and "
+"appearance ratios in the texts."
+msgstr "البحث عن الألفاظ الأكثر شيوعًا مع التكرارات ونسب الظهور في النصوص."
 
 #: main/templates/main/vocabulary/vocabulary_form.html:24
 msgid "Advanced options"

@@ -11,7 +11,9 @@ from django.template.defaultfilters import mark_safe, floatformat
 from django.urls import reverse
 from django.utils.html import format_html
 
-from main.models import TextToken, DictionaryDefinition, Text
+from main.forms import *
+from main.models import TextToken, DictionaryDefinition
+from main.utils import build_common_filter_query
 
 register = template.Library()
 
@@ -78,8 +80,24 @@ def search_url(request, word, blog_pk=None):
 
 
 @register.filter
-def word_appearance_ratio(content, blog):
-    return Text.objects.filter(tokens__content=content, blog=blog).distinct().count() / Text.objects.filter(blog=blog).count()
+def appearance_ratio(content, request):
+    tokens = content.split(' ')
+    form = VocabularyForm(request.GET) if len(tokens) == 1 else NgramsForm(request.GET)
+    if form.is_valid():
+        filter_q, _ = build_common_filter_query(form.cleaned_data)
+        texts = Text.objects.filter(filter_q)
+        match len(tokens):
+            case 1:
+                return texts.filter(tokens__content=tokens[0]).distinct().count() / texts.count()
+            case 2:
+                return texts.filter(
+                    bigrams__first_token__content=tokens[0], bigrams__second_token__content=tokens[1]
+                ).distinct().count() / texts.count()
+            case 3:
+                return texts.filter(
+                    trigrams__first_token__content=tokens[0], trigrams__second_token__content=tokens[1],
+                    trigrams__third_token__content=tokens[2]
+                ).distinct().count() / texts.count()
 
 
 @register.filter
