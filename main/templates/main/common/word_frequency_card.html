@@ -11,7 +11,7 @@
     <div class="card-footer p-1 position-relative">
         <div class="progress" data-toggle="tooltip" title="{% translate 'Appearance ratio in the texts' %}">
             <div class="progress-bar bg-{{ color }} " role="progressbar" style="width: {{ ratio|percent:True }}"></div>
-            <div class="position-relative pl-1 text-{% if color == 'primary' %}{{ color }}{% else %}dark{% endif %}" style="top: 1rex">
+            <div class="position-relative pl-1 text-{% if color == 'primary' %}{{ color }}{% else %}dark{% endif %}" style="top: 1.5ex">
                 {{ ratio|percent }}
             </div>
         </div>
