@@ -78,8 +78,8 @@ def search_url(request, word, blog_pk=None):
 
 
 @register.filter
-def word_appearance_ratio(content):
-    return Text.objects.filter(tokens__content=content).distinct().count() / Text.objects.count()
+def word_appearance_ratio(content, blog):
+    return Text.objects.filter(tokens__content=content, blog=blog).distinct().count() / Text.objects.filter(blog=blog).count()
 
 
 @register.filter
