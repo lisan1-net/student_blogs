@@ -56,8 +56,8 @@ def vocabulary_results(request):
     page = None
     blog = None
     if form.is_valid():
+        blog = form.cleaned_data['blog']
         cleaned_data = clean_form_data(form.cleaned_data)
-        blog = cleaned_data['blog']
         paginator = get_vocabulary_paginator(**cleaned_data)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/vocabulary/vocabulary_results.html', context={
@@ -77,8 +77,8 @@ def blog_ngrams_results(request):
     page = None
     blog = None
     if form.is_valid():
+        blog = form.cleaned_data['blog']
         cleaned_data = clean_form_data(form.cleaned_data)
-        blog = cleaned_data['blog']
         paginator = get_ngrams_paginator(**cleaned_data)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/ngrams/blog_ngrams_results.html', context={

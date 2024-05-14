@@ -55,6 +55,7 @@
                 results.html(response);
                 results[0].scrollIntoView({behavior: "smooth"});
                 notification.toast('hide');
+                initializeTooltips();
             }
         ).fail(
             function () {

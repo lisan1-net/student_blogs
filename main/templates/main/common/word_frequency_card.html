@@ -1,10 +1,20 @@
+{% load i18n %}
 {% load search %}
 <div class="card list-group-item-action">
-    <div class="card-body lead d-flex justify-content-between align-items-center p-2">
-        <a href='{% search_url request word %}'
-           class="stretched-link text-decoration-none">
+    <div class="card-body p-2 lead d-flex justify-content-between align-items-center">
+        <a href='{% search_url request word %}' class="text-decoration-none">
             {{ word }}
         </a>
-        <span class="badge badge-{{ color }} pt-2">{{ frequency }}</span>
+        <span class="badge badge-{{ color }} pt-2" data-toggle="tooltip" title="{% translate 'Frequency' %}">{{ frequency }}</span>
     </div>
+    {% if ratio %}
+    <div class="card-footer p-1 position-relative">
+        <div class="progress" data-toggle="tooltip" title="{% translate 'Appearance ratio in the texts' %}">
+            <div class="progress-bar bg-{{ color }} " role="progressbar" style="width: {{ ratio|percent:True }}"></div>
+            <div class="position-relative pl-1 text-{% if color == 'primary' %}{{ color }}{% else %}dark{% endif %}" style="top: 1rex">
+                {{ ratio|percent }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>

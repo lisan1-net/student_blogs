@@ -7,11 +7,11 @@ from django.apps import apps
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.db.models.functions import Length
-from django.template.defaultfilters import mark_safe
+from django.template.defaultfilters import mark_safe, floatformat
 from django.urls import reverse
 from django.utils.html import format_html
 
-from main.models import TextToken, DictionaryDefinition
+from main.models import TextToken, DictionaryDefinition, Text
 
 register = template.Library()
 
@@ -75,6 +75,18 @@ def search_url(request, word, blog_pk=None):
         params['blog'] = blog_pk
     params.pop('page', None)
     return reverse('home') + '?' + params.urlencode()
+
+
+@register.filter
+def word_appearance_ratio(content):
+    return Text.objects.filter(tokens__content=content).distinct().count() / Text.objects.count()
+
+
+@register.filter
+def percent(value, unlocalized=False):
+    if value is None:
+        return None
+    return floatformat(value * 100.0, 2 if not unlocalized else "2u") + '%'
 
 
 @register.simple_tag

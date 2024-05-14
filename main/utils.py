@@ -145,6 +145,7 @@ def get_ngrams_paginator(**cleaned_data) -> Paginator:
 
 
 def clean_form_data(form_data: dict) -> dict:
+    form_data = form_data.copy()
     for k, v in form_data.items():
         if isinstance(v, Iterable) and not isinstance(v, str):
             form_data[k] = tuple(v)
