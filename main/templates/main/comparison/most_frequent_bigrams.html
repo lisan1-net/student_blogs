@@ -1,7 +1,7 @@
 {% load i18n %}
 {% with blog.is_bigram_fully_indexed|yesno:'primary,warning' as color %}
     {% for first_word, second_word, frequency in blog.most_frequent_bigrams %}
-        <div class="col mb-1">
+        <div class="col mb-2">
             {% include 'main/common/word_frequency_card.html' with word=first_word|add:' '|add:second_word color=blog.is_bigram_fully_indexed|yesno:'primary,warning'%}
         </div>
     {% empty %}

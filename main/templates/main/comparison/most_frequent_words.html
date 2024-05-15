@@ -1,7 +1,7 @@
 {% load i18n %}
 {% with blog.is_word_fully_indexed|yesno:'primary,warning' as color %}
     {% for word, frequency in blog.most_frequent_words_extended %}
-        <div class="col mb-1">
+        <div class="col mb-2">
             {% include 'main/common/word_frequency_card.html' with color=blog.is_word_fully_indexed|yesno:'primary,warning' %}
         </div>
     {% empty %}

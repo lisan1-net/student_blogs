@@ -1,3 +1,21 @@
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <label for="{{ form.contains_part.id_for_label }}" class="input-group-text">{{ form.contains_part.label }}</label>
+        </div>
+        {{ form.contains_part }}
+    </div>
+    {% include 'main/common/error_list.html' with errors=form.contains_part.errors %}
+</div>
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <label for="{{ form.not_contains_part.id_for_label }}" class="input-group-text">{{ form.not_contains_part.label }}</label>
+        </div>
+        {{ form.not_contains_part }}
+    </div>
+    {% include 'main/common/error_list.html' with errors=form.not_contains_part.errors %}
+</div>
 <div class="form-group form-check">
     {{ form.include_functional_words }}
     <label class="form-check-label" for="{{ form.include_functional_words.id_for_label }}">

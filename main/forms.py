@@ -153,6 +153,15 @@ class VocabularyForm(SearchForm):
         widget=widgets.CheckboxInput
     )
 
+    contains_part = forms.CharField(
+        max_length=100, required=False, label=_('Contains part'), help_text=_('Enter a part of the word to search for.')
+    )
+
+    not_contains_part = forms.CharField(
+        max_length=100, required=False, label=_('Does not contain part'),
+        help_text=_('Enter a part of the word to exclude from the search results.')
+    )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['blog'].required = True
@@ -166,6 +175,20 @@ class VocabularyForm(SearchForm):
             'data-toggle': 'tooltip',
             'data-placement': 'top',
             'title': self.fields['include_functional_words'].help_text,
+        })
+        self.fields['contains_part'].widget.attrs.update({
+            'placeholder': self.fields['contains_part'].help_text,
+            'class': 'form-control',
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+            'title': self.fields['contains_part'].help_text,
+        })
+        self.fields['not_contains_part'].widget.attrs.update({
+            'placeholder': self.fields['not_contains_part'].help_text,
+            'class': 'form-control',
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+            'title': self.fields['not_contains_part'].help_text,
         })
         del self.fields['search_query']
 

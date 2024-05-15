@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="card">
+<div class="card mb-3">
     <div class="card-header">
         <h5 class="card-title">{{ blog.title }}</h5>
         <ul class="nav nav-tabs card-header-tabs" role="tablist">
@@ -29,7 +29,7 @@
             </li>
         </ul>
     </div>
-    <div class="tab-content overflow-auto" style="max-height: 25rem">
+    <div class="tab-content overflow-auto" style="max-height: 25em">
         <div class="card-body tab-pane fade show active" id="blog{{ blog.pk }}-tab1">
             <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6">
                 <div class="d-flex justify-content-center align-items-center">
@@ -59,18 +59,21 @@
                 $('[data-target="#blog{{ blog.pk }}-tab1"] .badge').text(
                     tab1.find('.list-group-item-action').length.toString()
                 )
+                initializeTooltips();
             });
             const tab2 = $('#blog{{ blog.pk }}-tab2');
             tab2.find('.row').load('{% url 'most_frequent_bigrams' blog.pk %}', function() {
                 $('[data-target="#blog{{ blog.pk }}-tab2"] .badge').text(
                     tab2.find('.list-group-item-action').length.toString()
                 )
+                initializeTooltips();
             });
             const tab3 = $('#blog{{ blog.pk }}-tab3');
             tab3.find('.row').load('{% url 'most_frequent_trigrams' blog.pk %}', function() {
                 $('[data-target="#blog{{ blog.pk }}-tab3"] .badge').text(
                     tab3.find('.list-group-item-action').length.toString()
                 )
+                initializeTooltips();
             });
         });
     </script>
