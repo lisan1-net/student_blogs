@@ -109,6 +109,20 @@ def get_vocabulary_paginator(**cleaned_data) -> Paginator:
     texts = Text.objects.filter(filter_query).distinct()
     words = TextToken.objects.filter(text__in=texts).values('token__content')
     include_functional_words = cleaned_data['include_functional_words']
+    contains = cleaned_data['contains']
+    partial_contains = cleaned_data['partial_contains']
+    not_contains = cleaned_data['not_contains']
+    partial_not_contains = cleaned_data['partial_not_contains']
+    if contains:
+        if partial_contains:
+            words = words.filter(token__content__icontains=contains)
+        else:
+            words = words.filter(token__content=contains)
+    if not_contains:
+        if partial_not_contains:
+            words = words.exclude(token__content__icontains=not_contains)
+        else:
+            words = words.exclude(token__content=not_contains)
     if not include_functional_words:
         words = words.exclude(token__content__in=FunctionalWord.objects.values_list('content', flat=True))
     word_frequencies = words.annotate(frequency=Count('token__content')).order_by('-frequency').values_list(
@@ -126,11 +140,35 @@ def get_ngrams_paginator(**cleaned_data) -> Paginator:
     texts = Text.objects.filter(filter_query).distinct()
     ngram_type = cleaned_data['ngram_type']
     ngrams = []
+    contains = cleaned_data['contains']
+    partial_contains = cleaned_data['partial_contains']
+    not_contains = cleaned_data['not_contains']
+    partial_not_contains = cleaned_data['partial_not_contains']
     match ngram_type:
         case 'bigram':
             ngrams = Bigram.objects.filter(text__in=texts).prefetch_related('first_token', 'second_token').values(
                 'first_token__content', 'second_token__content'
-            ).annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
+            )
+            if contains:
+                if partial_contains:
+                    ngrams = ngrams.filter(
+                        Q(first_token__content__icontains=contains) | Q(second_token__content__icontains=contains)
+                    )
+                else:
+                    ngrams = ngrams.filter(
+                        Q(first_token__content=contains) | Q(second_token__content=contains)
+                    )
+            if not_contains:
+                if partial_not_contains:
+                    ngrams = ngrams.exclude(
+                        Q(first_token__content__icontains=not_contains) |
+                        Q(second_token__content__icontains=not_contains)
+                    )
+                else:
+                    ngrams = ngrams.exclude(
+                        Q(first_token__content=not_contains) | Q(second_token__content=not_contains)
+                    )
+            ngrams = ngrams.annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
                 'first_token__content', 'second_token__content', 'frequency'
             )
         case 'trigram':
@@ -138,7 +176,31 @@ def get_ngrams_paginator(**cleaned_data) -> Paginator:
                 'first_token', 'second_token', 'third_token'
             ).values(
                 'first_token__content', 'second_token__content', 'third_token__content'
-            ).annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
+            )
+            if contains:
+                if partial_contains:
+                    ngrams = ngrams.filter(
+                        Q(first_token__content__icontains=contains) | Q(second_token__content__icontains=contains) |
+                        Q(third_token__content__icontains=contains)
+                    )
+                else:
+                    ngrams = ngrams.filter(
+                        Q(first_token__content=contains) | Q(second_token__content=contains) |
+                        Q(third_token__content=contains)
+                    )
+            if not_contains:
+                if partial_not_contains:
+                    ngrams = ngrams.exclude(
+                        Q(first_token__content__icontains=not_contains) |
+                        Q(second_token__content__icontains=not_contains) |
+                        Q(third_token__content__icontains=not_contains)
+                    )
+                else:
+                    ngrams = ngrams.exclude(
+                        Q(first_token__content=not_contains) | Q(second_token__content=not_contains) |
+                        Q(third_token__content=not_contains)
+                    )
+            ngrams = ngrams.annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
                 'first_token__content', 'second_token__content', 'third_token__content', 'frequency'
             )
     return Paginator(ngrams, 60)

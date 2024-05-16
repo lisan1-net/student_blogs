@@ -1,0 +1,36 @@
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <label for="{{ form.contains.id_for_label }}" class="input-group-text">{{ form.contains.label }}</label>
+        </div>
+        {{ form.contains }}
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <div class="custom-control custom-switch">
+                    {{ form.partial_contains }}
+                    <label class="custom-control-label" for="{{ form.partial_contains.id_for_label }}">{{ form.partial_contains.label }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'main/common/error_list.html' with errors=form.contains.errors %}
+    {% include 'main/common/error_list.html' with errors=form.partial_contains.errors %}
+</div>
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <label for="{{ form.not_contains.id_for_label }}" class="input-group-text">{{ form.not_contains.label }}</label>
+        </div>
+        {{ form.not_contains }}
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <div class="custom-control custom-switch">
+                    {{ form.partial_not_contains }}
+                    <label class="custom-control-label" for="{{ form.partial_not_contains.id_for_label }}">{{ form.partial_not_contains.label }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'main/common/error_list.html' with errors=form.not_contains.errors %}
+    {% include 'main/common/error_list.html' with errors=form.partial_not_contains.errors %}
+</div>

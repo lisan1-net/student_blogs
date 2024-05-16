@@ -153,13 +153,23 @@ class VocabularyForm(SearchForm):
         widget=widgets.CheckboxInput
     )
 
-    contains_part = forms.CharField(
-        max_length=100, required=False, label=_('Contains part'), help_text=_('Enter a part of the word to search for.')
+    contains = forms.CharField(
+        max_length=100, required=False, label=_('Contains'), help_text=_('Enter a word or a part of it to search for.')
     )
 
-    not_contains_part = forms.CharField(
-        max_length=100, required=False, label=_('Does not contain part'),
-        help_text=_('Enter a part of the word to exclude from the search results.')
+    partial_contains = forms.BooleanField(
+        required=False, label=_('Partial contains'), help_text=_('Search for a part of the word.'),
+        widget=widgets.CheckboxInput, initial=True
+    )
+
+    not_contains = forms.CharField(
+        max_length=100, required=False, label=_('Does not contain'),
+        help_text=_('Enter a word part of it to exclude from the search results.')
+    )
+
+    partial_not_contains = forms.BooleanField(
+        required=False, label=_('Partial does not contain'), help_text=_('Exclude a part of the word.'),
+        widget=widgets.CheckboxInput, initial=True
     )
 
     def __init__(self, *args, **kwargs):
@@ -176,19 +186,31 @@ class VocabularyForm(SearchForm):
             'data-placement': 'top',
             'title': self.fields['include_functional_words'].help_text,
         })
-        self.fields['contains_part'].widget.attrs.update({
-            'placeholder': self.fields['contains_part'].help_text,
+        self.fields['contains'].widget.attrs.update({
+            'placeholder': self.fields['contains'].help_text,
             'class': 'form-control',
             'data-toggle': 'tooltip',
             'data-placement': 'top',
-            'title': self.fields['contains_part'].help_text,
+            'title': self.fields['contains'].help_text,
         })
-        self.fields['not_contains_part'].widget.attrs.update({
-            'placeholder': self.fields['not_contains_part'].help_text,
+        self.fields['partial_contains'].widget.attrs.update({
+            'class': 'custom-control-input',
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+            'title': self.fields['partial_contains'].help_text,
+        })
+        self.fields['not_contains'].widget.attrs.update({
+            'placeholder': self.fields['not_contains'].help_text,
             'class': 'form-control',
             'data-toggle': 'tooltip',
             'data-placement': 'top',
-            'title': self.fields['not_contains_part'].help_text,
+            'title': self.fields['not_contains'].help_text,
+        })
+        self.fields['partial_not_contains'].widget.attrs.update({
+            'class': 'custom-control-input',
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+            'title': self.fields['partial_not_contains'].help_text,
         })
         del self.fields['search_query']
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-15 02:18+0000\n"
+"POT-Creation-Date: 2024-05-16 03:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,7 +207,7 @@ msgstr "\"%(token)s\" في \"%(text)s\" [%(start)d:%(end)d]"
 msgid "Bigram"
 msgstr "المتلازمة اللفظية الثنائية"
 
-#: indexes/models.py:56 main/forms.py:204
+#: indexes/models.py:56 main/forms.py:226
 msgid "Bigrams"
 msgstr "المتلازمات اللفظية الثنائية"
 
@@ -249,7 +249,7 @@ msgstr "\"%(first)s %(second)s\" في \"%(text)s\""
 msgid "Trigram"
 msgstr "المتلازمة اللفظية الثلاثية"
 
-#: indexes/models.py:86 main/forms.py:204
+#: indexes/models.py:86 main/forms.py:226
 msgid "Trigrams"
 msgstr "المتلازمات اللفظية الثلاثية"
 
@@ -323,38 +323,54 @@ msgid "Include the functional words in the search results."
 msgstr "تضمين الكلمات الوظيفية ('في'، 'على'، 'من'، ...) في نتائج البحث."
 
 #: main/forms.py:157
-msgid "Contains part"
-msgstr "يحتوي على الجزء"
+msgid "Contains"
+msgstr "يحوي"
 
 #: main/forms.py:157
-msgid "Enter a part of the word to search for."
-msgstr "أدخل جزءًا من الكلمة للبحث عنه."
+msgid "Enter a word or a part of it to search for."
+msgstr "أدخل كلمة أو جزء منها للبحث."
 
 #: main/forms.py:161
-msgid "Does not contain part"
-msgstr "لا يحتوي على الجزء"
+msgid "Partial contains"
+msgstr "محتوى جزئي للتضمين"
 
-#: main/forms.py:162
-msgid "Enter a part of the word to exclude from the search results."
-msgstr "أدخل جزءًا من الكلمة لاستبعاده من نتائج البحث."
+#: main/forms.py:161
+msgid "Search for a part of the word."
+msgstr "البحث عن جزء من الكلمة."
 
-#: main/forms.py:168
+#: main/forms.py:166
+msgid "Does not contain"
+msgstr "لا يحوي"
+
+#: main/forms.py:167
+msgid "Enter a word part of it to exclude from the search results."
+msgstr "أدخل كلمة أو جزء منها لاستبعاده من نتائج البحث."
+
+#: main/forms.py:171
+msgid "Partial does not contain"
+msgstr "محتوى جزئي للاستبعاد"
+
+#: main/forms.py:171
+msgid "Exclude a part of the word."
+msgstr "استبعاد جزء من الكلمة."
+
+#: main/forms.py:178
 msgid "Select a blog"
 msgstr "حدد مدونة"
 
-#: main/forms.py:204
+#: main/forms.py:226
 msgid "N-gram type"
 msgstr "نوع المتلازمة اللفظية"
 
-#: main/forms.py:205
+#: main/forms.py:227
 msgid "Select the type of n-gram to search for."
 msgstr "حدد نوع المتلازمة اللفظية للبحث عنها."
 
-#: main/forms.py:222 main/models.py:15
+#: main/forms.py:244 main/models.py:15
 msgid "Blogs"
 msgstr "المدونات"
 
-#: main/forms.py:223
+#: main/forms.py:245
 msgid "Select the blogs to compare."
 msgstr "حدد المدونات للمقارنة."
 
@@ -871,9 +887,6 @@ msgstr "لم يتم العثور على أيّة ألفاظ"
 
 #~ msgid "Part"
 #~ msgstr "الجزء"
-
-#~ msgid "Part of the word"
-#~ msgstr "جزء الكلمة"
 
 #~ msgid "Text Word"
 #~ msgstr "كلمة النص"
