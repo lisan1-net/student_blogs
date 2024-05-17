@@ -1,57 +1,50 @@
-{% extends 'main/base/base.html' %}
+{% extends 'main/common/page.html' %}
 {% load i18n %}
 {% load search %}
-
-{% block content %}
+{% block top %}
     {% include 'main/common/announcements.html' %}
-    <div class="jumbotron pt-3 pb-1 text-center">
-        <h1 class="mb-3">{% get_app_name %}</h1>
-        <h3 class="mb-3">{% translate 'Search in the database' %}</h3>
-        {{ form }}
-        <h4 class="mb-1 d-flex align-items-center justify-content-center">
-            {% translate 'Available blogs' %}
-        </h4>
-        {% include 'main/common/progress_bar.html' %}
-        <div class="row row-cols-md-3 row-cols-sm-1 d-flex justify-content-center mt-2" id="blog-cards">
-            <script type="text/javascript">
-                function showBlogErrorNotification() {
-                    const notification = $('#notification');
-                    notification.find('.toast-title').text('{% translate 'An error occurred' %}');
-                    notification.find('.toast-icon').text('error');
-                    notification.find('.toast-body').html(
-                        '<p class="text-danger text-center">' +
-                        '{% translate 'An error occurred while loading the blog cards.' %}' +
-                        '</p>'
-                    );
-                    notification.toast('show');
-                    setProgress(0, -1);
-                }
-                const blog_cards = $('#blog-cards');
-                $.ajax("{% url 'blog_ids' %}").done(
-                    function (blog_ids) {
-                        let loaded = 0;
-                        setProgress(0, blog_ids.length);
-                        blog_ids.forEach(function (blog_id) {
-                            $.ajax("{% url 'blog_card' 0 %}".replace('0', `${blog_id}`)).done(
-                                (blog_card) => blog_cards.append(blog_card)
-                            ).always(() => {
-                                loaded++;
-                                setProgress(loaded, blog_ids.length);
-                            }).fail(showBlogErrorNotification);
-                        });
-                    }
-                ).fail(showBlogErrorNotification);
-            </script>
-        </div>
-    </div>
-    <div id="results"></div>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            if (window.location.search) {
-                const search_api_url = '{% url 'search_results' %}' + window.location.search;
-                loadSearchResults(search_api_url);
+{% endblock %}
+{% block heading_title %}{% get_app_name %}{% endblock %}
+{% block heading_description %}{% translate 'Search in the database' %}{% endblock %}
+{% block form %}
+    {{ form }}
+    <h4 class="mb-1 d-flex align-items-center justify-content-center">
+        {% translate 'Available blogs' %}
+    </h4>
+    {% include 'main/common/progress_bar.html' %}
+    <div class="row row-cols-md-3 row-cols-sm-1 d-flex justify-content-center mt-2" id="blog-cards">
+        <script type="text/javascript">
+            function showBlogErrorNotification() {
+                const notification = $('#notification');
+                notification.find('.toast-title').text('{% translate 'An error occurred' %}');
+                notification.find('.toast-icon').text('error');
+                notification.find('.toast-body').html(
+                    '<p class="text-danger text-center">' +
+                    '{% translate 'An error occurred while loading the blog cards.' %}' +
+                    '</p>'
+                );
+                notification.toast('show');
+                setProgress(0, -1);
             }
-            addFormSubmitLogic('{% url 'search_results' %}');
-        });
-    </script>
+            const blog_cards = $('#blog-cards');
+            $.ajax("{% url 'blog_ids' %}").done(
+                function (blog_ids) {
+                    let loaded = 0;
+                    setProgress(0, blog_ids.length);
+                    blog_ids.forEach(function (blog_id) {
+                        $.ajax("{% url 'blog_card' 0 %}".replace('0', `${blog_id}`)).done(
+                            (blog_card) => blog_cards.append(blog_card)
+                        ).always(() => {
+                            loaded++;
+                            setProgress(loaded, blog_ids.length);
+                        }).fail(showBlogErrorNotification);
+                    });
+                }
+            ).fail(showBlogErrorNotification);
+        </script>
+    </div>
+{% endblock %}
+{% block results_loading_script %}
+    {% url 'search_results' as results_url %}
+    {% include 'main/common/results_loading_script.html' %}
 {% endblock %}

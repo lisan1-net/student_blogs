@@ -1,0 +1,8 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        if (window.location.search) {
+            const api_url = '{{ results_url }}' + window.location.search;
+            loadSearchResults(api_url);
+        }
+    });
+</script>

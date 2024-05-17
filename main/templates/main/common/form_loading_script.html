@@ -1,0 +1,5 @@
+<script type="text/javascript">
+    $('#form').load('{{ form_url }}' + window.location.search, function() {
+        addFormSubmitLogic('{{ results_url }}');
+    });
+</script>

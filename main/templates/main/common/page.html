@@ -1,0 +1,27 @@
+{% extends 'main/base/base.html' %}
+{% load i18n %}
+{% block content %}
+    {% block top %}{% endblock %}
+    <div class="row">
+        <div class="col-12">
+            <div class="jumbotron p-3 text-center">
+                <h1>{% block heading_title %}{% endblock %}</h1>
+                <p class="lead">{% block heading_description %}{% endblock %}</p>
+                {% block form %}
+                    <div id="form">
+                        <div class="spinner-border text-secondary" role="status"></div>
+                    </div>
+                {% endblock %}
+                {% block form_loading_script %}
+                	{% include 'main/common/form_loading_script.html' %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    {% block results %}
+        <div id="results"></div>
+    {% endblock %}
+    {% block results_loading_script %}
+        {% include 'main/common/results_loading_script.html' %}
+    {% endblock %}
+{% endblock %}

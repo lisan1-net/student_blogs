@@ -1,32 +1,17 @@
-{% extends 'main/base/base.html' %}
+{% extends 'main/common/page.html' %}
 {% load i18n %}
-{% load search %}
-{% block content %}
-    <div class="row">
-        <div class="col-12">
-            <div class="jumbotron p-3 text-center">
-                <h1>{% translate 'Vocabulary of the database' %}</h1>
-                <p class="lead">
-                    {% translate 'Search for the most frequent vocabulary with the respective frequencies and appearance ratios in the texts.' %}
-                </p>
-                <div id="form">
-                    <div class="spinner-border text-secondary" role="status"></div>
-                </div>
-                <script type="text/javascript">
-                    $('#form').load('{% url 'vocabulary_form' %}' + window.location.search, function() {
-                        addFormSubmitLogic('{% url 'vocabulary_results' %}');
-                    });
-                </script>
-            </div>
-        </div>
-    </div>
-    <div id="results"></div>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            if (window.location.search) {
-                const vocabulary_api_url = '{% url 'vocabulary_results' %}' + window.location.search;
-                loadSearchResults(vocabulary_api_url);
-            }
-        });
-    </script>
+{% block heading_title %}
+    {% translate 'Vocabulary of the database' %}
+{% endblock %}
+{% block heading_description %}
+    {% translate 'Search for the most frequent vocabulary with the respective frequencies and appearance ratios in the texts.' %}
+{% endblock %}
+{% block form_loading_script %}
+    {% url 'vocabulary_form' as form_url %}
+    {% url 'vocabulary_results' as results_url %}
+    {% include 'main/common/form_loading_script.html' %}
+{% endblock %}
+{% block results_loading_script %}
+    {% url 'vocabulary_results' as results_url %}
+    {% include 'main/common/results_loading_script.html' %}
 {% endblock %}

@@ -1,29 +1,15 @@
-{% extends 'main/base/base.html' %}
+{% extends 'main/common/page.html' %}
 {% load i18n %}
-{% block content %}
-    <div class="row">
-        <div class="col-12">
-            <div class="jumbotron p-3 text-center">
-                <h1>{% translate 'Extraction of the n-grams' %}</h1>
-                <p class="lead">{% translate 'Extract the n-grams from the texts with their apparition ratios.' %}</p>
-                <div id="form">
-                    <div class="spinner-border text-secondary" role="status"></div>
-                </div>
-                <script type="text/javascript">
-                    $('#form').load('{% url 'blog_ngrams_form' %}' + window.location.search, function() {
-                        addFormSubmitLogic('{% url 'blog_ngrams_results' %}');
-                    });
-                </script>
-            </div>
-        </div>
-    </div>
-    <div id="results"></div>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            if (window.location.search) {
-                const ngrams_api_url = '{% url 'blog_ngrams_results' %}' + window.location.search;
-                loadSearchResults(ngrams_api_url);
-            }
-        });
-    </script>
+{% block heading_title %}{% translate 'Extraction of the n-grams' %}{% endblock %}
+{% block heading_description %}
+    {% translate 'Extract the n-grams from the texts with their apparition ratios.' %}
+{% endblock %}
+{% block form_loading_script %}
+    {% url 'blog_ngrams_form' as form_url %}
+    {% url 'blog_ngrams_results' as results_url %}
+    {% include 'main/common/form_loading_script.html' %}
+{% endblock %}
+{% block results_loading_script %}
+    {% url 'blog_ngrams_results' as results_url %}
+    {% include 'main/common/results_loading_script.html' %}
 {% endblock %}
