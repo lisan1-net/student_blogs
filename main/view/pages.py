@@ -41,3 +41,11 @@ def blog_ngrams(request):
 
 def blog_comparison(request):
     return render(request, 'main/comparison/blog_comparison.html')
+
+
+def surrounding_words(request):
+    form = SurroundingWordsFrequencyForm(request.GET or None)
+    form.advanced = form.is_valid() and any(v for k, v in form.cleaned_data.items() if k not in (
+        'search_query', 'position'
+    ))
+    return render(request, 'main/surrounding/surrounding_words_frequency.html', context={'form': form})

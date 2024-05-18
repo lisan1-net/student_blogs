@@ -18,4 +18,6 @@ urlpatterns = [
     path('most_frequent_words/<int:blog_id>/', api.most_frequent_words, name='most_frequent_words'),
     path('most_frequent_bigrams/<int:blog_id>/', api.most_frequent_bigrams, name='most_frequent_bigrams'),
     path('most_frequent_trigrams/<int:blog_id>/', api.most_frequent_trigrams, name='most_frequent_trigrams'),
+    path('advanced_surrounding_words_form/', api.advanced_surrounding_words_form, name='advanced_surrounding_words_form'),
+    path('surrounding_words_results/', api.surrounding_words_results, name='surrounding_words_results'),
 ]

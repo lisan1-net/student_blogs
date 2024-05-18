@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, reverse
 
 from main.forms import *
-from main.models import Blog, Announcement
+from main.models import Announcement
 from main.utils import *
 
 
@@ -114,3 +114,23 @@ def most_frequent_bigrams(request, blog_id):
 def most_frequent_trigrams(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
     return render(request, 'main/comparison/most_frequent_trigrams.html', context={'blog': blog})
+
+
+def advanced_surrounding_words_form(request):
+    form = SurroundingWordsFrequencyForm(request.GET or None)
+    return render(request, 'main/search/advanced_search_form.html', context={'form': form})
+
+
+def surrounding_words_results(request):
+    form = SurroundingWordsFrequencyForm(request.GET or None)
+    page = None
+    fully_indexed = None
+    if form.is_valid():
+        cleaned_data = clean_form_data(form.cleaned_data)
+        paginator, fully_indexed = get_surrounding_words_frequencies_paginator(**cleaned_data)
+        page = paginator.get_page(request.GET.get('page'))
+    return render(request, 'main/surrounding/surrounding_words_frequency_results.html', context={
+        'results': page, 'fully_indexed': fully_indexed,
+        'page_url': reverse('surrounding_words') + request.get_full_path()[len(request.path):],
+        'api_url': reverse('surrounding_words_results')
+    })

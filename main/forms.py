@@ -254,3 +254,44 @@ class BlogComparisonForm(forms.Form):
             'data-toggle': 'tooltip',
             'data-placement': 'top',
         })
+
+
+class SurroundingWordsFrequencyForm(SearchForm):
+
+    class Meta(SearchForm.Meta):
+        pass
+
+    template_name = 'main/surrounding/surrounding_words_frequency_form.html'
+
+    position = forms.ChoiceField(
+        choices=[('P', _('Previous words')), ('N', _('Next words'))], required=True, label=_('Position'),
+        help_text=_('Select the position of the words to search for.'),
+        widget=widgets.RadioSelect, initial='P'
+    )
+
+    partial_search = forms.BooleanField(
+        required=False, label=_('Partial search'), help_text=_('Search for a part of the word.'),
+        widget=widgets.CheckboxInput
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['search_query'].help_text = _(
+            'Enter a word or part of it to search for its previous and next words.'
+        )
+        self.fields['search_query'].widget.attrs.update({
+            'placeholder': self.fields['search_query'].help_text,
+            'title': self.fields['search_query'].help_text,
+        })
+        self.fields['position'].widget.attrs.update({
+            'class': 'form-check-input',
+            'title': self.fields['position'].help_text,
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+        })
+        self.fields['partial_search'].widget.attrs.update({
+            'class': 'custom-control-input',
+            'title': self.fields['partial_search'].help_text,
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+        })

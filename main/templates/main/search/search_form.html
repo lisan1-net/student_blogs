@@ -4,6 +4,7 @@
     <div class="form-group">
         <div class="input-group">
             {{ form.search_query }}
+            {% block additional_search_buttons %}{% endblock %}
             <div class="input-group-append">
                 <button class="btn btn-outline-primary" type="submit" data-toggle="tooltip" data-placement="top"
                         title="{% translate 'Search' context 'Form action' %}">
@@ -13,6 +14,7 @@
             {% include 'main/common/error_list.html' with errors=form.search_query.errors %}
         </div>
     </div>
+    {% block extra_fields %}{% endblock %}
     <div class="form-group">
         <a class="btn btn-link" data-toggle="collapse" href="#advanced-search" role="button" aria-expanded="false"
            aria-controls="advanced-search">
@@ -24,12 +26,8 @@
             <div class="spinner-border text-secondary" role="status"></div>
         </div>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            const advancedSearch = $('#advanced-search');
-            if (advancedSearch.hasClass('show'))
-                retrieveAdvancedPart('{% url 'advanced_search_form' %}', advancedSearch)
-            advancedSearch.on('show.bs.collapse', () => retrieveAdvancedPart('{% url 'advanced_search_form' %}', advancedSearch));
-        });
-    </script>
+    {% block advanced_part_script %}
+        {% url 'advanced_search_form' as advanced_form_url %}
+    	{% include 'main/search/advanced_part_script.html' %}
+    {% endblock %}
 </form>

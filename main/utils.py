@@ -8,7 +8,7 @@ from pyarabic.araby import DIACRITICS
 
 from indexes.models import TextToken, Bigram, Trigram
 from indexes.utils import normalize
-from main.models import Text, FunctionalWord
+from main.models import Text, FunctionalWord, Blog
 
 
 @lru_cache(64)
@@ -204,6 +204,35 @@ def get_ngrams_paginator(**cleaned_data) -> Paginator:
                 'first_token__content', 'second_token__content', 'third_token__content', 'frequency'
             )
     return Paginator(ngrams, 60)
+
+
+@lru_cache(64)
+def get_surrounding_words_frequencies_paginator(**cleaned_data) -> (Paginator, bool):
+    filter_query, advanced = build_common_filter_query(cleaned_data)
+    if blog_id := cleaned_data['blog']:
+        filter_query &= Q(blog_id=blog_id)
+    texts = Text.objects.filter(filter_query).distinct()
+    query = normalize(cleaned_data['search_query'])
+    fully_indexed = all(blog.is_bigram_fully_indexed() for blog in Blog.objects.filter(text__in=texts))
+    filters = dict(text__in=texts)
+    if cleaned_data['position'] == 'P':
+        if cleaned_data['partial_search']:
+            key = 'second_token__content__icontains'
+        else:
+            key = 'second_token__content'
+        filters[key] = query
+    elif cleaned_data['position'] == 'N':
+        if cleaned_data['partial_search']:
+            key = 'first_token__content__icontains'
+        else:
+            key = 'first_token__content'
+        filters[key] = query
+    frequencies = Bigram.objects.filter(**filters).distinct().prefetch_related(
+        'first_token', 'second_token'
+    ).values('second_token__content').annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
+        'first_token__content', 'second_token__content', 'frequency'
+    )
+    return Paginator(frequencies, 60), fully_indexed
 
 
 def clean_form_data(form_data: dict) -> dict:

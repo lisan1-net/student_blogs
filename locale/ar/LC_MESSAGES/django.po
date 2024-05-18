@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-16 03:08+0000\n"
+"POT-Creation-Date: 2024-05-18 13:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -334,7 +334,7 @@ msgstr "أدخل كلمة أو جزء منها للبحث."
 msgid "Partial contains"
 msgstr "محتوى جزئي للتضمين"
 
-#: main/forms.py:161
+#: main/forms.py:161 main/forms.py:273
 msgid "Search for a part of the word."
 msgstr "البحث عن جزء من الكلمة."
 
@@ -373,6 +373,30 @@ msgstr "المدونات"
 #: main/forms.py:245
 msgid "Select the blogs to compare."
 msgstr "حدد المدونات للمقارنة."
+
+#: main/forms.py:267
+msgid "Previous words"
+msgstr "الكلمات السابقة"
+
+#: main/forms.py:267
+msgid "Next words"
+msgstr "الكلمات التالية"
+
+#: main/forms.py:267
+msgid "Position"
+msgstr "الموضع"
+
+#: main/forms.py:268
+msgid "Select the position of the words to search for."
+msgstr "حدد الموضع للكلمات التي تبحث عنها."
+
+#: main/forms.py:273
+msgid "Partial search"
+msgstr "بحث جزئي"
+
+#: main/forms.py:280
+msgid "Enter a word or part of it to search for its previous and next words."
+msgstr "أدخل كلمة أو جزء منها للبحث عن كلماتها السابقة والتالية."
 
 #: main/models.py:14 main/models.py:98
 #: main/templates/main/search/advanced_search_form.html:3
@@ -659,9 +683,14 @@ msgid "N-grams"
 msgstr "المتلازمات اللفظية"
 
 #: main/templates/main/base/navbar.html:5
-#: main/templates/main/comparison/blog_comparison.html:7
+#: main/templates/main/comparison/blog_comparison.html:3
 msgid "Blog comparison"
 msgstr "مقارنة المدونات"
+
+#: main/templates/main/base/navbar.html:6
+#: main/templates/main/surrounding/surrounding_words_frequency.html:3
+msgid "Surrounding words"
+msgstr "الكلمات المحيطة"
 
 #: main/templates/main/base/scripts.html:47
 msgid "Search in progress"
@@ -745,7 +774,7 @@ msgstr "لم يتم العثور على وسوم"
 msgid "Appearance ratio in the texts"
 msgstr "نسبة الظهور في النصوص"
 
-#: main/templates/main/comparison/blog_comparison.html:9
+#: main/templates/main/comparison/blog_comparison.html:5
 msgid "Compare the selected blogs by the most frequent words and ngrams."
 msgstr "قارن المدونات المحددة بالكلمات والمتلازمات اللفظية الأكثر شيوعًا."
 
@@ -768,11 +797,11 @@ msgstr "المتلازمات الثنائية الأكثر شيوعًا"
 msgid "Most frequent trigrams"
 msgstr "المتلازمات الثلاثية الأكثر شيوعًا"
 
-#: main/templates/main/ngrams/blog_ngrams.html:7
+#: main/templates/main/ngrams/blog_ngrams.html:3
 msgid "Extraction of the n-grams"
 msgstr "استخراج المتلازمات اللفظية"
 
-#: main/templates/main/ngrams/blog_ngrams.html:8
+#: main/templates/main/ngrams/blog_ngrams.html:5
 msgid "Extract the n-grams from the texts with their apparition ratios."
 msgstr "استخراج المتلازمات اللفظية من النصوص مع نسب ظهورها."
 
@@ -780,7 +809,7 @@ msgstr "استخراج المتلازمات اللفظية من النصوص م�
 msgid "No N-grams found"
 msgstr "لم يتم العثور على متلازمات لفظية"
 
-#: main/templates/main/search/search.html:9
+#: main/templates/main/search/search.html:8
 msgid "Search in the database"
 msgstr "البحث في قاعدة البيانات"
 
@@ -792,13 +821,13 @@ msgstr "المدونات المتاحة"
 msgid "An error occurred while loading the blog cards."
 msgstr "حدث خطأ أثناء تحميل بطاقات المدونات."
 
-#: main/templates/main/search/search_form.html:9
+#: main/templates/main/search/search_form.html:10
 #: main/templates/main/vocabulary/vocabulary_form.html:11
 msgctxt "Form action"
 msgid "Search"
 msgstr "ابحث"
 
-#: main/templates/main/search/search_form.html:19
+#: main/templates/main/search/search_form.html:21
 msgid "Advanced search"
 msgstr "بحث متقدم"
 
@@ -839,11 +868,23 @@ msgstr "البحث في مدونات الطلاب"
 msgid "Enter an expression"
 msgstr "أدخل تعبيرًا"
 
-#: main/templates/main/vocabulary/vocabulary.html:8
+#: main/templates/main/surrounding/surrounding_words_frequency.html:5
+msgid ""
+"Search for the previous and following words of a given words in the texts "
+"with their apparition frequencies."
+msgstr ""
+"البحث عن الكلمات السابقة والتالية للكلمة المعينة في النصوص مع تكرارات ظهورها."
+
+#: main/templates/main/surrounding/surrounding_words_frequency_results.html:12
+#: main/templates/main/vocabulary/vocabulary_results.html:13
+msgid "No words found"
+msgstr "لم يتم العثور على أيّة ألفاظ"
+
+#: main/templates/main/vocabulary/vocabulary.html:4
 msgid "Vocabulary of the database"
 msgstr "شيوع الألفاظ في المدونات"
 
-#: main/templates/main/vocabulary/vocabulary.html:10
+#: main/templates/main/vocabulary/vocabulary.html:7
 msgid ""
 "Search for the most frequent vocabulary with the respective frequencies and "
 "appearance ratios in the texts."
@@ -852,10 +893,6 @@ msgstr "البحث عن الألفاظ الأكثر شيوعًا مع التكر
 #: main/templates/main/vocabulary/vocabulary_form.html:24
 msgid "Advanced options"
 msgstr "خيارات متقدمة"
-
-#: main/templates/main/vocabulary/vocabulary_results.html:13
-msgid "No words found"
-msgstr "لم يتم العثور على أيّة ألفاظ"
 
 #, python-format
 #~ msgid "Indexing bigrams of \"%(text)s\"..."
@@ -891,9 +928,6 @@ msgstr "لم يتم العثور على أيّة ألفاظ"
 #~ msgid "Text Word"
 #~ msgstr "كلمة النص"
 
-#~ msgid "Text Words"
-#~ msgstr "كلمات النص"
-
 #~ msgid "Word that is found in this text"
 #~ msgstr "الكلمة الموجودة في هذا النص"
 
@@ -906,9 +940,6 @@ msgstr "لم يتم العثور على أيّة ألفاظ"
 #, python-format
 #~ msgid "\"%(word)s\" in \"%(text)s\" [%(start)d:%(end)d]"
 #~ msgstr "\"%(word)s\" في \"%(text)s\" [%(start)d:%(end)d]"
-
-#~ msgid "Indexing words..."
-#~ msgstr "جارٍ فهرسة الكلمات..."
 
 #, python-format
 #~ msgid "Indexing words of \"%(blog)s\"..."

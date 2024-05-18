@@ -1,0 +1,30 @@
+{% extends 'main/search/search_form.html' %}
+{% block additional_search_buttons %}
+    <div class="input-group-append">
+        <div class="input-group-text">
+            <div class="custom-control custom-switch">
+                {{ form.partial_search }}
+                <label class="custom-control-label" for="{{ form.partial_search.id_for_label }}">
+                    {{ form.partial_search.label }}
+                </label>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_fields %}
+    <div class="form-group">
+        {% for position_choice in form.position %}
+            <div class="form-check form-check-inline">
+                {{ position_choice.tag }}
+                <label class="form-check-label" for="{{ position_choice.id_for_label }}">
+                    {{ position_choice.choice_label }}
+                </label>
+            </div>
+        {% endfor %}
+        {% include 'main/common/error_list.html' with errors=form.position.errors %}
+    </div>
+{% endblock %}
+{% block advanced_part_script %}
+    {% url 'advanced_surrounding_words_form' as advanced_form_url %}
+    {% include 'main/search/advanced_part_script.html' %}
+{% endblock %}

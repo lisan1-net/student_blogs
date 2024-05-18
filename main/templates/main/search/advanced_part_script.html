@@ -1,0 +1,8 @@
+<script type="text/javascript">
+$(document).ready(function () {
+    const advancedSearch = $('#advanced-search');
+    if (advancedSearch.hasClass('show'))
+        retrieveAdvancedPart('{{ advanced_form_url }}', advancedSearch)
+    advancedSearch.on('show.bs.collapse', () => retrieveAdvancedPart('{{ advanced_form_url }}', advancedSearch));
+});
+</script>

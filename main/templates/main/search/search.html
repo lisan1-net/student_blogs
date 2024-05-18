@@ -44,6 +44,13 @@
         </script>
     </div>
 {% endblock %}
+{% block form_loading_script %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            addFormSubmitLogic('{% url 'search_results' %}');
+        });
+    </script>
+{% endblock %}
 {% block results_loading_script %}
     {% url 'search_results' as results_url %}
     {% include 'main/common/results_loading_script.html' %}
