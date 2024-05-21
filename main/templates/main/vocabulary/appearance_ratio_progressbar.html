@@ -1,0 +1,28 @@
+{% load search %}
+{% load i18n %}
+{% with 'progress-'|add:word|slugify_unicode as progress_id %}
+<div class="progress" data-toggle="tooltip" title="{% translate 'Appearance ratio in the texts' %}" id="{{ progress_id }}">
+    {% if ratio %}
+        <div class="progress-bar bg-{{ color }} " role="progressbar" style="width: {{ ratio|percent:True }}"></div>
+        <div class="position-relative pl-1 text-{% if color == 'primary' %}{{ color }}{% else %}dark{% endif %}" style="top: 1.5ex">
+            {{ ratio|percent }}
+        </div>
+    {% else %}
+        <div class="progress-bar bg-info w-100 progress-bar-striped progress-bar-animated" role="progressbar"></div>
+        <script type="text/javascript">
+            $.ajax('{% url 'vocabulary_appearance_progressbar' word %}' + window.location.search + '&color={{ color }}')
+                .done(function(data) {
+                    const progressBar = $(data)
+                    $('#{{ progress_id }}').replaceWith(progressBar);
+                    initializeTooltips(progressBar);
+                }).fail(function() {
+                    const progressBar = $('#{{ progress_id }}');
+                    progressBar.find('.progress-bar')
+                        .removeClass('progress-bar-striped progress-bar-animated').addClass('bg-danger');
+                    progressBar.attr('data-original-title', '{% translate 'Failed to calculate the appearance ratio' %}');
+                    initializeTooltips(progressBar);
+                });
+        </script>
+    {% endif %}
+</div>
+{% endwith %}

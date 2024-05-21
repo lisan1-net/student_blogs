@@ -24,5 +24,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(import_from_excel_files, migrations.RunPython.noop)
+        migrations.RunPython(import_from_excel_files)
     ]

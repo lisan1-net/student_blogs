@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-18 13:01+0000\n"
+"POT-Creation-Date: 2024-05-21 04:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,6 +144,7 @@ msgid "Tokens"
 msgstr "الوحدات"
 
 #: indexes/models.py:12 main/models.py:101 main/models.py:179
+#: main/models.py:235 main/models.py:253
 #: main/templates/main/search/search_results.html:32
 msgid "Content"
 msgstr "المحتوى"
@@ -657,6 +658,42 @@ msgstr "التعريف"
 msgid "Definition of the term"
 msgstr "تعريف المصطلح"
 
+#: main/models.py:231
+msgid "Prefix"
+msgstr "السابقة"
+
+#: main/models.py:232
+msgid "Prefixes"
+msgstr "السوابق"
+
+#: main/models.py:235
+msgid "Content of the prefix"
+msgstr "محتوى السابقة"
+
+#: main/models.py:238
+msgid "Can precede"
+msgstr "يمكن أن تسبق"
+
+#: main/models.py:240
+msgid "Compatible with"
+msgstr "متوافقة مع"
+
+#: main/models.py:249
+msgid "Suffix"
+msgstr "اللاحقة"
+
+#: main/models.py:250
+msgid "Suffixes"
+msgstr "اللواحق"
+
+#: main/models.py:253
+msgid "Content of the suffix"
+msgstr "محتوى اللاحقة"
+
+#: main/models.py:256
+msgid "Can follow"
+msgstr "يمكن أن تتبع"
+
 #: main/templates/main/base/base.html:8
 msgid "Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi"
 msgstr "حقوق النشر 2024. جميع الحقوق محفوظة. د. عبد العزيز عبد الله المهيوبي"
@@ -692,16 +729,16 @@ msgstr "مقارنة المدونات"
 msgid "Surrounding words"
 msgstr "الكلمات المحيطة"
 
-#: main/templates/main/base/scripts.html:47
+#: main/templates/main/base/scripts.html:52
 msgid "Search in progress"
 msgstr "البحث جارٍ"
 
-#: main/templates/main/base/scripts.html:62
+#: main/templates/main/base/scripts.html:67
 #: main/templates/main/search/search.html:19
 msgid "An error occurred"
 msgstr "حدث خطأ"
 
-#: main/templates/main/base/scripts.html:66
+#: main/templates/main/base/scripts.html:71
 msgid "An error occurred while processing the search query."
 msgstr "حدث خطأ أثناء معالجة استعلام البحث."
 
@@ -769,10 +806,6 @@ msgstr "خيارات مدونات الكتب والقصص"
 #: main/templates/main/common/tags_fieldset.html:16
 msgid "No tags found"
 msgstr "لم يتم العثور على وسوم"
-
-#: main/templates/main/common/word_frequency_card.html:12
-msgid "Appearance ratio in the texts"
-msgstr "نسبة الظهور في النصوص"
 
 #: main/templates/main/comparison/blog_comparison.html:5
 msgid "Compare the selected blogs by the most frequent words and ngrams."
@@ -880,6 +913,14 @@ msgstr ""
 msgid "No words found"
 msgstr "لم يتم العثور على أيّة ألفاظ"
 
+#: main/templates/main/vocabulary/appearance_ratio_progressbar.html:4
+msgid "Appearance ratio in the texts"
+msgstr "نسبة الظهور في النصوص"
+
+#: main/templates/main/vocabulary/appearance_ratio_progressbar.html:22
+msgid "Failed to calculate the appearance ratio"
+msgstr "فشل حساب نسبة الظهور"
+
 #: main/templates/main/vocabulary/vocabulary.html:4
 msgid "Vocabulary of the database"
 msgstr "شيوع الألفاظ في المدونات"
@@ -915,12 +956,6 @@ msgstr "خيارات متقدمة"
 
 #~ msgid "Stem"
 #~ msgstr "الجذع"
-
-#~ msgid "Prefix"
-#~ msgstr "السابقة"
-
-#~ msgid "Suffix"
-#~ msgstr "اللاحقة"
 
 #~ msgid "Part"
 #~ msgstr "الجزء"

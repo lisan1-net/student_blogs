@@ -67,6 +67,31 @@ def vocabulary_results(request):
     })
 
 
+def vocabulary_appearance_progressbar(request, content):
+    tokens = content.split(' ')
+    form = VocabularyForm(request.GET) if len(tokens) == 1 else NgramsForm(request.GET)
+    ratio = None
+    if form.is_valid():
+        filter_q, _ = build_common_filter_query(form.cleaned_data)
+        texts = Text.objects.filter(filter_q)
+        match len(tokens):
+            case 1:
+                ratio = texts.filter(tokens__content=tokens[0]).distinct().count() / texts.count()
+            case 2:
+                ratio = texts.filter(
+                    bigrams__first_token__content=tokens[0], bigrams__second_token__content=tokens[1]
+                ).distinct().count() / texts.count()
+            case 3:
+                ratio = texts.filter(
+                    trigrams__first_token__content=tokens[0], trigrams__second_token__content=tokens[1],
+                    trigrams__third_token__content=tokens[2]
+                ).distinct().count() / texts.count()
+    context = {'ratio': ratio, 'word': content, 'color': request.GET.get('color')}
+    return render(
+        request, 'main/vocabulary/appearance_ratio_progressbar.html', context=context
+    )
+
+
 def blog_ngrams_form(request):
     form = NgramsForm(request.GET or None)
     return render(request, 'main/ngrams/blog_ngrams_form.html', context={'form': form})

@@ -8,8 +8,13 @@
 
 <!-- Initialize Bootstrap tooltips -->
 <script>
-    function initializeTooltips() {
-        $('[data-toggle="tooltip"]').tooltip();
+    function initializeTooltips(element = null) {
+        const tooltipSelector = '[data-toggle="tooltip"]';
+        if (element) {
+            element.find(tooltipSelector).addBack(tooltipSelector).tooltip();
+        } else {
+            $(tooltipSelector).tooltip();
+        }
     }
     $(document).ready(initializeTooltips);
 </script>

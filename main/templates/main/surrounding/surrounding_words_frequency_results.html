@@ -1,7 +1,7 @@
 {% load i18n %}
 {% with fully_indexed|yesno:'primary,warning' as color %}
     {% if results %}
-        <div class="row row-cols-md-6 row-cols-sm-3 d-flex justify-content-center">
+        <div class="row row-cols-md-5 row-cols-sm-3 row-cols-2 d-flex justify-content-center">
             {% for first_word, second_word, frequency in results %}
                 <div class="col mb-3">
                     {% include 'main/common/word_frequency_card.html' with word=first_word|add:' '|add:second_word %}

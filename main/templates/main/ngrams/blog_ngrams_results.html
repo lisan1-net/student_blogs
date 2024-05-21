@@ -9,7 +9,7 @@
                 {% for first_word, second_word, frequency in frequencies %}
                     <div class="col mb-3">
                         {% with first_word|add:' '|add:second_word as word %}
-                            {% include 'main/common/word_frequency_card.html' with ratio=word|appearance_ratio:request%}
+                            {% include 'main/common/word_frequency_card.html' with appearance_ratio=True%}
                         {% endwith %}
                     </div>
                 {% endfor %}
@@ -21,7 +21,7 @@
                 {% for first_word, second_word, third_word, frequency in frequencies %}
                     <div class="col mb-3">
                         {% with first_word|add:' '|add:second_word|add:' '|add:third_word as word %}
-                            {% include 'main/common/word_frequency_card.html' with ratio=word|appearance_ratio:request%}
+                            {% include 'main/common/word_frequency_card.html' with appearance_ratio=True%}
                         {% endwith %}
                     </div>
                 {% endfor %}

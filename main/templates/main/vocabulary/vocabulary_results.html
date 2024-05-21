@@ -5,7 +5,7 @@
         <div class="row row-cols-md-6 row-cols-sm-3 d-flex justify-content-center">
             {% for word, frequency in frequencies %}
                 <div class="col mb-3">
-                    {% include 'main/common/word_frequency_card.html' with ratio=word|appearance_ratio:request %}
+                    {% include 'main/common/word_frequency_card.html' with appearance_ratio=True %}
                 </div>
             {% endfor %}
         </div>
