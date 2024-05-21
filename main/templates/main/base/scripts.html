@@ -11,7 +11,7 @@
     function initializeTooltips(element = null) {
         const tooltipSelector = '[data-toggle="tooltip"]';
         if (element) {
-            element.find(tooltipSelector).addBack(tooltipSelector).tooltip();
+            $(element).find(tooltipSelector).addBack(tooltipSelector).tooltip();
         } else {
             $(tooltipSelector).tooltip();
         }
@@ -87,4 +87,24 @@
             loadSearchResults(api_url);
         });
     }
+</script>
+
+<script type="text/javascript">
+    const pendingRequests = [];
+    window.processingResquests = false;
+
+    function processRequest() {
+        if (pendingRequests.length > 0 && !window.processingResquests) {
+            window.processingResquests = true;
+            const {url, doneCallback, failCallback} = pendingRequests.shift();
+            $.ajax(url).done(doneCallback).fail(failCallback).always(() => window.processingResquests = false);
+        }
+    }
+
+    function scheduleRequest(url, doneCallback, failCallback) {
+        pendingRequests.push({url, doneCallback, failCallback});
+    }
+
+    setInterval(processRequest, 500);
+
 </script>

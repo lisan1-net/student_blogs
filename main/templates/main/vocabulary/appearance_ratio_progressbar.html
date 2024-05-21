@@ -10,18 +10,21 @@
     {% else %}
         <div class="progress-bar bg-info w-100 progress-bar-striped progress-bar-animated" role="progressbar"></div>
         <script type="text/javascript">
-            $.ajax('{% url 'vocabulary_appearance_progressbar' word %}' + window.location.search + '&color={{ color }}')
-                .done(function(data) {
+            scheduleRequest(
+                '{% url 'vocabulary_appearance_progressbar' word %}' + window.location.search + '&color={{ color }}',
+                function(data) {
                     const progressBar = $(data)
                     $('#{{ progress_id }}').replaceWith(progressBar);
                     initializeTooltips(progressBar);
-                }).fail(function() {
+                },
+                function() {
                     const progressBar = $('#{{ progress_id }}');
                     progressBar.find('.progress-bar')
                         .removeClass('progress-bar-striped progress-bar-animated').addClass('bg-danger');
                     progressBar.attr('data-original-title', '{% translate 'Failed to calculate the appearance ratio' %}');
                     initializeTooltips(progressBar);
-                });
+                }
+            )
         </script>
     {% endif %}
 </div>
