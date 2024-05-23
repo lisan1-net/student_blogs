@@ -49,3 +49,9 @@ def surrounding_words(request):
         'search_query', 'position'
     ))
     return render(request, 'main/surrounding/surrounding_words_frequency.html', context={'form': form})
+
+
+def word_derivations(request):
+    form = WordDerivationsForm(request.GET or None)
+    form.advanced = form.is_valid() and any(v for k, v in form.cleaned_data.items() if k != 'search_query')
+    return render(request, 'main/derivations/word_derivations.html', context={'form': form})

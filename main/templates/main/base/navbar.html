@@ -4,12 +4,14 @@
 {% translate 'N-grams' as ngrams %}
 {% translate 'Blog comparison' as blog_comparison %}
 {% translate 'Surrounding words' as surrounding_words %}
+{% translate 'Word derivations' as word_derivations %}
 {% url 'home' as home_path %}
 {% url 'vocabulary' as vocabulary_path %}
 {% url 'blog_ngrams' as ngrams_path %}
 {% url 'blog_comparison' as comparison_path %}
 {% url 'surrounding_words' as surrounding_path %}
-<nav class="navbar navbar-dark bg-success navbar-expand-md mb-3 shadow">
+{% url 'word_derivations' as derivations_path %}
+<nav class="navbar navbar-dark bg-success navbar-expand-lg mb-3 shadow">
     <a class="navbar-brand" href="{% url 'home' %}">
         {% include 'main/base/app_icon.html' with style='font-size:2em' %}
         <span class="h4">{{ app_name }}</span>
@@ -52,6 +54,13 @@
                     <a class="nav-link active" href="{{ surrounding_path }}">{{ surrounding_words }}</a>
                 {% else %}
                     <a class="nav-link" href="{{ surrounding_path }}">{{ surrounding_words }}</a>
+                {% endif %}
+            </li>
+            <li class="nav-item">
+                {% if request.path == derivations_path %}
+                    <a class="nav-link active" href="{{ derivations_path }}">{{ word_derivations }}</a>
+                {% else %}
+                    <a class="nav-link" href="{{ derivations_path }}">{{ word_derivations }}</a>
                 {% endif %}
             </li>
         </ul>

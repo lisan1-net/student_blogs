@@ -50,3 +50,15 @@ class DictionaryDefinitionAdmin(admin.ModelAdmin):
 
     search_fields = ('term', 'definition')
     list_display = search_fields
+
+
+@admin.register(Prefix)
+class PrefixAdmin(admin.ModelAdmin):
+    list_display = ['content']
+    search_fields = ['content']
+
+
+@admin.register(Suffix)
+class SuffixAdmin(admin.ModelAdmin):
+    list_display = ['content']
+    search_fields = ['content']

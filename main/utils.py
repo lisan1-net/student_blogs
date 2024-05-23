@@ -8,7 +8,7 @@ from pyarabic.araby import DIACRITICS
 
 from indexes.models import TextToken, Bigram, Trigram
 from indexes.utils import normalize
-from main.models import Text, FunctionalWord, Blog
+from main.models import Text, FunctionalWord, Blog, Prefix
 
 
 @lru_cache(64)
@@ -233,6 +233,38 @@ def get_surrounding_words_frequencies_paginator(**cleaned_data) -> (Paginator, b
         'first_token__content', 'second_token__content', 'frequency'
     )
     return Paginator(frequencies, 60), fully_indexed
+
+
+@lru_cache(128)
+def get_possible_derivations(word: str):
+    possible_derivations = set()
+    for prefix in Prefix.objects.all():
+        possible_derivations.add(f'{prefix}{word}')
+        for suffix in prefix.suffixes.all():
+            possible_derivations.add(f'{word}{suffix}')
+            possible_derivations.add(f'{prefix}{word}{suffix}')
+    return possible_derivations
+
+
+@lru_cache(64)
+def get_derivation_frequencies_paginator(**cleaned_data) -> (Paginator, bool):
+    print(cleaned_data)
+    filter_query, advanced = build_common_filter_query(cleaned_data)
+    if blog_id := cleaned_data['blog']:
+        filter_query &= Q(blog_id=blog_id)
+    texts = Text.objects.filter(filter_query).distinct()
+    word = normalize(cleaned_data['search_query'])
+    print('Possible derivations:')
+    possible_derivations = get_possible_derivations(word)
+    frequencies = {}
+    for i, possible_derivation in enumerate(possible_derivations, 1):
+        if count := TextToken.objects.filter(text__in=texts, token__content=possible_derivation).count():
+            frequencies[possible_derivation] = count
+        print('{:03d}/{:03d} | {} : {}'.format(i, len(possible_derivations), possible_derivation, count))
+    print('Fully indexed')
+    fully_indexed = all(blog.is_word_fully_indexed() for blog in Blog.objects.filter(text__in=texts))
+    print(fully_indexed)
+    return Paginator(list(frequencies.items()), 60), fully_indexed
 
 
 def clean_form_data(form_data: dict) -> dict:

@@ -223,3 +223,34 @@ class DictionaryDefinition(models.Model):
 
     def __str__(self):
         return self.term
+
+
+class Prefix(models.Model):
+
+    class Meta:
+        verbose_name = _('Prefix')
+        verbose_name_plural = _('Prefixes')
+
+    content = models.CharField(
+        max_length=10, verbose_name=_('Content'), help_text=_('Content of the prefix'), unique=True
+    )
+
+    suffixes = models.ManyToManyField(
+        'Suffix', related_name='prefixes', verbose_name=_('Compatible with suffixes')
+    )
+
+    def __str__(self):
+        return self.content
+
+
+class Suffix(models.Model):
+    class Meta:
+        verbose_name = _('Suffix')
+        verbose_name_plural = _('Suffixes')
+
+    content = models.CharField(
+        max_length=10, verbose_name=_('Content'), help_text=_('Content of the suffix'), unique=True
+    )
+
+    def __str__(self):
+        return self.content

@@ -1,0 +1,5 @@
+{% extends 'main/search/search_form.html' %}
+{% block advanced_part_script %}
+    {% url 'advanced_word_derivations_form' as advanced_form_url %}
+    {% include 'main/search/advanced_part_script.html' %}
+{% endblock %}

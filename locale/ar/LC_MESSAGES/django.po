@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-21 04:34+0000\n"
+"POT-Creation-Date: 2024-05-23 03:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,7 +144,7 @@ msgid "Tokens"
 msgstr "الوحدات"
 
 #: indexes/models.py:12 main/models.py:101 main/models.py:179
-#: main/models.py:235 main/models.py:253
+#: main/models.py:235 main/models.py:252
 #: main/templates/main/search/search_results.html:32
 msgid "Content"
 msgstr "المحتوى"
@@ -398,6 +398,13 @@ msgstr "بحث جزئي"
 #: main/forms.py:280
 msgid "Enter a word or part of it to search for its previous and next words."
 msgstr "أدخل كلمة أو جزء منها للبحث عن كلماتها السابقة والتالية."
+
+#: main/forms.py:308
+msgid ""
+"Enter a word to search for its derivations (by adding the possible prefixes "
+"and suffixes)."
+msgstr ""
+"أدخل كلمة للبحث عن اشتقاقاتها (من خلال إضافة السوابق واللواحق الممكنة)."
 
 #: main/models.py:14 main/models.py:98
 #: main/templates/main/search/advanced_search_form.html:3
@@ -670,29 +677,21 @@ msgstr "السوابق"
 msgid "Content of the prefix"
 msgstr "محتوى السابقة"
 
-#: main/models.py:238
-msgid "Can precede"
-msgstr "يمكن أن تسبق"
+#: main/models.py:239
+msgid "Compatible with suffixes"
+msgstr "متوافقة مع اللواحق"
 
-#: main/models.py:240
-msgid "Compatible with"
-msgstr "متوافقة مع"
-
-#: main/models.py:249
+#: main/models.py:248
 msgid "Suffix"
 msgstr "اللاحقة"
 
-#: main/models.py:250
+#: main/models.py:249
 msgid "Suffixes"
 msgstr "اللواحق"
 
-#: main/models.py:253
+#: main/models.py:252
 msgid "Content of the suffix"
 msgstr "محتوى اللاحقة"
-
-#: main/models.py:256
-msgid "Can follow"
-msgstr "يمكن أن تتبع"
 
 #: main/templates/main/base/base.html:8
 msgid "Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi"
@@ -728,6 +727,11 @@ msgstr "مقارنة المدونات"
 #: main/templates/main/surrounding/surrounding_words_frequency.html:3
 msgid "Surrounding words"
 msgstr "الكلمات المحيطة"
+
+#: main/templates/main/base/navbar.html:7
+#: main/templates/main/derivations/word_derivations.html:3
+msgid "Word derivations"
+msgstr "اشتقاقات الكلمة"
 
 #: main/templates/main/base/scripts.html:52
 msgid "Search in progress"
@@ -830,6 +834,19 @@ msgstr "المتلازمات الثنائية الأكثر شيوعًا"
 msgid "Most frequent trigrams"
 msgstr "المتلازمات الثلاثية الأكثر شيوعًا"
 
+#: main/templates/main/derivations/word_derivations.html:5
+msgid ""
+"Search for the words that are derived from the given word in the texts with "
+"their apparition frequencies."
+msgstr ""
+"البحث عن الكلمات المشتقة من الكلمة المعطاة في النصوص مع تكرارات ظهورها."
+
+#: main/templates/main/derivations/word_derivations_results.html:12
+#: main/templates/main/surrounding/surrounding_words_frequency_results.html:12
+#: main/templates/main/vocabulary/vocabulary_results.html:13
+msgid "No words found"
+msgstr "لم يتم العثور على أيّة ألفاظ"
+
 #: main/templates/main/ngrams/blog_ngrams.html:3
 msgid "Extraction of the n-grams"
 msgstr "استخراج المتلازمات اللفظية"
@@ -908,16 +925,11 @@ msgid ""
 msgstr ""
 "البحث عن الكلمات السابقة والتالية للكلمة المعينة في النصوص مع تكرارات ظهورها."
 
-#: main/templates/main/surrounding/surrounding_words_frequency_results.html:12
-#: main/templates/main/vocabulary/vocabulary_results.html:13
-msgid "No words found"
-msgstr "لم يتم العثور على أيّة ألفاظ"
-
 #: main/templates/main/vocabulary/appearance_ratio_progressbar.html:4
 msgid "Appearance ratio in the texts"
 msgstr "نسبة الظهور في النصوص"
 
-#: main/templates/main/vocabulary/appearance_ratio_progressbar.html:22
+#: main/templates/main/vocabulary/appearance_ratio_progressbar.html:24
 msgid "Failed to calculate the appearance ratio"
 msgstr "فشل حساب نسبة الظهور"
 
@@ -934,6 +946,12 @@ msgstr "البحث عن الألفاظ الأكثر شيوعًا مع التكر
 #: main/templates/main/vocabulary/vocabulary_form.html:24
 msgid "Advanced options"
 msgstr "خيارات متقدمة"
+
+#~ msgid "Can precede"
+#~ msgstr "يمكن أن تسبق"
+
+#~ msgid "Can follow"
+#~ msgstr "يمكن أن تتبع"
 
 #, python-format
 #~ msgid "Indexing bigrams of \"%(text)s\"..."

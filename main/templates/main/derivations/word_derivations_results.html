@@ -1,0 +1,15 @@
+{% load i18n %}
+{% with fully_indexed|yesno:'primary,warning' as color %}
+    {% if results %}
+        <div class="row row-cols-md-5 row-cols-sm-3 row-cols-2 d-flex justify-content-center">
+            {% for word, frequency in results %}
+                <div class="col mb-3">
+                    {% include 'main/common/word_frequency_card.html' %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="lead text-{{ color }} text-center mb-3">{% translate 'No words found' %}</div>
+    {% endif %}
+{% endwith %}
+{% include 'main/common/pagination.html' %}

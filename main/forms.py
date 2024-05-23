@@ -295,3 +295,19 @@ class SurroundingWordsFrequencyForm(SearchForm):
             'data-toggle': 'tooltip',
             'data-placement': 'top',
         })
+
+
+class WordDerivationsForm(SearchForm):
+
+    class Meta(SearchForm.Meta):
+        pass
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['search_query'].help_text = _(
+            'Enter a word to search for its derivations (by adding the possible prefixes and suffixes).'
+        )
+        self.fields['search_query'].widget.attrs.update({
+            'placeholder': self.fields['search_query'].help_text,
+            'title': self.fields['search_query'].help_text,
+        })

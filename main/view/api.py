@@ -159,3 +159,23 @@ def surrounding_words_results(request):
         'page_url': reverse('surrounding_words') + request.get_full_path()[len(request.path):],
         'api_url': reverse('surrounding_words_results')
     })
+
+
+def advanced_word_derivations_form(request):
+    form = WordDerivationsForm(request.GET or None)
+    return render(request, 'main/search/advanced_search_form.html', context={'form': form})
+
+
+def word_derivations_results(request):
+    form = WordDerivationsForm(request.GET or None)
+    results = None
+    fully_indexed = None
+    if form.is_valid():
+        cleaned_data = clean_form_data(form.cleaned_data)
+        paginator, fully_indexed = get_derivation_frequencies_paginator(**cleaned_data)
+        results = paginator.get_page(request.GET.get('page'))
+    return render(request, 'main/derivations/word_derivations_results.html', context={
+        'results': results, 'fully_indexed': fully_indexed,
+        'page_url': reverse('word_derivations') + request.get_full_path()[len(request.path):],
+        'api_url': reverse('word_derivations_results')
+    })

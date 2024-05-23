@@ -1,0 +1,20 @@
+{% extends 'main/common/page.html' %}
+{% load i18n %}
+{% block heading_title %}{% translate 'Word derivations' %}{% endblock %}
+{% block heading_description %}
+    {% translate 'Search for the words that are derived from the given word in the texts with their apparition frequencies.' %}
+{% endblock %}
+{% block form %}
+    {{ form }}
+{% endblock %}
+{% block form_loading_script %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            addFormSubmitLogic('{% url 'word_derivations_results' %}');
+        });
+    </script>
+{% endblock %}
+{% block results_loading_script %}
+    {% url 'word_derivations_results' as results_url %}
+    {% include 'main/common/results_loading_script.html'%}
+{% endblock %}
