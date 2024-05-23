@@ -8,7 +8,7 @@ from pyarabic.araby import DIACRITICS
 
 from indexes.models import TextToken, Bigram, Trigram
 from indexes.utils import normalize
-from main.models import Text, FunctionalWord, Blog, Prefix
+from main.models import Text, FunctionalWord, Prefix
 
 
 @lru_cache(64)
@@ -213,7 +213,7 @@ def get_surrounding_words_frequencies_paginator(**cleaned_data) -> (Paginator, b
         filter_query &= Q(blog_id=blog_id)
     texts = Text.objects.filter(filter_query).distinct()
     query = normalize(cleaned_data['search_query'])
-    fully_indexed = all(blog.is_bigram_fully_indexed() for blog in Blog.objects.filter(text__in=texts))
+    fully_indexed = not texts.filter(bigrams_indexed=False).exists()
     filters = dict(text__in=texts)
     if cleaned_data['position'] == 'P':
         if cleaned_data['partial_search']:
@@ -257,7 +257,7 @@ def get_derivation_frequencies_paginator(**cleaned_data) -> (Paginator, bool):
     frequencies = TextToken.objects.filter(text__in=texts, token__content__in=possible_derivations).values(
         'token__content'
     ).annotate(frequency=Count('token__content')).order_by('-frequency').values_list('token__content', 'frequency')
-    fully_indexed = all(blog.is_word_fully_indexed() for blog in Blog.objects.filter(text__in=texts))
+    fully_indexed = not texts.filter(words_indexed=False).exists()
     return Paginator(frequencies, 60), fully_indexed
 
 

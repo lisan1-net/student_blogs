@@ -50,13 +50,13 @@ class Blog(models.Model):
         ).order_by('-count')[:limit].values_list('token__content', 'count')
 
     def is_word_fully_indexed(self):
-        return self.text_set.filter(words_indexed=False).count() == 0
+        return not self.text_set.filter(words_indexed=False).exists()
 
     def is_bigram_fully_indexed(self):
-        return self.text_set.filter(bigrams_indexed=False).count() == 0
+        return not self.text_set.filter(bigrams_indexed=False).exists()
 
     def is_trigram_fully_indexed(self):
-        return self.text_set.filter(trigrams_indexed=False).count() == 0
+        return not self.text_set.filter(trigrams_indexed=False).exists()
 
     def most_frequent_bigrams(self, count=100):
         return Bigram.objects.filter(text__blog=self).prefetch_related(
