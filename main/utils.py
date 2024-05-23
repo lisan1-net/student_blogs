@@ -248,23 +248,17 @@ def get_possible_derivations(word: str):
 
 @lru_cache(64)
 def get_derivation_frequencies_paginator(**cleaned_data) -> (Paginator, bool):
-    print(cleaned_data)
     filter_query, advanced = build_common_filter_query(cleaned_data)
     if blog_id := cleaned_data['blog']:
         filter_query &= Q(blog_id=blog_id)
     texts = Text.objects.filter(filter_query).distinct()
     word = normalize(cleaned_data['search_query'])
-    print('Possible derivations:')
     possible_derivations = get_possible_derivations(word)
-    frequencies = {}
-    for i, possible_derivation in enumerate(possible_derivations, 1):
-        if count := TextToken.objects.filter(text__in=texts, token__content=possible_derivation).count():
-            frequencies[possible_derivation] = count
-        print('{:03d}/{:03d} | {} : {}'.format(i, len(possible_derivations), possible_derivation, count))
-    print('Fully indexed')
+    frequencies = TextToken.objects.filter(text__in=texts, token__content__in=possible_derivations).values(
+        'token__content'
+    ).annotate(frequency=Count('token__content')).order_by('-frequency').values_list('token__content', 'frequency')
     fully_indexed = all(blog.is_word_fully_indexed() for blog in Blog.objects.filter(text__in=texts))
-    print(fully_indexed)
-    return Paginator(list(frequencies.items()), 60), fully_indexed
+    return Paginator(frequencies, 60), fully_indexed
 
 
 def clean_form_data(form_data: dict) -> dict:
