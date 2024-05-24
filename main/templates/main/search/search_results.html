@@ -30,6 +30,10 @@
 </div>
 {%  translate 'Title' as title_name %}
 {%  translate 'Content' as content_name %}
+{% if results %}
+    {% url 'search_export' as export_url %}
+    {% include 'main/common/export_results_button.html' %}
+{% endif %}
 {% for result in results %}
     {% include 'main/search/result_card.html' with result=result%}
 {% empty %}

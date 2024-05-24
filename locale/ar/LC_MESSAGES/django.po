@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-23 03:32+0000\n"
+"POT-Creation-Date: 2024-05-24 10:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -407,12 +407,12 @@ msgstr ""
 "أدخل كلمة للبحث عن اشتقاقاتها (من خلال إضافة السوابق واللواحق الممكنة)."
 
 #: main/models.py:14 main/models.py:98
-#: main/templates/main/search/advanced_search_form.html:3
+#: main/templates/main/search/advanced_search_form.html:3 main/utils.py:127
 msgid "Blog"
 msgstr "المدونة"
 
 #: main/models.py:17 main/models.py:100 main/models.py:193
-#: main/templates/main/search/search_results.html:31
+#: main/templates/main/search/search_results.html:31 main/utils.py:127
 msgid "Title"
 msgstr "العنوان"
 
@@ -481,7 +481,7 @@ msgstr "الرقم"
 msgid "Number of the student"
 msgstr "رقم الطالب"
 
-#: main/models.py:110
+#: main/models.py:110 main/utils.py:127
 msgid "Sex"
 msgstr "الجنس"
 
@@ -490,6 +490,7 @@ msgid "Student sex"
 msgstr "جنس الطالب"
 
 #: main/models.py:113 main/templates/main/common/blog_card.html:45
+#: main/utils.py:127
 msgid "Level"
 msgstr "الصف"
 
@@ -497,7 +498,7 @@ msgstr "الصف"
 msgid "Level of the student"
 msgstr "صف الطالب"
 
-#: main/models.py:117
+#: main/models.py:117 main/utils.py:127
 msgid "School"
 msgstr "المدرسة"
 
@@ -505,7 +506,7 @@ msgstr "المدرسة"
 msgid "School of the student"
 msgstr "مدرسة الطالب"
 
-#: main/models.py:120
+#: main/models.py:120 main/utils.py:127
 msgid "City"
 msgstr "المدينة"
 
@@ -787,6 +788,10 @@ msgstr "لا توجد كلمات"
 msgid "Show vocabulary"
 msgstr "عرض شيوع الألفاظ"
 
+#: main/templates/main/common/export_results_button.html:3
+msgid "Export results"
+msgstr "تصدير النتائج"
+
 #: main/templates/main/common/pagination.html:4
 msgid "ٍSearch pages"
 msgstr "صفحات البحث"
@@ -902,7 +907,7 @@ msgstr "الصفحة الحالية"
 msgid "Results from %(f)s to %(t)s of %(c)s"
 msgstr "النتائج من %(f)s إلى %(t)s من أصل %(c)s"
 
-#: main/templates/main/search/search_results.html:38
+#: main/templates/main/search/search_results.html:46
 msgid "Query did not match any texts."
 msgstr "الاستعلام لم يطابق أية نصوص."
 
@@ -946,6 +951,14 @@ msgstr "البحث عن الألفاظ الأكثر شيوعًا مع التكر
 #: main/templates/main/vocabulary/vocabulary_form.html:24
 msgid "Advanced options"
 msgstr "خيارات متقدمة"
+
+#: main/utils.py:127
+msgid "Context"
+msgstr "السياق"
+
+#: main/utils.py:127
+msgid "Student number"
+msgstr "رقم الطالب"
 
 #~ msgid "Can precede"
 #~ msgstr "يمكن أن تسبق"

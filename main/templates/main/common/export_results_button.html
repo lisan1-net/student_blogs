@@ -1,0 +1,10 @@
+{% load i18n %}
+<div class="row mb-3">
+    <div class="col-12 text-center">
+        <button class="btn btn-outline-dark" onclick="window.location.href = '{{ export_url }}' + window.location.search;">
+            <span class="spinner-border spinner-border-sm d-none" role="status"></span>
+            <i class="fa-solid fa-file-excel"></i> {% translate 'Export results' %}
+        </button>
+    </div>
+</div>
+

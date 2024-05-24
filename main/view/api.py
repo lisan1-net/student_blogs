@@ -1,8 +1,11 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, reverse
+from django.utils.http import content_disposition_header
+from django.utils.translation import gettext as _
 
 from main.forms import *
 from main.models import Announcement
+from main.templatetags.search import get_app_name
 from main.utils import *
 
 
@@ -39,6 +42,20 @@ def search_results(request):
         'page_url': reverse('home') + request.get_full_path()[len(request.path):],
         'api_url': reverse('search_results')
     })
+
+
+def search_export(request):
+    form = SearchForm(request.GET or None)
+    if form.is_valid():
+        cleaned_data = clean_form_data(form.cleaned_data)
+        excel_file_content = export_search_results(**cleaned_data)
+        response = HttpResponse(
+            excel_file_content, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        filename = f'{get_app_name()} - {_("Search results")} - {cleaned_data["search_query"]}.xlsx'
+        response['Content-Disposition'] = content_disposition_header(True, filename)
+        return response
+    return HttpResponse(status=400)
 
 
 def advanced_vocabulary_form(request):

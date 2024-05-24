@@ -1,9 +1,12 @@
 import re
 from functools import lru_cache
+from io import BytesIO
 from typing import Iterable
 
 from django.core.paginator import Paginator
 from django.db.models import Q, Model, Count, Sum
+from django.utils.translation import gettext as _
+from openpyxl import Workbook
 from pyarabic.araby import DIACRITICS
 
 from indexes.models import TextToken, Bigram, Trigram
@@ -89,7 +92,7 @@ def build_common_filter_query(cleaned_data: dict) -> (Q, bool):
 
 
 @lru_cache(64)
-def get_search_paginator_and_counts(**cleaned_data) -> (Paginator, int, bool):
+def get_search_results(**cleaned_data):
     filter_query, advanced = build_common_filter_query(cleaned_data)
     if blog := cleaned_data['blog']:
         filter_query &= Q(blog=blog)
@@ -98,6 +101,50 @@ def get_search_paginator_and_counts(**cleaned_data) -> (Paginator, int, bool):
     texts = Text.objects.filter(filter_query).distinct().iterator()
     results = find_search_results(query, texts)
     matched_texts_count = len(set(r['text'] for r in results))
+    return results, matched_texts_count, advanced
+
+
+def get_context(text: str, highlight_start: int, highlight_end: int, surrounding_words):
+    text_before = text[:highlight_start]
+    highlighted_text = text[highlight_start:highlight_end]
+    text_after = text[highlight_end:]
+    words_before = text_before.split(' ')
+    words_after = text_after.split(' ')
+    prefix = Paginator.ELLIPSIS if len(words_before) > surrounding_words else ''
+    suffix = Paginator.ELLIPSIS if len(words_after) > surrounding_words else ''
+    visible_words_before = words_before[-surrounding_words:]
+    visible_words_after = words_after[:surrounding_words]
+    return text_before, highlighted_text, text_after, visible_words_before, visible_words_after, prefix, suffix
+
+
+@lru_cache(32)
+def export_search_results(**cleaned_data) -> bytes:
+    results, matched_texts_count, advanced = get_search_results(**cleaned_data)
+    wb = Workbook(write_only=True)
+    ws = wb.create_sheet()
+    ws.append([
+        _('Context'), _('Title'), _('Blog'), _('Student number'), _('Sex'), _('Level'), _('School'), _('City'),
+        _('Type'), _('Source')
+    ])
+    for r in results:
+        text: Text = r['text']
+        text_before, highlighted_text, text_after, visible_words_before, visible_words_after, prefix, suffix = get_context(
+            text.content, r['start'], r['end'], 5
+        )
+        ws.append([
+            f'{prefix}{" ".join(visible_words_before)}{highlighted_text}{" ".join(visible_words_after)}{suffix}',
+            text.title, text.blog.title, text.student_number, text.get_sex_display(), text.level, text.school,
+            text.city, text.type or text.author_name, text.source_type
+        ])
+    excel_file = BytesIO()
+    wb.save(excel_file)
+    excel_file.seek(0)
+    return excel_file.getvalue()
+
+
+@lru_cache(64)
+def get_search_paginator_and_counts(**cleaned_data) -> (Paginator, int, bool):
+    results, matched_texts_count, advanced = get_search_results(**cleaned_data)
     return Paginator(results, 15), matched_texts_count, advanced
 
 

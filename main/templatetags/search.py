@@ -13,6 +13,7 @@ from django.utils.html import format_html
 from django.utils.text import slugify
 
 from main.models import TextToken, DictionaryDefinition
+from main.utils import get_context
 
 register = template.Library()
 
@@ -98,15 +99,10 @@ def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None
         highlight_start = int(highlight_start)
     if isinstance(highlight_end, str):
         highlight_end = int(highlight_end)
-    text_before = text[:highlight_start]
-    highlighted_text = text[highlight_start:highlight_end]
-    text_after = text[highlight_end:]
-    words_before = text_before.split(' ')
-    words_after = text_after.split(' ')
-    prefix = Paginator.ELLIPSIS if len(words_before) > surrounding_words else ''
-    suffix = Paginator.ELLIPSIS if len(words_after) > surrounding_words else ''
-    visible_words_before = words_before[-surrounding_words:]
-    visible_words_after = words_after[:surrounding_words]
+
+    text_before, highlighted_text, text_after, visible_words_before, visible_words_after, prefix, suffix = get_context(
+        text, highlight_start, highlight_end, surrounding_words
+    )
 
     def get_generated_text(words: list[str], prefix='', suffix=''):
         return prefix + ' '.join(words) + suffix
