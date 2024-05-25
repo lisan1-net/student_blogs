@@ -196,10 +196,19 @@ def surrounding_words_results(request):
         paginator, fully_indexed = get_surrounding_words_frequencies_paginator(**cleaned_data)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/surrounding/surrounding_words_frequency_results.html', context={
-        'results': page, 'fully_indexed': fully_indexed,
+        'results': page, 'fully_indexed': fully_indexed, 'form': form,
         'page_url': reverse('surrounding_words') + request.get_full_path()[len(request.path):],
         'api_url': reverse('surrounding_words_results')
     })
+
+
+def surrounding_words_export(request):
+    form = SurroundingWordsFrequencyForm(request.GET or None)
+    title = _("Surrounding words results")
+    return export_view(
+        request, form, export_surrounding_words_frequencies_results,
+        f'{get_app_name()} - {title} - {request.GET["search_query"]}.xlsx'
+    )
 
 
 def advanced_word_derivations_form(request):

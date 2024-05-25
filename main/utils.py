@@ -271,6 +271,7 @@ def get_ngram_results(**cleaned_data):
     return ngrams
 
 
+@lru_cache(32)
 def export_ngram_results(**cleaned_data) -> bytes:
     ngrams = get_ngram_results(**cleaned_data)
     wb = Workbook(write_only=True)
@@ -297,8 +298,8 @@ def get_ngrams_paginator(**cleaned_data) -> Paginator:
     return Paginator(ngrams, 60)
 
 
-@lru_cache(64)
-def get_surrounding_words_frequencies_paginator(**cleaned_data) -> (Paginator, bool):
+@lru_cache(32)
+def get_surrounding_words_frequencies_results(**cleaned_data):
     filter_query, advanced = build_common_filter_query(cleaned_data)
     if blog_id := cleaned_data['blog']:
         filter_query &= Q(blog_id=blog_id)
@@ -323,7 +324,28 @@ def get_surrounding_words_frequencies_paginator(**cleaned_data) -> (Paginator, b
     ).values('second_token__content').annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
         'first_token__content', 'second_token__content', 'frequency'
     )
+    return frequencies, fully_indexed
+
+
+@lru_cache(64)
+def get_surrounding_words_frequencies_paginator(**cleaned_data) -> (Paginator, bool):
+    frequencies, fully_indexed = get_surrounding_words_frequencies_results(**cleaned_data)
     return Paginator(frequencies, 60), fully_indexed
+
+
+@lru_cache(32)
+def export_surrounding_words_frequencies_results(**cleaned_data) -> bytes:
+    frequencies, fully_indexed = get_surrounding_words_frequencies_results(**cleaned_data)
+    wb = Workbook(write_only=True)
+    ws = wb.create_sheet()
+    ws.append([
+        _('First Token'), _('Second Token'), _('Frequency')
+    ])
+    for frequency in frequencies[:cleaned_data.get('export_count', 500)]:
+        ws.append(frequency)
+    excel_file = BytesIO()
+    wb.save(excel_file)
+    return excel_file.getvalue()
 
 
 @lru_cache(128)

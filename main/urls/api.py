@@ -25,6 +25,7 @@ urlpatterns = [
     path('most_frequent_trigrams/<int:blog_id>/', api.most_frequent_trigrams, name='most_frequent_trigrams'),
     path('advanced_surrounding_words_form/', api.advanced_surrounding_words_form, name='advanced_surrounding_words_form'),
     path('surrounding_words_results/', api.surrounding_words_results, name='surrounding_words_results'),
+    path('surrounding_words_export', api.surrounding_words_export, name='surrounding_words_export'),
     path('advanced_word_derivations_form/', api.advanced_word_derivations_form, name='advanced_word_derivations_form'),
     path('word_derivations_results/', api.word_derivations_results, name='word_derivations_results'),
 ]
