@@ -91,13 +91,13 @@
 
 <script type="text/javascript">
     const pendingRequests = [];
-    window.processingResquests = false;
+    window.availableRequests = 3;
 
     function processRequest() {
-        if (pendingRequests.length > 0 && !window.processingResquests) {
-            window.processingResquests = true;
+        if (pendingRequests.length > 0 && window.availableRequests > 0) {
+            window.availableRequests--;
             const {url, doneCallback, failCallback} = pendingRequests.shift();
-            $.ajax(url).done(doneCallback).fail(failCallback).always(() => window.processingResquests = false);
+            $.ajax(url).done(doneCallback).fail(failCallback).always(() => window.availableRequests++);
         }
     }
 

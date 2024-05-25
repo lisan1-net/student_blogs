@@ -12,6 +12,7 @@ urlpatterns = [
     path('advanced_vocabulary_form/', api.advanced_vocabulary_form, name='advanced_vocabulary_form'),
     path('vocabulary_form/', api.vocabulary_form, name='vocabulary_form'),
     path('vocabulary_results/', api.vocabulary_results, name='vocabulary_results'),
+    path('vocabulary_export', api.vocabulary_export, name='vocabulary_export'),
     path('vocabulary_appearance_progressbar/<str:content>/', api.vocabulary_appearance_progressbar,
          name='vocabulary_appearance_progressbar'),
     path('blog_ngrams_form/', api.blog_ngrams_form, name='blog_ngrams_form'),

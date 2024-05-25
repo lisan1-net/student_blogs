@@ -98,6 +98,12 @@ class SearchForm(forms.ModelForm):
             'data-placement': 'top',
             'title': self.fields['tags'].help_text,
         })
+        self.fields['export_count'].widget.attrs.update({
+            'class': 'form-control',
+            'title': self.fields['export_count'].help_text,
+            'data-toggle': 'tooltip',
+            'data-placement': 'top',
+        })
 
     search_query = forms.CharField(
         max_length=100, min_length=2, label=_('Search query'),
@@ -108,6 +114,11 @@ class SearchForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(
         Tag.objects.all(), required=False, widget=widgets.CheckboxSelectMultiple,
         label=_('Tags'), help_text=_('Select the tags of the text.')
+    )
+
+    export_count = forms.IntegerField(
+        label=_('Export count'), help_text=_('The maximum number of results to export.'), min_value=1, max_value=500,
+        required=False, initial=500
     )
 
     student_blog_field_names = ('type', 'student_number', 'sex', 'level', 'city', 'school')

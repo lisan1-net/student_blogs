@@ -38,7 +38,7 @@ def search_results(request):
         paginator, text_count, form.advanced = get_search_paginator_and_counts(**cleaned_data)
         results = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/search/search_results.html', context={
-        'results': results, 'matched_text_count': text_count,
+        'results': results, 'matched_text_count': text_count, 'form': form,
         'page_url': reverse('home') + request.get_full_path()[len(request.path):],
         'api_url': reverse('search_results')
     })
@@ -55,7 +55,7 @@ def search_export(request):
         filename = f'{get_app_name()} - {_("Search results")} - {cleaned_data["search_query"]}.xlsx'
         response['Content-Disposition'] = content_disposition_header(True, filename)
         return response
-    return HttpResponse(status=400)
+    return JsonResponse(status=400, data=form.errors, safe=True)
 
 
 def advanced_vocabulary_form(request):
@@ -78,10 +78,25 @@ def vocabulary_results(request):
         paginator = get_vocabulary_paginator(**cleaned_data)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/vocabulary/vocabulary_results.html', context={
-        'frequencies': page, 'blog': blog,
+        'frequencies': page, 'blog': blog, 'form': form,
         'page_url': reverse('vocabulary') + request.get_full_path()[len(request.path):],
         'api_url': reverse('vocabulary_results')
     })
+
+
+def vocabulary_export(request):
+    form = VocabularyForm(request.GET or None)
+    if form.is_valid():
+        cleaned_data = clean_form_data(form.cleaned_data)
+        excel_file_content = export_vocabulary_results(**cleaned_data)
+        response = HttpResponse(
+            excel_file_content, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        title = _("Vocabulary results")
+        filename = f'{get_app_name()} - {title} - {form.cleaned_data["blog"].title}.xlsx'
+        response['Content-Disposition'] = content_disposition_header(True, filename)
+        return response
+    return JsonResponse(status=400, data=form.errors, safe=True)
 
 
 def vocabulary_appearance_progressbar(request, content):

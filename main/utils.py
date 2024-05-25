@@ -126,7 +126,7 @@ def export_search_results(**cleaned_data) -> bytes:
         _('Context'), _('Title'), _('Blog'), _('Student number'), _('Sex'), _('Level'), _('School'), _('City'),
         _('Type'), _('Source')
     ])
-    for r in results:
+    for r in results[:cleaned_data.get('export_count', 500)]:
         text: Text = r['text']
         text_before, highlighted_text, text_after, visible_words_before, visible_words_after, prefix, suffix = get_context(
             text.content, r['start'], r['end'], 5
@@ -134,11 +134,10 @@ def export_search_results(**cleaned_data) -> bytes:
         ws.append([
             f'{prefix}{" ".join(visible_words_before)}{highlighted_text}{" ".join(visible_words_after)}{suffix}',
             text.title, text.blog.title, text.student_number, text.get_sex_display(), text.level, text.school,
-            text.city, text.type or text.author_name, text.source_type
+            text.city, text.get_type_display() or text.author_name, text.source_type
         ])
     excel_file = BytesIO()
     wb.save(excel_file)
-    excel_file.seek(0)
     return excel_file.getvalue()
 
 
@@ -148,8 +147,8 @@ def get_search_paginator_and_counts(**cleaned_data) -> (Paginator, int, bool):
     return Paginator(results, 15), matched_texts_count, advanced
 
 
-@lru_cache(64)
-def get_vocabulary_paginator(**cleaned_data) -> Paginator:
+@lru_cache(32)
+def get_vocabulary_results(**cleaned_data):
     filter_query, advanced = build_common_filter_query(cleaned_data)
     if blog_id := cleaned_data['blog']:
         filter_query &= Q(blog_id=blog_id)
@@ -175,6 +174,25 @@ def get_vocabulary_paginator(**cleaned_data) -> Paginator:
     word_frequencies = words.annotate(frequency=Count('token__content')).order_by('-frequency').values_list(
         'token__content', 'frequency'
     )
+    return word_frequencies
+
+
+@lru_cache(32)
+def export_vocabulary_results(**cleaned_data):
+    word_frequencies = get_vocabulary_results(**cleaned_data)
+    wb = Workbook(write_only=True)
+    ws = wb.create_sheet()
+    ws.append([_('Word'), _('Frequency')])
+    for word, frequency in word_frequencies[:cleaned_data.get('export_count', 500)]:
+        ws.append([word, frequency])
+    excel_file = BytesIO()
+    wb.save(excel_file)
+    return excel_file.getvalue()
+
+
+@lru_cache(64)
+def get_vocabulary_paginator(**cleaned_data) -> Paginator:
+    word_frequencies = get_vocabulary_results(**cleaned_data)
     return Paginator(word_frequencies, 60)
 
 

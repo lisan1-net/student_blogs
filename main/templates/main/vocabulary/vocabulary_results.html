@@ -2,6 +2,8 @@
 {% load search %}
 {% with blog.is_word_fully_indexed|yesno:'primary,warning' as color %}
     {% if frequencies %}
+        {% url 'vocabulary_export' as export_url %}
+        {% include 'main/common/export_results_button.html' %}
         <div class="row row-cols-md-6 row-cols-sm-3 d-flex justify-content-center">
             {% for word, frequency in frequencies %}
                 <div class="col mb-3">
