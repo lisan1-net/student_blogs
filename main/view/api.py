@@ -44,18 +44,24 @@ def search_results(request):
     })
 
 
-def search_export(request):
-    form = SearchForm(request.GET or None)
+def export_view(request, form, export_function, filename):
     if form.is_valid():
         cleaned_data = clean_form_data(form.cleaned_data)
-        excel_file_content = export_search_results(**cleaned_data)
+        excel_file_content = export_function(**cleaned_data)
         response = HttpResponse(
             excel_file_content, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
-        filename = f'{get_app_name()} - {_("Search results")} - {cleaned_data["search_query"]}.xlsx'
         response['Content-Disposition'] = content_disposition_header(True, filename)
         return response
     return JsonResponse(status=400, data=form.errors, safe=True)
+
+
+def search_export(request):
+    form = SearchForm(request.GET or None)
+    return export_view(
+        request, form, export_search_results,
+        f'{get_app_name()} - {_("Search results")} - {request.GET["search_query"]}.xlsx'
+    )
 
 
 def advanced_vocabulary_form(request):
@@ -86,17 +92,11 @@ def vocabulary_results(request):
 
 def vocabulary_export(request):
     form = VocabularyForm(request.GET or None)
-    if form.is_valid():
-        cleaned_data = clean_form_data(form.cleaned_data)
-        excel_file_content = export_vocabulary_results(**cleaned_data)
-        response = HttpResponse(
-            excel_file_content, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
-        title = _("Vocabulary results")
-        filename = f'{get_app_name()} - {title} - {form.cleaned_data["blog"].title}.xlsx'
-        response['Content-Disposition'] = content_disposition_header(True, filename)
-        return response
-    return JsonResponse(status=400, data=form.errors, safe=True)
+    title = _("Vocabulary results")
+    blog_title = get_object_or_404(Blog, pk=int(request.GET["blog"])).title
+    return export_view(
+        request, form, export_vocabulary_results, f'{get_app_name()} - {title} - {blog_title}.xlsx'
+    )
 
 
 def vocabulary_appearance_progressbar(request, content):
@@ -139,10 +139,19 @@ def blog_ngrams_results(request):
         paginator = get_ngrams_paginator(**cleaned_data)
         page = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/ngrams/blog_ngrams_results.html', context={
-        'frequencies': page, 'blog': blog,
+        'frequencies': page, 'blog': blog, 'form': form,
         'page_url': reverse('blog_ngrams') + request.get_full_path()[len(request.path):],
         'api_url': reverse('blog_ngrams_results')
     })
+
+
+def ngrams_export(request):
+    form = NgramsForm(request.GET or None)
+    title = _("Vocabulary results")
+    blog_title = get_object_or_404(Blog, pk=int(request.GET["blog"])).title
+    return export_view(
+        request, form, export_ngram_results, f'{get_app_name()} - {title} - {blog_title}.xlsx'
+    )
 
 
 def blog_comparison_form(request):

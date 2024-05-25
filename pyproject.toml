@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "student_blogs_search_engine"
-version = "0.24.0"
+version = "0.25.0"
 description = ""
 authors = ["Hamza <hamza.abbad@gmail.com>"]
 readme = "README.md"

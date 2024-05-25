@@ -178,7 +178,7 @@ def get_vocabulary_results(**cleaned_data):
 
 
 @lru_cache(32)
-def export_vocabulary_results(**cleaned_data):
+def export_vocabulary_results(**cleaned_data) -> bytes:
     word_frequencies = get_vocabulary_results(**cleaned_data)
     wb = Workbook(write_only=True)
     ws = wb.create_sheet()
@@ -196,8 +196,8 @@ def get_vocabulary_paginator(**cleaned_data) -> Paginator:
     return Paginator(word_frequencies, 60)
 
 
-@lru_cache(64)
-def get_ngrams_paginator(**cleaned_data) -> Paginator:
+@lru_cache(32)
+def get_ngram_results(**cleaned_data):
     blog_id = cleaned_data['blog']
     filter_query = Q(blog_id=blog_id)
     q, advanced = build_common_filter_query(cleaned_data)
@@ -268,6 +268,32 @@ def get_ngrams_paginator(**cleaned_data) -> Paginator:
             ngrams = ngrams.annotate(frequency=Sum('frequency')).order_by('-frequency').values_list(
                 'first_token__content', 'second_token__content', 'third_token__content', 'frequency'
             )
+    return ngrams
+
+
+def export_ngram_results(**cleaned_data) -> bytes:
+    ngrams = get_ngram_results(**cleaned_data)
+    wb = Workbook(write_only=True)
+    ws = wb.create_sheet()
+    match cleaned_data['ngram_type']:
+        case 'bigram':
+            ws.append([
+                _('First Token'), _('Second Token'), _('Frequency')
+            ])
+        case 'trigram':
+            ws.append([
+                _('First Token'), _('Second Token'), _('Third Token'), _('Frequency')
+            ])
+    for ngram in ngrams[:cleaned_data.get('export_count', 500)]:
+        ws.append(ngram)
+    excel_file = BytesIO()
+    wb.save(excel_file)
+    return excel_file.getvalue()
+
+
+@lru_cache(64)
+def get_ngrams_paginator(**cleaned_data) -> Paginator:
+    ngrams = get_ngram_results(**cleaned_data)
     return Paginator(ngrams, 60)
 
 

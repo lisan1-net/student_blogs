@@ -17,6 +17,7 @@ urlpatterns = [
          name='vocabulary_appearance_progressbar'),
     path('blog_ngrams_form/', api.blog_ngrams_form, name='blog_ngrams_form'),
     path('blog_ngrams_results/', api.blog_ngrams_results, name='blog_ngrams_results'),
+    path('ngrams_export', api.ngrams_export, name='ngrams_export'),
     path('blog_comparison_form/', api.blog_comparison_form, name='blog_comparison_form'),
     path('blog_comparison_results/', api.blog_comparison_results, name='blog_comparison_results'),
     path('most_frequent_words/<int:blog_id>/', api.most_frequent_words, name='most_frequent_words'),
