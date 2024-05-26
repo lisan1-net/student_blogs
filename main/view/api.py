@@ -225,7 +225,16 @@ def word_derivations_results(request):
         paginator, fully_indexed = get_derivation_frequencies_paginator(**cleaned_data)
         results = paginator.get_page(request.GET.get('page'))
     return render(request, 'main/derivations/word_derivations_results.html', context={
-        'results': results, 'fully_indexed': fully_indexed,
+        'results': results, 'fully_indexed': fully_indexed, 'form': form,
         'page_url': reverse('word_derivations') + request.get_full_path()[len(request.path):],
         'api_url': reverse('word_derivations_results')
     })
+
+
+def word_derivations_export(request):
+    form = WordDerivationsForm(request.GET or None)
+    title = _("Word derivations results")
+    return export_view(
+        request, form, export_derivation_frequencies_results,
+        f'{get_app_name()} - {title} - {request.GET["search_query"]}.xlsx'
+    )

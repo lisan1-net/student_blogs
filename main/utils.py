@@ -3,6 +3,7 @@ from functools import lru_cache
 from io import BytesIO
 from typing import Iterable
 
+from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q, Model, Count, Sum
 from django.utils.translation import gettext as _
@@ -11,7 +12,7 @@ from pyarabic.araby import DIACRITICS
 
 from indexes.models import TextToken, Bigram, Trigram
 from indexes.utils import normalize
-from main.models import Text, FunctionalWord, Prefix
+from main.models import Text, FunctionalWord, Prefix, Suffix
 
 
 @lru_cache(64)
@@ -126,7 +127,7 @@ def export_search_results(**cleaned_data) -> bytes:
         _('Context'), _('Title'), _('Blog'), _('Student number'), _('Sex'), _('Level'), _('School'), _('City'),
         _('Type'), _('Source')
     ])
-    for r in results[:cleaned_data.get('export_count', 500)]:
+    for r in results[:cleaned_data.get('export_count', settings.EXPORT_LIMIT)]:
         text: Text = r['text']
         text_before, highlighted_text, text_after, visible_words_before, visible_words_after, prefix, suffix = get_context(
             text.content, r['start'], r['end'], 5
@@ -183,7 +184,7 @@ def export_vocabulary_results(**cleaned_data) -> bytes:
     wb = Workbook(write_only=True)
     ws = wb.create_sheet()
     ws.append([_('Word'), _('Frequency')])
-    for word, frequency in word_frequencies[:cleaned_data.get('export_count', 500)]:
+    for word, frequency in word_frequencies[:cleaned_data.get('export_count', settings.EXPORT_LIMIT)]:
         ws.append([word, frequency])
     excel_file = BytesIO()
     wb.save(excel_file)
@@ -285,7 +286,7 @@ def export_ngram_results(**cleaned_data) -> bytes:
             ws.append([
                 _('First Token'), _('Second Token'), _('Third Token'), _('Frequency')
             ])
-    for ngram in ngrams[:cleaned_data.get('export_count', 500)]:
+    for ngram in ngrams[:cleaned_data.get('export_count', settings.EXPORT_LIMIT)]:
         ws.append(ngram)
     excel_file = BytesIO()
     wb.save(excel_file)
@@ -341,7 +342,7 @@ def export_surrounding_words_frequencies_results(**cleaned_data) -> bytes:
     ws.append([
         _('First Token'), _('Second Token'), _('Frequency')
     ])
-    for frequency in frequencies[:cleaned_data.get('export_count', 500)]:
+    for frequency in frequencies[:cleaned_data.get('export_count', settings.EXPORT_LIMIT)]:
         ws.append(frequency)
     excel_file = BytesIO()
     wb.save(excel_file)
@@ -354,24 +355,47 @@ def get_possible_derivations(word: str):
     for prefix in Prefix.objects.all():
         possible_derivations.add(f'{prefix}{word}')
         for suffix in prefix.suffixes.all():
-            possible_derivations.add(f'{word}{suffix}')
             possible_derivations.add(f'{prefix}{word}{suffix}')
+    for suffix in Suffix.objects.all():
+        possible_derivations.add(f'{word}{suffix}')
     return possible_derivations
 
 
-@lru_cache(64)
-def get_derivation_frequencies_paginator(**cleaned_data) -> (Paginator, bool):
+@lru_cache(32)
+def get_derivation_frequencies_results(**cleaned_data):
     filter_query, advanced = build_common_filter_query(cleaned_data)
     if blog_id := cleaned_data['blog']:
         filter_query &= Q(blog_id=blog_id)
     texts = Text.objects.filter(filter_query).distinct()
     word = normalize(cleaned_data['search_query'])
     possible_derivations = get_possible_derivations(word)
+    possible_derivations.add(word)
     frequencies = TextToken.objects.filter(text__in=texts, token__content__in=possible_derivations).values(
         'token__content'
     ).annotate(frequency=Count('token__content')).order_by('-frequency').values_list('token__content', 'frequency')
     fully_indexed = not texts.filter(words_indexed=False).exists()
+    return frequencies, fully_indexed
+
+
+@lru_cache(64)
+def get_derivation_frequencies_paginator(**cleaned_data) -> (Paginator, bool):
+    frequencies, fully_indexed = get_derivation_frequencies_results(**cleaned_data)
     return Paginator(frequencies, 60), fully_indexed
+
+
+@lru_cache(32)
+def export_derivation_frequencies_results(**cleaned_data) -> bytes:
+    frequencies, fully_indexed = get_derivation_frequencies_results(**cleaned_data)
+    wb = Workbook(write_only=True)
+    ws = wb.create_sheet()
+    ws.append([
+        _('Word'), _('Frequency')
+    ])
+    for frequency in frequencies[:cleaned_data.get('export_count', settings.EXPORT_LIMIT)]:
+        ws.append(frequency)
+    excel_file = BytesIO()
+    wb.save(excel_file)
+    return excel_file.getvalue()
 
 
 def clean_form_data(form_data: dict) -> dict:

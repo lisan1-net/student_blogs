@@ -103,6 +103,7 @@ class SearchForm(forms.ModelForm):
             'title': self.fields['export_count'].help_text,
             'data-toggle': 'tooltip',
             'data-placement': 'top',
+            'value': self.fields['export_count'].initial
         })
 
     search_query = forms.CharField(

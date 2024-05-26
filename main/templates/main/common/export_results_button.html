@@ -18,14 +18,16 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="{{ form.export_count.id_for_label }}">{{ form.export_count.label }}</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label for="{{ form.export_count.id_for_label }}" class="input-group-text">{{ form.export_count.label }}</label>
+                    </div>
                     {{ form.export_count }}
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate 'Cancel' %}</button>
-                <button type="submit" class="btn btn-primary">{% translate 'Export' %}</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">{% translate 'Cancel' %}</button>
+                <button type="submit" class="btn btn-success">{% translate 'Export' %}</button>
             </div>
         </div>
     </form>

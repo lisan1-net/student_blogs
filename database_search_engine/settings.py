@@ -205,3 +205,4 @@ INTERNAL_IPS = [
 # Custom
 
 MAINTENANCE_MESSAGE = config('MAINTENANCE_MESSAGE', default=None)
+EXPORT_LIMIT = config('EXPORT_LIMIT', default=500, cast=int)

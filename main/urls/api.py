@@ -28,4 +28,5 @@ urlpatterns = [
     path('surrounding_words_export', api.surrounding_words_export, name='surrounding_words_export'),
     path('advanced_word_derivations_form/', api.advanced_word_derivations_form, name='advanced_word_derivations_form'),
     path('word_derivations_results/', api.word_derivations_results, name='word_derivations_results'),
+    path('word_derivations_export/', api.word_derivations_export, name='word_derivations_export')
 ]
