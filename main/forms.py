@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.db import models
 from django.forms import widgets
 from django.shortcuts import get_object_or_404
@@ -118,8 +119,8 @@ class SearchForm(forms.ModelForm):
     )
 
     export_count = forms.IntegerField(
-        label=_('Export count'), help_text=_('The maximum number of results to export.'), min_value=1, max_value=500,
-        required=False, initial=500
+        label=_('Export count'), help_text=_('The maximum number of results to export.'), min_value=1,
+        max_value=settings.EXPORT_LIMIT, required=False, initial=settings.EXPORT_LIMIT
     )
 
     student_blog_field_names = ('type', 'student_number', 'sex', 'level', 'city', 'school')
