@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-26 03:05+0000\n"
+"POT-Creation-Date: 2024-05-29 04:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -208,7 +208,7 @@ msgstr "\"%(token)s\" في \"%(text)s\" [%(start)d:%(end)d]"
 msgid "Bigram"
 msgstr "المتلازمة اللفظية الثنائية"
 
-#: indexes/models.py:56 main/forms.py:237
+#: indexes/models.py:56 main/forms.py:239
 msgid "Bigrams"
 msgstr "المتلازمات اللفظية الثنائية"
 
@@ -253,7 +253,7 @@ msgstr "\"%(first)s %(second)s\" في \"%(text)s\""
 msgid "Trigram"
 msgstr "المتلازمة اللفظية الثلاثية"
 
-#: indexes/models.py:86 main/forms.py:237
+#: indexes/models.py:86 main/forms.py:239
 msgid "Trigrams"
 msgstr "المتلازمات اللفظية الثلاثية"
 
@@ -286,19 +286,35 @@ msgstr "عدد حدوثات المتلازمة اللفظية الثلاثية �
 msgid "\"%(first)s %(second)s %(third)s\" in \"%(text)s\""
 msgstr "\"%(first)s %(second)s %(third)s\" في \"%(text)s\""
 
-#: main/admin.py:13 main/templates/main/common/blog_card.html:44
+#: main/admin.py:14 main/templates/main/common/blog_card.html:44
 msgid "Unspecified"
 msgstr "غير محدد"
+
+#: main/admin.py:39
+msgid "%(count)d text moved to \"%(blog)s\"."
+msgid_plural "%(count)d texts moved to \"%(blog)s\"."
+msgstr[0] "%(count)d من النصوص تم نقله إلى \"%(blog)s\"."
+msgstr[1] "%(count)d من النصوص تم نقله إلى \"%(blog)s\"."
+msgstr[2] "%(count)d من النصوص تم نقله إلى \"%(blog)s\"."
+msgstr[3] "%(count)d من النصوص تم نقله إلى \"%(blog)s\"."
+msgstr[4] "%(count)d من النصوص تم نقله إلى \"%(blog)s\"."
+msgstr[5] "%(count)d من النصوص تم نقله إلى \"%(blog)s\"."
+
+
+#: main/admin.py:55
+#, python-format
+msgid "Move to \"%s\""
+msgstr "نقل إلى \"%s\""
 
 #: main/apps.py:8
 msgid "Students blog"
 msgstr "مدونة الطلاب"
 
-#: main/forms.py:109
+#: main/forms.py:111
 msgid "Search query"
 msgstr "استعلام البحث"
 
-#: main/forms.py:110
+#: main/forms.py:112
 msgid ""
 "Enter an expression to search in the texts. Any expression in double quotes "
 "will be searched as a whole word."
@@ -306,111 +322,111 @@ msgstr ""
 "أدخل تعبيرًا للبحث في النصوص. أي تعبير بين علامتي اقتباس مزدوجة سيتم البحث "
 "عنه ككلمة كاملة."
 
-#: main/forms.py:116
+#: main/forms.py:118
 msgid "Tags"
 msgstr "الوسوم"
 
-#: main/forms.py:116
+#: main/forms.py:118
 msgid "Select the tags of the text."
 msgstr "حدد الوسوم الخاصة بالنص."
 
-#: main/forms.py:120
+#: main/forms.py:122
 msgid "Export count"
 msgstr "عدد التصدير"
 
-#: main/forms.py:120
+#: main/forms.py:122
 msgid "The maximum number of results to export."
 msgstr "أقصى عدد من النتائج لتصديرها."
 
-#: main/forms.py:156
+#: main/forms.py:158
 msgid "The blog to search in"
 msgstr "حدد مدونة للبحث فيها"
 
-#: main/forms.py:162
+#: main/forms.py:164
 msgid "Include functional words"
 msgstr "تضمين الكلمات الوظيفية"
 
-#: main/forms.py:163
+#: main/forms.py:165
 msgid "Include the functional words in the search results."
 msgstr "تضمين الكلمات الوظيفية ('في'، 'على'، 'من'، ...) في نتائج البحث."
 
-#: main/forms.py:168
+#: main/forms.py:170
 msgid "Contains"
 msgstr "يحوي"
 
-#: main/forms.py:168
+#: main/forms.py:170
 msgid "Enter a word or a part of it to search for."
 msgstr "أدخل كلمة أو جزء منها للبحث."
 
-#: main/forms.py:172
+#: main/forms.py:174
 msgid "Partial contains"
 msgstr "محتوى جزئي للتضمين"
 
-#: main/forms.py:172 main/forms.py:284
+#: main/forms.py:174 main/forms.py:286
 msgid "Search for a part of the word."
 msgstr "البحث عن جزء من الكلمة."
 
-#: main/forms.py:177
+#: main/forms.py:179
 msgid "Does not contain"
 msgstr "لا يحوي"
 
-#: main/forms.py:178
+#: main/forms.py:180
 msgid "Enter a word part of it to exclude from the search results."
 msgstr "أدخل كلمة أو جزء منها لاستبعاده من نتائج البحث."
 
-#: main/forms.py:182
+#: main/forms.py:184
 msgid "Partial does not contain"
 msgstr "محتوى جزئي للاستبعاد"
 
-#: main/forms.py:182
+#: main/forms.py:184
 msgid "Exclude a part of the word."
 msgstr "استبعاد جزء من الكلمة."
 
-#: main/forms.py:189
+#: main/forms.py:191
 msgid "Select a blog"
 msgstr "حدد مدونة"
 
-#: main/forms.py:237
+#: main/forms.py:239
 msgid "N-gram type"
 msgstr "نوع المتلازمة اللفظية"
 
-#: main/forms.py:238
+#: main/forms.py:240
 msgid "Select the type of n-gram to search for."
 msgstr "حدد نوع المتلازمة اللفظية للبحث عنها."
 
-#: main/forms.py:255 main/models.py:15
+#: main/forms.py:257 main/models.py:15
 msgid "Blogs"
 msgstr "المدونات"
 
-#: main/forms.py:256
+#: main/forms.py:258
 msgid "Select the blogs to compare."
 msgstr "حدد المدونات للمقارنة."
 
-#: main/forms.py:278
+#: main/forms.py:280
 msgid "Previous words"
 msgstr "الكلمات السابقة"
 
-#: main/forms.py:278
+#: main/forms.py:280
 msgid "Next words"
 msgstr "الكلمات التالية"
 
-#: main/forms.py:278
+#: main/forms.py:280
 msgid "Position"
 msgstr "الموضع"
 
-#: main/forms.py:279
+#: main/forms.py:281
 msgid "Select the position of the words to search for."
 msgstr "حدد الموضع للكلمات التي تبحث عنها."
 
-#: main/forms.py:284
+#: main/forms.py:286
 msgid "Partial search"
 msgstr "بحث جزئي"
 
-#: main/forms.py:291
+#: main/forms.py:293
 msgid "Enter a word or part of it to search for its previous and next words."
 msgstr "أدخل كلمة أو جزء منها للبحث عن كلماتها السابقة والتالية."
 
-#: main/forms.py:319
+#: main/forms.py:321
 msgid ""
 "Enter a word to search for its derivations (by adding the possible prefixes "
 "and suffixes)."
@@ -807,11 +823,11 @@ msgstr "تصدير النتائج كملف Excel"
 msgid "Export results"
 msgstr "تصدير النتائج"
 
-#: main/templates/main/common/export_results_button.html:27
+#: main/templates/main/common/export_results_button.html:29
 msgid "Cancel"
 msgstr "إلغاء"
 
-#: main/templates/main/common/export_results_button.html:28
+#: main/templates/main/common/export_results_button.html:30
 msgid "Export"
 msgstr "تصدير"
 

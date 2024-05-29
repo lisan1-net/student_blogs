@@ -1,7 +1,8 @@
 from django.apps import apps
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.admin import ModelAdmin
-from django.utils.translation import gettext_lazy as _
+from django.forms import CheckboxSelectMultiple
+from django.utils.translation import gettext_lazy as _, ngettext
 
 from main.models import *
 
@@ -28,6 +29,37 @@ class TextAdmin(admin.ModelAdmin):
     )
     list_filter = tuple(e for e in list_display if e not in ('title', )) + ('blog', 'tags')
     search_fields = ('title', 'content', 'school', 'city')
+
+    def move_to_blog(self, request, queryset, blog_id):
+        blog = Blog.objects.get(pk=blog_id)
+        updated = queryset.update(blog_id=blog_id)
+        self.message_user(
+            request,
+            ngettext(
+                '%(count)d text moved to "%(blog)s".',
+                '%(count)d texts moved to "%(blog)s".',
+                updated,
+            ) % {'count': updated, 'blog': blog.title},
+            messages.SUCCESS,
+        )
+
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if self.has_change_permission(request):
+            for blog in Blog.objects.all():
+                blog_id = blog.pk
+                blog_title = blog.title
+                action_name = f'move_to_blog_{blog_id}'
+                if action_name not in actions:
+                    def move_to_blog(model_admin, request, queryset, blog_id=blog_id):
+                        model_admin.move_to_blog(request, queryset, blog_id)
+
+                    actions[action_name] = (
+                        move_to_blog,
+                        action_name,
+                        _('Move to "%s"') % blog_title
+                    )
+        return actions
 
 
 @admin.register(FunctionalWord)
@@ -57,8 +89,16 @@ class PrefixAdmin(admin.ModelAdmin):
     list_display = ['content']
     search_fields = ['content']
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        kwargs['widget'] = CheckboxSelectMultiple
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+
 
 @admin.register(Suffix)
 class SuffixAdmin(admin.ModelAdmin):
     list_display = ['content']
     search_fields = ['content']
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        kwargs['widget'] = CheckboxSelectMultiple
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
