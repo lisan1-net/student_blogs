@@ -1,8 +1,7 @@
 {% extends 'main/common/page.html' %}
 {% load i18n %}
-{% block heading_title %}
-    {% translate 'Vocabulary of the database' %}
-{% endblock %}
+{% block heading_title %}{% translate 'Vocabulary of the database' %}{% endblock %}
+{% block extra_title %} - {% translate 'Vocabulary of the database' %}{% endblock %}
 {% block heading_description %}
     {% translate 'Search for the most frequent vocabulary with the respective frequencies and appearance ratios in the texts.' %}
 {% endblock %}

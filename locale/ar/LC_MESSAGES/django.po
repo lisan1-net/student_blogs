@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-29 04:26+0000\n"
+"POT-Creation-Date: 2024-06-16 09:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -291,6 +291,7 @@ msgid "Unspecified"
 msgstr "غير محدد"
 
 #: main/admin.py:39
+#, python-format
 msgid "%(count)d text moved to \"%(blog)s\"."
 msgid_plural "%(count)d texts moved to \"%(blog)s\"."
 msgstr[0] "%(count)d من النصوص تم نقله إلى \"%(blog)s\"."
@@ -300,8 +301,7 @@ msgstr[3] "%(count)d من النصوص تم نقله إلى \"%(blog)s\"."
 msgstr[4] "%(count)d من النصوص تم نقله إلى \"%(blog)s\"."
 msgstr[5] "%(count)d من النصوص تم نقله إلى \"%(blog)s\"."
 
-
-#: main/admin.py:55
+#: main/admin.py:60
 #, python-format
 msgid "Move to \"%s\""
 msgstr "نقل إلى \"%s\""
@@ -725,11 +725,11 @@ msgstr "محتوى اللاحقة"
 msgid "Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi"
 msgstr "حقوق النشر 2024. جميع الحقوق محفوظة. د. عبد العزيز عبد الله المهيوبي"
 
-#: main/templates/main/base/base.html:24
+#: main/templates/main/base/base.html:25
 msgid "Search engine in the blogs of students"
 msgstr "محرك بحث في مدونات الطلاب"
 
-#: main/templates/main/base/base.html:25
+#: main/templates/main/base/base.html:26
 msgid "search, blogs, students"
 msgstr "بحث، مدونات، طلاب"
 
@@ -748,18 +748,32 @@ msgstr "المتلازمات اللفظية"
 
 #: main/templates/main/base/navbar.html:5
 #: main/templates/main/comparison/blog_comparison.html:3
+#: main/templates/main/comparison/blog_comparison.html:4
 msgid "Blog comparison"
 msgstr "مقارنة المدونات"
 
 #: main/templates/main/base/navbar.html:6
 #: main/templates/main/surrounding/surrounding_words_frequency.html:3
+#: main/templates/main/surrounding/surrounding_words_frequency.html:4
 msgid "Surrounding words"
 msgstr "الكلمات المحيطة"
 
 #: main/templates/main/base/navbar.html:7
 #: main/templates/main/derivations/word_derivations.html:3
+#: main/templates/main/derivations/word_derivations.html:4
 msgid "Word derivations"
 msgstr "اشتقاقات الكلمة"
+
+#: main/templates/main/base/navbar.html:72
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+#: main/templates/main/base/navbar.html:75
+#: main/templates/registration/login.html:5
+#: main/templates/registration/login.html:14
+#: main/templates/registration/login.html:33
+msgid "Login"
+msgstr "تسجيل الدخول"
 
 #: main/templates/main/base/scripts.html:52
 msgid "Search in progress"
@@ -855,7 +869,7 @@ msgstr "خيارات مدونات الكتب والقصص"
 msgid "No tags found"
 msgstr "لم يتم العثور على وسوم"
 
-#: main/templates/main/comparison/blog_comparison.html:5
+#: main/templates/main/comparison/blog_comparison.html:6
 msgid "Compare the selected blogs by the most frequent words and ngrams."
 msgstr "قارن المدونات المحددة بالكلمات والمتلازمات اللفظية الأكثر شيوعًا."
 
@@ -878,7 +892,7 @@ msgstr "المتلازمات الثنائية الأكثر شيوعًا"
 msgid "Most frequent trigrams"
 msgstr "المتلازمات الثلاثية الأكثر شيوعًا"
 
-#: main/templates/main/derivations/word_derivations.html:5
+#: main/templates/main/derivations/word_derivations.html:6
 msgid ""
 "Search for the words that are derived from the given word in the texts with "
 "their apparition frequencies."
@@ -892,10 +906,11 @@ msgid "No words found"
 msgstr "لم يتم العثور على أيّة ألفاظ"
 
 #: main/templates/main/ngrams/blog_ngrams.html:3
+#: main/templates/main/ngrams/blog_ngrams.html:4
 msgid "Extraction of the n-grams"
 msgstr "استخراج المتلازمات اللفظية"
 
-#: main/templates/main/ngrams/blog_ngrams.html:5
+#: main/templates/main/ngrams/blog_ngrams.html:6
 msgid "Extract the n-grams from the texts with their apparition ratios."
 msgstr "استخراج المتلازمات اللفظية من النصوص مع نسب ظهورها."
 
@@ -962,7 +977,7 @@ msgstr "البحث في مدونات الطلاب"
 msgid "Enter an expression"
 msgstr "أدخل تعبيرًا"
 
-#: main/templates/main/surrounding/surrounding_words_frequency.html:5
+#: main/templates/main/surrounding/surrounding_words_frequency.html:6
 msgid ""
 "Search for the previous and following words of a given words in the texts "
 "with their apparition frequencies."
@@ -977,11 +992,12 @@ msgstr "نسبة الظهور في النصوص"
 msgid "Failed to calculate the appearance ratio"
 msgstr "فشل حساب نسبة الظهور"
 
+#: main/templates/main/vocabulary/vocabulary.html:3
 #: main/templates/main/vocabulary/vocabulary.html:4
 msgid "Vocabulary of the database"
 msgstr "شيوع الألفاظ في المدونات"
 
-#: main/templates/main/vocabulary/vocabulary.html:7
+#: main/templates/main/vocabulary/vocabulary.html:6
 msgid ""
 "Search for the most frequent vocabulary with the respective frequencies and "
 "appearance ratios in the texts."
@@ -990,6 +1006,10 @@ msgstr "البحث عن الألفاظ الأكثر شيوعًا مع التكر
 #: main/templates/main/vocabulary/vocabulary_form.html:24
 msgid "Advanced options"
 msgstr "خيارات متقدمة"
+
+#: main/templates/registration/login.html:38
+msgid "Reset password"
+msgstr "إعادة تعيين كلمة المرور"
 
 #: main/utils.py:127
 msgid "Context"

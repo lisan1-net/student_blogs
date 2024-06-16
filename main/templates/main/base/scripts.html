@@ -21,23 +21,23 @@
 
 <script>
     function disableForms() {
-        let $submitButton = $('button[type="submit"]');
+        let $submitButton = $('form[method="get"] button[type="submit"]');
         $submitButton.children().addClass('searching');
 
         setTimeout(function() {
             $submitButton.attr('disabled', 'disabled');
-            $('input, select').attr('disabled', 'disabled');
+            $('form[method="get"] input, form[method="get"] select').attr('disabled', 'disabled');
         }, 0);
     }
     function enableForms() {
-        const form = $('form');
+        const form = $('form[method="get"]');
         form.find('button[type="submit"], input, select').removeAttr('disabled');
         form.find('.searching').removeClass('searching');
     }
     function retrieveAdvancedPart(baseURL, advancedPart) {
         if (advancedPart.has('.spinner-border').length) {
             advancedPart.load(baseURL + window.location.search, () => {
-                $('form').on('submit', disableForms);
+                $('form[method="get"]').on('submit', disableForms);
                 initializeTooltips();
             });
         }
@@ -77,7 +77,7 @@
     }
     function addFormSubmitLogic(results_url) {
         initializeTooltips();
-        $('form').on('submit', function(event) {
+        $('form[method="get"]').on('submit', function(event) {
             event.preventDefault();
             const fields = $(this).serializeArray();
             const queryString = $.param(fields);

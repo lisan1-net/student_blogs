@@ -20,7 +20,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav lead">
+        <ul class="navbar-nav lead mr-auto d-flex align-items-center">
             <li class="nav-item">
                 {% if request.path == home_path %}
                     <a class="nav-link active" href="{{ home_path }}">{{ search }}</a>
@@ -64,5 +64,15 @@
                 {% endif %}
             </li>
         </ul>
+        {% if user.is_authenticated %}
+            <span class="mr-2">{{ user.get_full_name }}</span>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input class="btn btn-outline-dark" type="submit" value="{% translate 'Logout' %}">
+            </form>
+        {% else %}
+            <a class="btn btn-outline-light" href="{% url 'login' %}">{% translate 'Login' %}</a>
+        {% endif %}
     </div>
 </nav>
