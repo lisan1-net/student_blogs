@@ -1,0 +1,138 @@
+{% extends 'main/base/base.html' %}
+{% load i18n %}
+
+{% block extra_title %} - {% translate 'Register' %}{% endblock %}
+
+{% block content %}
+    {% include 'main/common/error_list.html' with errors=form.non_field_errors %}
+    <script>
+    $(document).ready(function() {
+        const emailField = $('#{{ form.email.id_for_label }}');
+        const usernameField = $('#{{ form.username.id_for_label }}');
+        emailField.on('input', function() {
+            const predictedUsername = $(this).val().split('@')[0];
+            usernameField.val(predictedUsername);
+        });
+    });
+    function togglePassword(id) {
+        const passwordField = $(`#${id}`);
+        const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+        passwordField.attr('type', type);
+        const icon = passwordField.next().find('i');
+        icon.toggleClass('fa-eye-slash');
+        icon.toggleClass('fa-eye');
+    }
+    </script>
+    <div class="row mb-3">
+        <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="card-title text-center">{% translate 'Register' %}</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'django_registration_register' %}">
+                        <input type="hidden" name="next" value="{{ next }}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="{{ form.email.id_for_label }}">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </label>
+                                </div>
+                                <input type="text" class="form-control" id="{{ form.email.id_for_label }}"
+                                       name="{{ form.email.html_name }}" value="{{ form.email.value|default_if_none:'' }}"
+                                       placeholder="{{ form.email.label }}">
+                            </div>
+                            {% include 'main/common/error_list.html' with errors=form.email.errors%}
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="{{ form.username.id_for_label }}">
+                                        <i class="fa-solid fa-user"></i>
+                                    </label>
+                                </div>
+                                <input type="text" class="form-control" id="{{ form.username.id_for_label }}"
+                                       name="{{ form.username.html_name }}" value="{{ form.username.value|default_if_none:'' }}"
+                                       placeholder="{{ form.username.label }}">
+                            </div>
+                            {% include 'main/common/error_list.html' with errors=form.username.errors%}
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="{{ form.first_name.id_for_label }}">
+                                        <i class="fa-solid fa-person"></i>
+                                    </label>
+                                </div>
+                                <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}"
+                                       name="{{ form.first_name.html_name }}" value="{{ form.first_name.value|default_if_none:'' }}"
+                                       placeholder="{{ form.first_name.label }}">
+                            </div>
+                            {% include 'main/common/error_list.html' with errors=form.first_name.errors %}
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="{{ form.last_name.id_for_label }}">
+                                        <i class="fa-solid fa-people-group"></i>
+                                    </label>
+                                </div>
+                                <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}"
+                                       name="{{ form.last_name.html_name }}" value="{{ form.last_name.value|default_if_none:'' }}"
+                                       placeholder="{{ form.last_name.label }}">
+                            </div>
+                            {% include 'main/common/error_list.html' with errors=form.last_name.errors %}
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="{{ form.password1.id_for_label }}">
+                                        <i class="fa-solid fa-key"></i>
+                                    </label>
+                                </div>
+                                <input type="password" class="form-control" id="{{ form.password1.id_for_label }}"
+                                       name="{{ form.password1.html_name }}"
+                                       placeholder="{{ form.password1.label }}">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-outline-secondary"
+                                            onclick="togglePassword('{{ form.password1.id_for_label }}')">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {% include 'main/common/error_list.html' with errors=form.password1.errors%}
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="{{ form.password2.id_for_label }}">
+                                        <i class="fa-solid fa-key"></i>
+                                    </label>
+                                </div>
+                                <input type="password" class="form-control" id="{{ form.password2.id_for_label }}"
+                                       name="{{ form.password2.html_name }}"
+                                       placeholder="{{ form.password2.label }}">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-outline-secondary"
+                                            onclick="togglePassword('{{ form.password2.id_for_label }}')">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {% include 'main/common/error_list.html' with errors=form.password2.errors%}
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">
+                            <i class="fa-solid fa-user-plus"></i>
+                            {% translate 'Register' %}
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-link" href="{% url 'login' %}">{% translate 'Login' %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

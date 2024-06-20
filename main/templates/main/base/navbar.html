@@ -65,14 +65,30 @@
             </li>
         </ul>
         {% if user.is_authenticated %}
-            <span class="mr-2">{{ user.get_full_name }}</span>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
-                <input class="btn btn-outline-dark" type="submit" value="{% translate 'Logout' %}">
-            </form>
+            <div class="dropdown">
+                <button class="btn btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown">
+                    {{ user.get_full_name|default:user.username }}
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input class="dropdown-item" type="submit" value="{% translate 'Logout' %}">
+                    </form>
+                </div>
+            </div>
         {% else %}
-            <a class="btn btn-outline-light" href="{% url 'login' %}">{% translate 'Login' %}</a>
+            <div class="btn-group">
+                <a href="{% url 'login' %}" class="btn btn-outline-light">{% translate 'Login' %}</a>
+                <button type="button" class="btn btn-outline-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'django_registration_register' %}">
+                        {% translate 'Register' %}
+                    </a>
+                </div>
+            </div>
         {% endif %}
     </div>
 </nav>

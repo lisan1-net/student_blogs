@@ -19,6 +19,7 @@ whitenoise = {extras = ["brotli"], version = "^6.6.0"}
 django-read-only = "^1.15.0"
 django-debug-toolbar = "^4.3.0"
 openpyxl = "^3.1.2"
+django-registration = "^3.4"
 
 
 [tool.poetry.group.dev.dependencies]

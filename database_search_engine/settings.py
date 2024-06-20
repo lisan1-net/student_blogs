@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'taggit',
     'django_read_only',
     'django.contrib.humanize',
-    'debug_toolbar'
+    'debug_toolbar',
+    'django_registration',
+    'django.contrib.sites'
 ]
 
 MIDDLEWARE = [
@@ -188,10 +190,27 @@ LOGGING = {
     },
 }
 
+# E-mail
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@localhost')
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default=None)
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default=None)
+
+# Sites
+
+SITE_ID = 1
+
+# Django registration
+
+ACCOUNT_ACTIVATION_DAYS = 3
+
 # TAGGIT
 
 TAGGIT_CASE_INSENSITIVE = True
-
 
 # Django Read-Only
 

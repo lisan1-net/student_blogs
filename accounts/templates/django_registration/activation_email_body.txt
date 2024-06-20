@@ -1,0 +1,20 @@
+{% load i18n %}
+
+{% url "django_registration_activate" activation_key  as activation_path %}
+{% with scheme|add:"://"|add:request.get_host|add:activation_path as activation_link %}
+{% translate site.name as site_name %}
+
+{% blocktranslate with email=user.email username=user.username site_name=site_name link=activation_link max_days=expiration_days %}
+    Hello,
+
+    To confirm that the email address {{email}} belongs to the user {{username}} who has registered on the site
+    {{site_name}}, please click on the following link:
+
+    {{link}}
+
+    Note: This link will expire in {{max_days}} days.
+
+    If you did not register on the site {{site_name}}, please ignore this email.
+{% endblocktranslate %}
+
+{% endwith %}
