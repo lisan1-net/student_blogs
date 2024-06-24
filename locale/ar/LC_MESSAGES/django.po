@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-20 12:18+0000\n"
+"POT-Creation-Date: 2024-06-24 04:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,11 +33,11 @@ msgid "Your account has been successfully activated."
 msgstr "تم تفعيل حسابك بنجاح."
 
 #: accounts/templates/django_registration/activation_complete.html:17
-#: accounts/templates/django_registration/registration_form.html:113
+#: accounts/templates/django_registration/registration_form.html:133
 #: accounts/templates/registration/login.html:5
 #: accounts/templates/registration/login.html:14
-#: accounts/templates/registration/login.html:49
-#: main/templates/main/base/navbar.html:82
+#: accounts/templates/registration/login.html:48
+#: main/templates/main/base/navbar.html:83
 msgid "Login"
 msgstr "تسجيل الدخول"
 
@@ -104,16 +104,29 @@ msgstr ""
 "المزعجة."
 
 #: accounts/templates/django_registration/registration_form.html:4
-#: accounts/templates/django_registration/registration_form.html:20
-#: accounts/templates/django_registration/registration_form.html:107
-#: accounts/templates/registration/login.html:57
-#: main/templates/main/base/navbar.html:88
+#: accounts/templates/django_registration/registration_form.html:30
+#: accounts/templates/django_registration/registration_form.html:128
+#: accounts/templates/registration/login.html:55
+#: main/templates/main/base/navbar.html:89
 msgid "Register"
 msgstr "التسجيل"
 
-#: accounts/templates/registration/login.html:55
+#: accounts/templates/registration/login.html:53
 msgid "Reset password"
 msgstr "إعادة تعيين كلمة المرور"
+
+#: accounts/templates/registration/password_change_done.html:4
+#: accounts/templates/registration/password_change_done.html:11
+msgid "Password change completed"
+msgstr "تم إتمام تغيير كلمة المرور"
+
+#: accounts/templates/registration/password_change_form.html:4
+msgid "Password change"
+msgstr "تغيير كلمة المرور"
+
+#: accounts/templates/registration/password_change_form.html:58
+msgid "Change"
+msgstr "تغيير"
 
 #: accounts/views.py:9
 msgid "First Name"
@@ -864,7 +877,11 @@ msgstr "الكلمات المحيطة"
 msgid "Word derivations"
 msgstr "اشتقاقات الكلمة"
 
-#: main/templates/main/base/navbar.html:76
+#: main/templates/main/base/navbar.html:73
+msgid "Change password"
+msgstr "غير كلمة المرور"
+
+#: main/templates/main/base/navbar.html:77
 msgid "Logout"
 msgstr "تسجيل الخروج"
 
