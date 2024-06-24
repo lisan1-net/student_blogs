@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-24 04:22+0000\n"
+"POT-Creation-Date: 2024-06-24 12:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,6 +37,7 @@ msgstr "تم تفعيل حسابك بنجاح."
 #: accounts/templates/registration/login.html:5
 #: accounts/templates/registration/login.html:14
 #: accounts/templates/registration/login.html:48
+#: accounts/templates/registration/password_reset_complete.html:17
 #: main/templates/main/base/navbar.html:83
 msgid "Login"
 msgstr "تسجيل الدخول"
@@ -121,12 +122,76 @@ msgid "Password change completed"
 msgstr "تم إتمام تغيير كلمة المرور"
 
 #: accounts/templates/registration/password_change_form.html:4
+#: accounts/templates/registration/password_reset_confirm.html:4
 msgid "Password change"
 msgstr "تغيير كلمة المرور"
 
 #: accounts/templates/registration/password_change_form.html:58
+#: accounts/templates/registration/password_reset_confirm.html:46
 msgid "Change"
 msgstr "تغيير"
+
+#: accounts/templates/registration/password_reset_complete.html:4
+msgid "Password reset success"
+msgstr "نجحت إعادة تعيين كلمة المرور"
+
+#: accounts/templates/registration/password_reset_complete.html:14
+msgid "Your password has been successfully reset."
+msgstr "تمت إعادة تعيين كلمة المرور بنجاح."
+
+#: accounts/templates/registration/password_reset_confirm.html:50
+msgid ""
+"The password reset link is invalid, possibly because it has already been "
+"used."
+msgstr ""
+"رابط إعادة تعيين كلمة المرور غير صالح، ربما لأنه تم استخدامه بالفعل."
+
+#: accounts/templates/registration/password_reset_done.html:4
+msgid "Password reset request"
+msgstr "طلب إعادة تعيين كلمة المرور"
+
+#: accounts/templates/registration/password_reset_done.html:14
+msgid ""
+"If the email address that you specified is registered, you will receive an "
+"email with instructions on how to reset your password."
+msgstr ""
+"إذا كان عنوان البريد الإلكتروني الذي حددته مسجلًا، ستتلقى بريدًا إلكترونيًا "
+"يحتوي على تعليمات حول كيفية إعادة تعيين كلمة المرور الخاصة بك."
+
+#: accounts/templates/registration/password_reset_email.html:5
+msgid ""
+"\n"
+"    Hello %(username)s,\n"
+"\n"
+"    To confirm your password reset request on %(site_name)s, please click "
+"the following link:\n"
+"\n"
+"    %(reset_link)s\n"
+"\n"
+"    If you did not request a password reset, please ignore this email.\n"
+msgstr ""
+"\n"
+"    مرحبًا %(username)s،\n"
+"\n"
+"    لتأكيد طلب إعادة تعيين كلمة المرور الخاص بك على %(site_name)s، يرجى "
+"النقر على الرابط التالي:\n"
+"\n"
+"    %(reset_link)s\n"
+"\n"
+"    إذا لم تطلب إعادة تعيين كلمة المرور، يرجى تجاهل هذا البريد الإلكتروني.\n"
+
+#: accounts/templates/registration/password_reset_form.html:4
+msgid "Password reset"
+msgstr "إعادة تعيين كلمة المرور"
+
+#: accounts/templates/registration/password_reset_form.html:32
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#: accounts/templates/registration/password_reset_subject.txt:1
+#, python-format
+msgid "[%(name)s] Password reset"
+msgstr "[%(name)s] إعادة تعيين كلمة المرور"
 
 #: accounts/views.py:9
 msgid "First Name"
