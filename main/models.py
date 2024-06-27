@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core import validators
 from django.db import models
 from django.db.models import Sum
@@ -15,7 +16,17 @@ class Blog(models.Model):
         verbose_name_plural = _('Blogs')
 
     title = models.CharField(max_length=100, verbose_name=_('Title'), help_text=_('Blog title'))
+
     description = models.TextField(blank=True, verbose_name=_('Description'), help_text=_('Blog description'))
+
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_('Owner'), help_text=_('Owner of the blog'),
+        db_default=1
+    )
+
+    public = models.BooleanField(
+        db_default=True, verbose_name=_('Public'), help_text=_('Indicates whether the blog is public or not')
+    )
 
     def __str__(self):
         return self.title
