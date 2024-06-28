@@ -2,6 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from django_registration.backends.activation.views import RegistrationView
 from django_registration.forms import RegistrationFormUniqueEmail
+from guardian.shortcuts import assign_perm
 
 
 class FirstLastNamesRegistrationForm(RegistrationFormUniqueEmail):
@@ -14,6 +15,8 @@ class FirstLastNamesRegistrationForm(RegistrationFormUniqueEmail):
         new_user.first_name = self.cleaned_data['first_name']
         new_user.last_name = self.cleaned_data['last_name']
         new_user.save()
+        assign_perm('main.add_blog', new_user)
+        assign_perm('main.add_text', new_user)
         return new_user
 
 

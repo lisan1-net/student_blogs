@@ -3,6 +3,7 @@ from django.contrib import admin, messages
 from django.contrib.admin import ModelAdmin
 from django.forms import CheckboxSelectMultiple
 from django.utils.translation import gettext_lazy as _, ngettext
+from guardian.admin import GuardedModelAdmin
 
 from main.models import *
 
@@ -15,14 +16,19 @@ admin.site.empty_value_display = _('Unspecified')
 
 
 @admin.register(Blog)
-class BlogAdmin(ModelAdmin):
+class BlogAdmin(GuardedModelAdmin):
 
     list_display = ('title', 'description')
     search_fields = ('title', 'description')
 
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.owner = request.user
+        super().save_model(request, obj, form, change)
+
 
 @admin.register(Text)
-class TextAdmin(admin.ModelAdmin):
+class TextAdmin(GuardedModelAdmin):
 
     list_display = (
         'title', 'type', 'student_number', 'sex', 'level', 'school', 'city', 'author_name', 'source_type',
@@ -60,6 +66,11 @@ class TextAdmin(admin.ModelAdmin):
                         _('Move to "%s"') % blog_title
                     )
         return actions
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'blog':
+            kwargs['queryset'] = Blog.objects.filter(owner=request.user)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(FunctionalWord)

@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'debug_toolbar',
     'django_registration',
-    'django.contrib.sites'
+    'django.contrib.sites',
+    'guardian',
 ]
 
 MIDDLEWARE = [
@@ -131,6 +132,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

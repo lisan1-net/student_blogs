@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import Sum
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _, pgettext
+from guardian.shortcuts import assign_perm
 from taggit.managers import TaggableManager
 
 from indexes.models import TextToken, Bigram, Trigram
@@ -21,7 +22,7 @@ class Blog(models.Model):
 
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_('Owner'), help_text=_('Owner of the blog'),
-        db_default=1
+        db_default=1, editable=False
     )
 
     public = models.BooleanField(
@@ -88,6 +89,12 @@ class Blog(models.Model):
     @property
     def most_frequent_words_extended(self):
         return self.most_frequent_words(200)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        assign_perm('main.view_blog', self.owner, self)
+        assign_perm('main.change_blog', self.owner, self)
+        assign_perm('main.delete_blog', self.owner, self)
 
 
 class Text(models.Model):
@@ -178,6 +185,12 @@ class Text(models.Model):
 
     def get_level_display(self):
         return _('Level %(level)d') % {'level': self.level}
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        assign_perm('main.view_text', self.blog.owner, self)
+        assign_perm('main.change_text', self.blog.owner, self)
+        assign_perm('main.delete_text', self.blog.owner, self)
 
 
 class FunctionalWord(models.Model):

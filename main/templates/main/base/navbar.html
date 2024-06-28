@@ -70,6 +70,7 @@
                     {{ user.get_full_name|default:user.username }}
                 </button>
                 <div class="dropdown-menu dropdown-menu-right bg-success">
+                    <a class="dropdown-item text-dark" href="{% url 'admin:index' %}">{% translate 'Control panel' %}</a>
                     <a class="dropdown-item text-dark" href="{% url 'password_change' %}">{% translate 'Change password' %}</a>
                     <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
