@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.utils.translation import gettext_lazy as _
 from django_registration.backends.activation.views import RegistrationView
 from django_registration.forms import RegistrationFormUniqueEmail
@@ -23,3 +25,16 @@ class FirstLastNamesRegistrationForm(RegistrationFormUniqueEmail):
 class UniqueEmailRegistrationView(RegistrationView):
 
     form_class = FirstLastNamesRegistrationForm
+
+
+class UsernameOrEmailAuthenticationForm(AuthenticationForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].label = _('Username or Email')
+        self.fields['username'].widget.attrs['placeholder'] = _('Username or Email')
+
+
+class UsernameOrEmailLoginView(LoginView):
+
+    form_class = UsernameOrEmailAuthenticationForm
