@@ -6,10 +6,9 @@ from django.utils.translation import gettext_lazy as _
 
 def alter_site_name(apps, schema_editor):
     Site = apps.get_model('sites', 'Site')
-    default_site = Site.objects.get(pk=settings.SITE_ID)
-    default_site.name = _('Students blog')
-    default_site.domain = 'corpus.lisan1.com'
-    default_site.save()
+    Site.objects.get_or_create(
+        pk=settings.SITE_ID, defaults={'name': _('Students blog'), 'domain': 'corpus.lisan1.com'}
+    )
 
 
 class Migration(migrations.Migration):
