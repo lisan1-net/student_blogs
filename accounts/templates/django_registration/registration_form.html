@@ -10,7 +10,7 @@
         const emailField = $('#{{ form.email.id_for_label }}');
         const usernameField = $('#{{ form.username.id_for_label }}');
         emailField.on('input', function() {
-            const predictedUsername = $(this).val().split('@')[0];
+            const predictedUsername = $(this).val().split('@')[0].replace(/\W/g, '');
             usernameField.val(predictedUsername);
         });
     });

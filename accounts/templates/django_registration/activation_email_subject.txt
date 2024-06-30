@@ -1,4 +1,5 @@
 {% load i18n %}
-{% blocktranslate trimmed with name=site.name %}
+{% translate site.name as site_name %}
+{% blocktranslate trimmed with name=site_name %}
     [{{ name }}] Account activation
 {% endblocktranslate %}
