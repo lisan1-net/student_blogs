@@ -16,6 +16,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('main', '0022_alter_blog_owner'),
+        ('sites', '0002_alter_domain_unique')
     ]
 
     operations = [
