@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'taggit',
     'django_read_only',
     'django.contrib.humanize',
-    'debug_toolbar',
     'django_registration',
     'django.contrib.sites',
     'guardian',
@@ -53,7 +52,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -222,14 +220,6 @@ TAGGIT_CASE_INSENSITIVE = True
 # Django Read-Only
 
 DJANGO_READ_ONLY = config('DJANGO_READ_ONLY', default=False, cast=bool)
-
-
-# Debug toolbar
-
-INTERNAL_IPS = [
-    '127.0.0.1',
-    'mdwn-ltlb.onrender.com'
-]
 
 
 # Custom
