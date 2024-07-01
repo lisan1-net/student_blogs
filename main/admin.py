@@ -20,6 +20,8 @@ class BlogAdmin(GuardedModelAdmin):
 
     list_display = ('title', 'description')
     search_fields = ('title', 'description')
+    user_owned_objects_field = 'owner'
+    user_can_access_owned_objects_only = True
 
     def save_model(self, request, obj, form, change):
         if not change:
@@ -35,6 +37,8 @@ class TextAdmin(GuardedModelAdmin):
     )
     list_filter = tuple(e for e in list_display if e not in ('title', )) + ('blog', 'tags')
     search_fields = ('title', 'content', 'school', 'city')
+    user_owned_objects_field = 'blog__owner'
+    user_can_access_owned_objects_only = True
 
     def move_to_blog(self, request, queryset, blog_id):
         blog = Blog.objects.get(pk=blog_id)
@@ -53,6 +57,8 @@ class TextAdmin(GuardedModelAdmin):
         actions = super().get_actions(request)
         if self.has_change_permission(request):
             for blog in Blog.objects.all():
+                if not request.user.has_perm('change_blog', blog):
+                    continue
                 blog_id = blog.pk
                 blog_title = blog.title
                 action_name = f'move_to_blog_{blog_id}'

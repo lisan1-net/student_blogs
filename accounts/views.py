@@ -18,7 +18,13 @@ class FirstLastNamesRegistrationForm(RegistrationFormUniqueEmail):
         new_user.last_name = self.cleaned_data['last_name']
         new_user.save()
         assign_perm('main.add_blog', new_user)
+        assign_perm('main.view_blog', new_user)
+        assign_perm('main.change_blog', new_user)
+        assign_perm('main.delete_blog', new_user)
         assign_perm('main.add_text', new_user)
+        assign_perm('main.view_text', new_user)
+        assign_perm('main.change_text', new_user)
+        assign_perm('main.delete_text', new_user)
         return new_user
 
 

@@ -11,11 +11,11 @@ from main.models import Blog, Text
 
 
 def get_schools():
-    return Text.objects.values_list('school', 'school').distinct().order_by('school')
+    return Text.objects.filter(blog__public=True).values_list('school', 'school').distinct().order_by('school')
 
 
 def get_cities():
-    return Text.objects.values_list('city', 'city').distinct().order_by('city')
+    return Text.objects.filter(blog__public=True).values_list('city', 'city').distinct().order_by('city')
 
 
 def with_empty(choices_function):
@@ -28,16 +28,16 @@ def with_empty(choices_function):
 
 
 def get_blogs():
-    for _id, title in Blog.objects.values_list('id', 'title').order_by('title'):
+    for _id, title in Blog.objects.filter(public=True).values_list('id', 'title').order_by('title'):
         yield _id, title
 
 
 def get_source_types():
-    return Text.objects.values_list('source_type', 'source_type').distinct().order_by('source_type')
+    return Text.objects.filter(blog__public=True).values_list('source_type', 'source_type').distinct().order_by('source_type')
 
 
 def get_author_names():
-    return Text.objects.values_list('author_name', 'author_name').distinct().order_by('author_name')
+    return Text.objects.filter(blog__public=True).values_list('author_name', 'author_name').distinct().order_by('author_name')
 
 
 class SearchForm(forms.ModelForm):
