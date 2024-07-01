@@ -14,7 +14,12 @@ def home(request):
 
 def text(request, pk):
     text = get_object_or_404(Text, pk=pk)
-    return render(request, 'main/popups/text.html', context={'text': text})
+    return render(request, 'main/detail/text.html', context={'text': text})
+
+
+def blog(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    return render(request, 'main/detail/blog.html', context={'blog': blog})
 
 
 def vocabulary(request):

@@ -1,0 +1,10 @@
+{% load l10n %}
+{% load humanize %}
+<div class="card bg-{{ color|default:'info' }} text-light shadow-sm">
+    <div class="card-header">
+        <h5 class="mb-0">{{ name }}</h5>
+    </div>
+    <div class="card-body p-2 h1">
+        {{ value|intcomma:False }}
+    </div>
+</div>

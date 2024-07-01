@@ -2,7 +2,7 @@
 {% load search %}
 <div class="card list-group-item-action">
     <div class="card-body p-2 lead d-flex justify-content-between align-items-center">
-        <a href='{% search_url request word %}' class="text-decoration-none">
+        <a href='{% search_url request word %}' class="text-decoration-none mr-2">
             {{ word }}
         </a>
         <span class="badge badge-{{ color }} pt-2" data-toggle="tooltip" title="{% translate 'Frequency' %}">{{ frequency }}</span>

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core import validators
 from django.db import models
 from django.db.models import Sum
+from django.shortcuts import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _, pgettext
 from guardian.shortcuts import assign_perm
@@ -89,6 +90,9 @@ class Blog(models.Model):
     @property
     def most_frequent_words_extended(self):
         return self.most_frequent_words(200)
+
+    def get_absolute_url(self):
+        return reverse('blog', args=[self.pk])
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -185,6 +189,9 @@ class Text(models.Model):
 
     def get_level_display(self):
         return _('Level %(level)d') % {'level': self.level}
+
+    def get_absolute_url(self):
+        return reverse('text', args=[self.pk])
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

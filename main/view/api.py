@@ -10,7 +10,7 @@ from main.utils import *
 
 
 def blog_ids(request):
-    ids = Blog.objects.values_list('id', flat=True)
+    ids = Blog.objects.filter(Q(public=True) | Q(owner=request.user)).values_list('id', flat=True)
     return JsonResponse(list(ids), safe=False)
 
 
