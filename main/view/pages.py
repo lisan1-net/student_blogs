@@ -7,7 +7,7 @@ from main.models import Text
 
 
 def home(request):
-    form = SearchForm(request.GET or None)
+    form = SearchForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     form.advanced = form.is_valid() and any(v for k, v in form.cleaned_data.items() if k != 'search_query')
     return render(request, 'main/search/search.html', context={'form': form})
 
@@ -49,7 +49,9 @@ def blog_comparison(request):
 
 
 def surrounding_words(request):
-    form = SurroundingWordsFrequencyForm(request.GET or None)
+    form = SurroundingWordsFrequencyForm(
+        request.GET or None, user=request.user if request.user.is_authenticated else None
+    )
     form.advanced = form.is_valid() and any(v for k, v in form.cleaned_data.items() if k not in (
         'search_query', 'position'
     ))
@@ -57,6 +59,6 @@ def surrounding_words(request):
 
 
 def word_derivations(request):
-    form = WordDerivationsForm(request.GET or None)
+    form = WordDerivationsForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     form.advanced = form.is_valid() and any(v for k, v in form.cleaned_data.items() if k != 'search_query')
     return render(request, 'main/derivations/word_derivations.html', context={'form': form})

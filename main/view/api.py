@@ -23,7 +23,7 @@ def blog_card(request, pk):
 
 
 def advanced_search_form(request):
-    form = SearchForm(request.GET or None)
+    form = SearchForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     return render(request, 'main/search/advanced_search_form.html', context={'form': form})
 
 
@@ -33,7 +33,7 @@ def announcements(request):
 
 
 def search_results(request):
-    form = SearchForm(request.GET or None)
+    form = SearchForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     results = None
     text_count = None
     if form.is_valid():
@@ -60,7 +60,7 @@ def export_view(request, form, export_function, filename):
 
 
 def search_export(request):
-    form = SearchForm(request.GET or None)
+    form = SearchForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     return export_view(
         request, form, export_search_results,
         f'{get_app_name()} - {_("Search results")} - {request.GET["search_query"]}.xlsx'
@@ -68,17 +68,17 @@ def search_export(request):
 
 
 def advanced_vocabulary_form(request):
-    form = VocabularyForm(request.GET or None)
+    form = VocabularyForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     return render(request, 'main/vocabulary/advanced_vocabulary_form.html', context={'form': form})
 
 
 def vocabulary_form(request):
-    form = VocabularyForm(request.GET or None)
+    form = VocabularyForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     return render(request, 'main/vocabulary/vocabulary_form.html', context={'form': form})
 
 
 def vocabulary_results(request):
-    form = VocabularyForm(request.GET or None)
+    form = VocabularyForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     page = None
     blog = None
     if form.is_valid():
@@ -94,7 +94,7 @@ def vocabulary_results(request):
 
 
 def vocabulary_export(request):
-    form = VocabularyForm(request.GET or None)
+    form = VocabularyForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     title = _("Vocabulary results")
     blog_title = get_object_or_404(Blog, pk=int(request.GET["blog"])).title
     return export_view(
@@ -104,7 +104,8 @@ def vocabulary_export(request):
 
 def vocabulary_appearance_progressbar(request, content):
     tokens = content.split(' ')
-    form = VocabularyForm(request.GET) if len(tokens) == 1 else NgramsForm(request.GET)
+    form = VocabularyForm(request.GET, user=request.user if request.user.is_authenticated else None)\
+        if len(tokens) == 1 else NgramsForm(request.GET, user=request.user if request.user.is_authenticated else None)
     ratio = None
     if form.is_valid():
         filter_q, _ = build_common_filter_query(form.cleaned_data)
@@ -128,12 +129,12 @@ def vocabulary_appearance_progressbar(request, content):
 
 
 def blog_ngrams_form(request):
-    form = NgramsForm(request.GET or None)
+    form = NgramsForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     return render(request, 'main/ngrams/blog_ngrams_form.html', context={'form': form})
 
 
 def blog_ngrams_results(request):
-    form = NgramsForm(request.GET or None)
+    form = NgramsForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     page = None
     blog = None
     if form.is_valid():
@@ -149,7 +150,7 @@ def blog_ngrams_results(request):
 
 
 def ngrams_export(request):
-    form = NgramsForm(request.GET or None)
+    form = NgramsForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     title = _("Vocabulary results")
     blog_title = get_object_or_404(Blog, pk=int(request.GET["blog"])).title
     return export_view(
@@ -158,12 +159,12 @@ def ngrams_export(request):
 
 
 def blog_comparison_form(request):
-    form = BlogComparisonForm(request.GET or None)
+    form = BlogComparisonForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     return render(request, 'main/comparison/blog_comparison_form.html', context={'form': form})
 
 
 def blog_comparison_results(request):
-    form = BlogComparisonForm(request.GET or None)
+    form = BlogComparisonForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     blogs = None
     if form.is_valid():
         blogs = form.cleaned_data['blogs']
@@ -186,12 +187,16 @@ def most_frequent_trigrams(request, blog_id):
 
 
 def advanced_surrounding_words_form(request):
-    form = SurroundingWordsFrequencyForm(request.GET or None)
+    form = SurroundingWordsFrequencyForm(
+        request.GET or None, user=request.user if request.user.is_authenticated else None
+    )
     return render(request, 'main/search/advanced_search_form.html', context={'form': form})
 
 
 def surrounding_words_results(request):
-    form = SurroundingWordsFrequencyForm(request.GET or None)
+    form = SurroundingWordsFrequencyForm(
+        request.GET or None, user=request.user if request.user.is_authenticated else None
+    )
     page = None
     fully_indexed = None
     if form.is_valid():
@@ -206,7 +211,9 @@ def surrounding_words_results(request):
 
 
 def surrounding_words_export(request):
-    form = SurroundingWordsFrequencyForm(request.GET or None)
+    form = SurroundingWordsFrequencyForm(
+        request.GET or None, user=request.user if request.user.is_authenticated else None
+    )
     title = _("Surrounding words results")
     return export_view(
         request, form, export_surrounding_words_frequencies_results,
@@ -215,12 +222,12 @@ def surrounding_words_export(request):
 
 
 def advanced_word_derivations_form(request):
-    form = WordDerivationsForm(request.GET or None)
+    form = WordDerivationsForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     return render(request, 'main/search/advanced_search_form.html', context={'form': form})
 
 
 def word_derivations_results(request):
-    form = WordDerivationsForm(request.GET or None)
+    form = WordDerivationsForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     results = None
     fully_indexed = None
     if form.is_valid():
@@ -235,7 +242,7 @@ def word_derivations_results(request):
 
 
 def word_derivations_export(request):
-    form = WordDerivationsForm(request.GET or None)
+    form = WordDerivationsForm(request.GET or None, user=request.user if request.user.is_authenticated else None)
     title = _("Word derivations results")
     return export_view(
         request, form, export_derivation_frequencies_results,
