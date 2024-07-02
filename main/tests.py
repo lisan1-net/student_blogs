@@ -57,6 +57,6 @@ class TestWebApp(TestCase):
             f"{reverse('text', args=[text.pk])}?start={start}&end={end}"
         )
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'main/popups/text.html')
+        self.assertTemplateUsed(response, 'main/detail/text.html')
         self.assertContains(response, text.title)
         self.assertContains(response, '<span class="text-warning">' + highlighted + '</span>')
