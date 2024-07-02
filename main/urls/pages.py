@@ -5,6 +5,7 @@ from main.view import pages
 urlpatterns = [
     path('text/<int:pk>/', pages.text, name='text'),
     path('blog/<int:pk>/', pages.blog, name='blog'),
+    path('profile/<int:pk>/', pages.profile, name='profile'),
     path('words/', pages.vocabulary, name='vocabulary'),
     path('blog_ngrams/', pages.blog_ngrams, name='blog_ngrams'),
     path('blog_comparison/', pages.blog_comparison, name='blog_comparison'),

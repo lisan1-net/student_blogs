@@ -1,0 +1,19 @@
+{% load humanize %}
+{% load i18n %}
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h5 class="card-title mb-0">
+            <a href="{% url 'blog' blog.pk %}" class="card-link">
+                {{ blog.title }}
+            </a>
+        </h5>
+    </div>
+    <div class="card-body">
+        <h3 class="mb-0">
+            {{ blog.text_count|intcomma:False }}
+        </h3>
+    </div>
+    <div class="card-footer text-muted">
+        {% translate 'of texts' %}
+    </div>
+</div>

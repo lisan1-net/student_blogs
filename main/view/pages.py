@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import connections, OperationalError
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -20,6 +21,11 @@ def text(request, pk):
 def blog(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
     return render(request, 'main/detail/blog.html', context={'blog': blog})
+
+
+def profile(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
+    return render(request, 'main/detail/profile.html', context={'user': user})
 
 
 def vocabulary(request):

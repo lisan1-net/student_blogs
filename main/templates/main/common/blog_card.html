@@ -9,9 +9,11 @@
                     {{ blog.title }}
                 </a>
             </h5>
-            <h6 class="card-subtitle text-muted">
-                <i class="fas fa-feather-alt"></i>
-                {{ blog.owner.get_full_name|default:blog.owner.username }}
+            <h6 class="card-subtitle">
+                <a href="{% url 'profile' blog.owner.pk %}" class="text-decoration-none text-secondary">
+                    <i class="fas fa-feather-alt"></i>
+                    {{ blog.owner.get_full_name|default:blog.owner.username }}
+                </a>
             </h6>
         </div>
         <a href="#collapse-{{blog.pk}}" class="btn btn-outline-primary mt-2 mx-2" data-toggle="collapse" role="button"
