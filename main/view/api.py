@@ -109,7 +109,7 @@ def vocabulary_appearance_progressbar(request, content):
     ratio = None
     if form.is_valid():
         filter_q, _ = build_common_filter_query(form.cleaned_data)
-        texts = Text.objects.filter(filter_q)
+        texts = Text.objects.filter(filter_q).filter(blog=form.cleaned_data['blog'])
         match len(tokens):
             case 1:
                 ratio = texts.filter(tokens__content=tokens[0]).distinct().count() / texts.count()
