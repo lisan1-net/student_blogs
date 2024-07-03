@@ -8,6 +8,9 @@
                 <a href="{% url 'blog' blog.pk %}" class="text-decoration-none">
                     {{ blog.title }}
                 </a>
+                {% if not blog.public %}
+                    <small class="badge badge-warning pt-1">{% translate 'Private' %}</small>
+                {% endif %}
             </h5>
             <h6 class="card-subtitle">
                 <a href="{% url 'profile' blog.owner.pk %}" class="text-decoration-none text-secondary">

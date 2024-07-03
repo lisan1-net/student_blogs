@@ -15,12 +15,12 @@
             <div class="col-12">
                 <h3 class="text-info mb-3">
                     {% translate 'Blogs' %}
-                    <span class="badge badge-info pt-2">{{ user.blog_set.count }}</span>
+                    <span class="badge badge-info badge-pill pt-2">{{ blogs.count }}</span>
                 </h3>
             </div>
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
-            {% for blog in user.blog_set.all %}
+            {% for blog in blogs %}
                 <div class="col mb-3">
                     {% include 'main/common/blog_stat_card.html' with blog=blog %}
                 </div>

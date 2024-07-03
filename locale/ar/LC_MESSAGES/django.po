@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-02 14:13+0000\n"
+"POT-Creation-Date: 2024-07-03 03:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -336,8 +336,8 @@ msgid "Content of the token"
 msgstr "محتوى الوحدة"
 
 #: indexes/models.py:16 main/models.py:117
-#: main/templates/main/common/blog_card.html:26
-#: main/templates/main/detail/blog.html:30
+#: main/templates/main/common/blog_card.html:31
+#: main/templates/main/detail/blog.html:37
 msgid "Texts"
 msgstr "النصوص"
 
@@ -469,7 +469,7 @@ msgstr "عدد حدوثات المتلازمة اللفظية الثلاثية �
 msgid "\"%(first)s %(second)s %(third)s\" in \"%(text)s\""
 msgstr "\"%(first)s %(second)s %(third)s\" في \"%(text)s\""
 
-#: main/admin.py:15 main/templates/main/common/blog_card.html:51
+#: main/admin.py:15 main/templates/main/common/blog_card.html:56
 msgid "Unspecified"
 msgstr "غير محدد"
 
@@ -578,7 +578,7 @@ msgid "Select the type of n-gram to search for."
 msgstr "حدد نوع المتلازمة اللفظية للبحث عنها."
 
 #: main/forms.py:281 main/models.py:18
-#: main/templates/main/detail/profile.html:19
+#: main/templates/main/detail/profile.html:17
 msgid "Blogs"
 msgstr "المدونات"
 
@@ -716,7 +716,7 @@ msgstr "الجنس"
 msgid "Student sex"
 msgstr "جنس الطالب"
 
-#: main/models.py:135 main/templates/main/common/blog_card.html:52
+#: main/models.py:135 main/templates/main/common/blog_card.html:57
 #: main/utils.py:127
 msgid "Level"
 msgstr "الصف"
@@ -993,45 +993,55 @@ msgstr "حدث خطأ أثناء معالجة استعلام البحث."
 msgid "More details"
 msgstr "المزيد من التفاصيل"
 
-#: main/templates/main/common/blog_card.html:19
+#: main/templates/main/common/blog_card.html:12
+#: main/templates/main/common/blog_stat_card.html:10
+#: main/templates/main/detail/blog.html:12
+msgid "Private"
+msgstr "خاصة"
+
+#: main/templates/main/common/blog_card.html:24
 msgid "Show details"
 msgstr "إظهار التفاصيل"
 
-#: main/templates/main/common/blog_card.html:30
-#: main/templates/main/detail/blog.html:39
+#: main/templates/main/common/blog_card.html:35
+#: main/templates/main/detail/blog.html:46
 msgid "Words with duplication"
 msgstr "الكلمات بالتكرار"
 
-#: main/templates/main/common/blog_card.html:36
-#: main/templates/main/detail/blog.html:35
+#: main/templates/main/common/blog_card.html:41
+#: main/templates/main/detail/blog.html:42
 msgid "Words without duplication"
 msgstr "الكلمات بدون تكرار"
 
-#: main/templates/main/common/blog_card.html:42
+#: main/templates/main/common/blog_card.html:47
 msgid "Schools"
 msgstr "المدارس"
 
-#: main/templates/main/common/blog_card.html:46
+#: main/templates/main/common/blog_card.html:51
 msgid "Students"
 msgstr "الطلاب"
 
-#: main/templates/main/common/blog_card.html:57
+#: main/templates/main/common/blog_card.html:62
 msgid "No students"
 msgstr "لا يوجد طلاب"
 
-#: main/templates/main/common/blog_card.html:62
+#: main/templates/main/common/blog_card.html:67
 #: main/templates/main/comparison/blog_most_frequent_card.html:8
-#: main/templates/main/detail/blog.html:48
+#: main/templates/main/detail/blog.html:55
 msgid "Most frequent words"
 msgstr "الكلمات الأكثر شيوعًا"
 
-#: main/templates/main/common/blog_card.html:76
+#: main/templates/main/common/blog_card.html:81
 msgid "No words"
 msgstr "لا توجد كلمات"
 
-#: main/templates/main/common/blog_card.html:86
+#: main/templates/main/common/blog_card.html:91
 msgid "Show vocabulary"
 msgstr "عرض شيوع الألفاظ"
+
+#: main/templates/main/common/blog_stat_card.html:20
+msgid "of texts"
+msgstr "من النصوص"
 
 #: main/templates/main/common/export_results_button.html:6
 msgid "Export results as Excel file"
@@ -1109,17 +1119,13 @@ msgstr ""
 msgid "No words found"
 msgstr "لم يتم العثور على أيّة ألفاظ"
 
-#: main/templates/main/detail/blog.html:15
+#: main/templates/main/detail/blog.html:20
 msgid "By"
 msgstr "بواسطة"
 
-#: main/templates/main/detail/blog.html:24
+#: main/templates/main/detail/blog.html:31
 msgid "Statistics"
 msgstr "الإحصائيات"
-
-#: main/templates/main/detail/profile.html:41
-msgid "of texts"
-msgstr "من النصوص"
 
 #: main/templates/main/ngrams/blog_ngrams.html:3
 #: main/templates/main/ngrams/blog_ngrams.html:4
