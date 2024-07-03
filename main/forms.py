@@ -101,7 +101,7 @@ class SearchForm(forms.ModelForm):
     error_css_class = 'is-invalid'
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
+        self.user = kwargs.pop('user', None)
         super(SearchForm, self).__init__(*args, **kwargs)
         self.label_suffix = ''
         self.fields['search_query'].widget.attrs.update({
@@ -124,12 +124,12 @@ class SearchForm(forms.ModelForm):
             'data-placement': 'top',
             'value': self.fields['export_count'].initial
         })
-        if user:
-            self.fields['blog'].choices = with_empty(partial(get_blogs, user))()
-            self.fields['school'].choices = with_empty(partial(get_schools, user))()
-            self.fields['city'].choices = with_empty(partial(get_cities, user))()
-            self.fields['source_type'].choices = with_empty(partial(get_source_types, user))()
-            self.fields['author_name'].choices = with_empty(partial(get_author_names, user))()
+        if self.user:
+            self.fields['blog'].choices = with_empty(partial(get_blogs, self.user))()
+            self.fields['school'].choices = with_empty(partial(get_schools, self.user))()
+            self.fields['city'].choices = with_empty(partial(get_cities, self.user))()
+            self.fields['source_type'].choices = with_empty(partial(get_source_types, self.user))()
+            self.fields['author_name'].choices = with_empty(partial(get_author_names, self.user))()
 
     search_query = forms.CharField(
         max_length=100, min_length=2, label=_('Search query'),
@@ -166,6 +166,7 @@ class SearchForm(forms.ModelForm):
         for k, v in cleaned_data.items():
             if isinstance(self.fields[k], forms.CharField):
                 cleaned_data[k] = normalize(v) if v is not None else None
+        cleaned_data['user'] = self.user
         return cleaned_data
 
     def clean_blog(self):

@@ -61,7 +61,9 @@ def find_search_results(query: str, texts: Iterable) -> list[dict]:
 
 def build_common_filter_query(cleaned_data: dict) -> (Q, bool):
     advanced_search = False
-    filter_query = Q()
+    filter_query = Q(blog__public=True)
+    if user := cleaned_data['user']:
+        filter_query |= Q(blog__owner=user)
     if student_number := cleaned_data['student_number']:
         filter_query &= Q(student_number=student_number)
         advanced_search = True
@@ -401,8 +403,8 @@ def export_derivation_frequencies_results(**cleaned_data) -> bytes:
 def clean_form_data(form_data: dict) -> dict:
     form_data = form_data.copy()
     for k, v in form_data.items():
-        if isinstance(v, Iterable) and not isinstance(v, str):
-            form_data[k] = tuple(v)
-        elif isinstance(v, Model):
+        if isinstance(v, Model):
             form_data[k] = v.pk
+        elif isinstance(v, Iterable) and not isinstance(v, str):
+            form_data[k] = tuple(v)
     return form_data
