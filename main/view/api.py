@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, reverse
 from django.utils.http import content_disposition_header
@@ -173,16 +174,25 @@ def blog_comparison_results(request):
 
 def most_frequent_words(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
+    if not blog.public:
+        if not request.user.is_authenticated or not request.user.has_perm('main.view_blog', blog):
+            raise PermissionDenied
     return render(request, 'main/comparison/most_frequent_words.html', context={'blog': blog})
 
 
 def most_frequent_bigrams(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
+    if not blog.public:
+        if not request.user.is_authenticated or not request.user.has_perm('main.view_blog', blog):
+            raise PermissionDenied
     return render(request, 'main/comparison/most_frequent_bigrams.html', context={'blog': blog})
 
 
 def most_frequent_trigrams(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
+    if not blog.public:
+        if not request.user.is_authenticated or not request.user.has_perm('main.view_blog', blog):
+            raise PermissionDenied
     return render(request, 'main/comparison/most_frequent_trigrams.html', context={'blog': blog})
 
 

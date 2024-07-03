@@ -279,12 +279,13 @@ class NgramsForm(VocabularyForm):
 class BlogComparisonForm(forms.Form):
 
     blogs = forms.ModelMultipleChoiceField(
-        queryset=Blog.objects.all(), required=True, label=_('Blogs'),
+        queryset=Blog.objects.filter(public=True), required=True, label=_('Blogs'),
         help_text=_('Select the blogs to compare.'),
         widget=widgets.CheckboxSelectMultiple
     )
 
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         self.fields['blogs'].widget.attrs.update({
             'class': 'form-check-input',
@@ -292,6 +293,13 @@ class BlogComparisonForm(forms.Form):
             'data-toggle': 'tooltip',
             'data-placement': 'top',
         })
+        if self.user:
+            self.fields['blogs'].queryset |= self.user.blog_set.all()
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cleaned_data['user'] = self.user
+        return cleaned_data
 
 
 class SurroundingWordsFrequencyForm(SearchForm):
