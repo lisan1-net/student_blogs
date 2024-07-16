@@ -52,6 +52,18 @@ class TestGetWordsRanges(SimpleTestCase):
         expected_ranges = [("الله", (0, 4))]
         self.assertEqual(get_words_ranges(sentence), expected_ranges)
 
+    def test_get_words_ranges_xml_tags(self):
+        # Test with an Arabic sentence with XML tags
+        sentence = "<p>الحمد لله</p> <span>رب العالمين</span>"
+        expected_ranges = [("الحمد", (0, 5)), ("لله", (6, 9)), ("رب", (10, 12)), ("العالمين", (13, 21))]
+        self.assertEqual(get_words_ranges(sentence), expected_ranges)
+
+    def test_get_words_ranges_xml_tags_and_diacritics(self):
+        # Test with an Arabic sentence with XML tags and diacritics
+        sentence = "<p>الْحَمْدُ لِلَّهِ</p> <span>رَبِّ الْعَالَمِينَ</span>"
+        expected_ranges = [("الْحَمْدُ", (0, 9)), ("لِلَّهِ", (10, 17)), ("رَبِّ", (18, 23)), ("الْعَالَمِينَ", (24, 37))]
+        self.assertEqual(get_words_ranges(sentence), expected_ranges)
+
 
 class TestNormalize(SimpleTestCase):
 
@@ -96,3 +108,33 @@ class TestNormalize(SimpleTestCase):
         # Test with an empty string
         word = ""
         self.assertEqual(normalize(word), word)
+
+
+class TestSeparateTagsPositionsAndText(SimpleTestCase):
+
+    def test_text_with_tags(self):
+        # Test with a text containing XML tags
+        text = "قل <p>الحمد لله</p> <span>رب العالمين</span> الرحمن الرحيم"
+        expected_tags_positions = [(3, '<p>'), (12, '</p>'), (13, '<span>'), (24, '</span>')]
+        expected_text_without_tags = "قل الحمد لله رب العالمين الرحمن الرحيم"
+        self.assertEqual(separate_tags_positions_and_text(text), (expected_tags_positions, expected_text_without_tags))
+
+        # Test with another text containing empty XML tags
+        text = "قل <p>الحمد لله</p> <span>رب العالمين</span> الرحمن الرحيم <br/>مالك يوم الدين"
+        expected_tags_positions = [(3, '<p>'), (12, '</p>'), (13, '<span>'), (24, '</span>')]
+        expected_text_without_tags = "قل الحمد لله رب العالمين الرحمن الرحيم <br/>مالك يوم الدين"
+        self.assertEqual(separate_tags_positions_and_text(text), (expected_tags_positions, expected_text_without_tags))
+
+    def test_text_without_tags(self):
+        # Test with a text without XML tags
+        text = "الحمد لله رب العالمين الرحمن الرحيم"
+        expected_tags_positions = []
+        expected_text_without_tags = text
+        self.assertEqual(separate_tags_positions_and_text(text), (expected_tags_positions, expected_text_without_tags))
+
+    def test_text_with_tags_and_diacritics(self):
+        # Test with a text containing XML tags and diacritics
+        text = "قل <p>الْحَمْدُ لِلَّهِ</p> <span>رَبِّ الْعَالَمِينَ</span> الرَّحْمَنِ الرَّحِيمِ"
+        expected_tags_positions = [(3, '<p>'), (20, '</p>'), (21, '<span>'), (40, '</span>')]
+        expected_text_without_tags = "قل الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ الرَّحْمَنِ الرَّحِيمِ"
+        self.assertEqual(separate_tags_positions_and_text(text), (expected_tags_positions, expected_text_without_tags))
