@@ -25,6 +25,14 @@ class FirstLastNamesRegistrationForm(RegistrationFormUniqueEmail):
         assign_perm('main.view_text', new_user)
         assign_perm('main.change_text', new_user)
         assign_perm('main.delete_text', new_user)
+        assign_perm('main.add_semantictag', new_user)
+        assign_perm('main.view_semantictag', new_user)
+        assign_perm('main.change_semantictag', new_user)
+        assign_perm('main.delete_semantictag', new_user)
+        assign_perm('main.add_morphologicaltag', new_user)
+        assign_perm('main.view_morphologicaltag', new_user)
+        assign_perm('main.change_morphologicaltag', new_user)
+        assign_perm('main.delete_morphologicaltag', new_user)
         return new_user
 
 

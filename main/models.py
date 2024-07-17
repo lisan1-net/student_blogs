@@ -285,3 +285,31 @@ class Suffix(models.Model):
 
     def __str__(self):
         return self.content
+
+
+class Tag(models.Model):
+
+    class Meta:
+        abstract = True
+
+    symbol = models.CharField(max_length=20, verbose_name=_('Symbol'), unique=True,
+                              help_text=_('Symbol of the tag (You can use only letters, numbers, and underscores)'),
+                              validators=[validators.RegexValidator(r'^\w+$')])
+    content = models.TextField(verbose_name=_('Content'), help_text=_('Content of the tag'))
+
+    def __str__(self):
+        return self.symbol
+
+
+class SemanticTag(Tag):
+
+    class Meta(Tag.Meta):
+        verbose_name = _('Semantic Tag')
+        verbose_name_plural = _('Semantic Tags')
+
+
+class MorphologicalTag(Tag):
+
+    class Meta(Tag.Meta):
+        verbose_name = _('Morphological Tag')
+        verbose_name_plural = _('Morphological Tags')

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-03 03:50+0000\n"
+"POT-Creation-Date: 2024-07-16 10:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -326,7 +326,7 @@ msgid "Tokens"
 msgstr "الوحدات"
 
 #: indexes/models.py:12 main/models.py:123 main/models.py:210
-#: main/models.py:266 main/models.py:283
+#: main/models.py:266 main/models.py:283 main/models.py:298
 #: main/templates/main/search/search_results.html:32
 msgid "Content"
 msgstr "المحتوى"
@@ -391,12 +391,12 @@ msgstr "\"%(token)s\" في \"%(text)s\" [%(start)d:%(end)d]"
 msgid "Bigram"
 msgstr "المتلازمة اللفظية الثنائية"
 
-#: indexes/models.py:56 main/forms.py:263
+#: indexes/models.py:56 main/forms.py:264
 msgid "Bigrams"
 msgstr "المتلازمات اللفظية الثنائية"
 
-#: indexes/models.py:60 indexes/models.py:90 main/utils.py:283
-#: main/utils.py:287 main/utils.py:343
+#: indexes/models.py:60 indexes/models.py:90 main/utils.py:285
+#: main/utils.py:289 main/utils.py:345
 msgid "First Token"
 msgstr "الوحدة الأولى"
 
@@ -404,8 +404,8 @@ msgstr "الوحدة الأولى"
 msgid "First token of the bigram"
 msgstr "الوحدة الأولى من المتلازمة اللفظية الثنائية"
 
-#: indexes/models.py:64 indexes/models.py:94 main/utils.py:283
-#: main/utils.py:287 main/utils.py:343
+#: indexes/models.py:64 indexes/models.py:94 main/utils.py:285
+#: main/utils.py:289 main/utils.py:345
 msgid "Second Token"
 msgstr "الوحدة الثانية"
 
@@ -418,8 +418,8 @@ msgid "Text that contains this bigram"
 msgstr "النص الذي يحتوي على هذه المتلازمة اللفظية الثنائية"
 
 #: indexes/models.py:72 indexes/models.py:106
-#: main/templates/main/common/word_frequency_card.html:8 main/utils.py:186
-#: main/utils.py:283 main/utils.py:287 main/utils.py:343 main/utils.py:392
+#: main/templates/main/common/word_frequency_card.html:8 main/utils.py:188
+#: main/utils.py:285 main/utils.py:289 main/utils.py:345 main/utils.py:394
 msgid "Frequency"
 msgstr "التكرار"
 
@@ -436,7 +436,7 @@ msgstr "\"%(first)s %(second)s\" في \"%(text)s\""
 msgid "Trigram"
 msgstr "المتلازمة اللفظية الثلاثية"
 
-#: indexes/models.py:86 main/forms.py:263
+#: indexes/models.py:86 main/forms.py:264
 msgid "Trigrams"
 msgstr "المتلازمات اللفظية الثلاثية"
 
@@ -448,7 +448,7 @@ msgstr "الوحدة الأولى من المتلازمة اللفظية الث�
 msgid "Second token of the trigram"
 msgstr "الوحدة الثانية من المتلازمة اللفظية الثلاثية"
 
-#: indexes/models.py:98 main/utils.py:287
+#: indexes/models.py:98 main/utils.py:289
 msgid "Third Token"
 msgstr "الوحدة الثالثة"
 
@@ -521,96 +521,96 @@ msgstr "عدد التصدير"
 msgid "The maximum number of results to export."
 msgstr "أقصى عدد من النتائج لتصديرها."
 
-#: main/forms.py:182
+#: main/forms.py:183
 msgid "The blog to search in"
 msgstr "حدد مدونة للبحث فيها"
 
-#: main/forms.py:188
+#: main/forms.py:189
 msgid "Include functional words"
 msgstr "تضمين الكلمات الوظيفية"
 
-#: main/forms.py:189
+#: main/forms.py:190
 msgid "Include the functional words in the search results."
 msgstr "تضمين الكلمات الوظيفية ('في'، 'على'، 'من'، ...) في نتائج البحث."
 
-#: main/forms.py:194
+#: main/forms.py:195
 msgid "Contains"
 msgstr "يحوي"
 
-#: main/forms.py:194
+#: main/forms.py:195
 msgid "Enter a word or a part of it to search for."
 msgstr "أدخل كلمة أو جزء منها للبحث."
 
-#: main/forms.py:198
+#: main/forms.py:199
 msgid "Partial contains"
 msgstr "محتوى جزئي للتضمين"
 
-#: main/forms.py:198 main/forms.py:310
+#: main/forms.py:199 main/forms.py:319
 msgid "Search for a part of the word."
 msgstr "البحث عن جزء من الكلمة."
 
-#: main/forms.py:203
+#: main/forms.py:204
 msgid "Does not contain"
 msgstr "لا يحوي"
 
-#: main/forms.py:204
+#: main/forms.py:205
 msgid "Enter a word part of it to exclude from the search results."
 msgstr "أدخل كلمة أو جزء منها لاستبعاده من نتائج البحث."
 
-#: main/forms.py:208
+#: main/forms.py:209
 msgid "Partial does not contain"
 msgstr "محتوى جزئي للاستبعاد"
 
-#: main/forms.py:208
+#: main/forms.py:209
 msgid "Exclude a part of the word."
 msgstr "استبعاد جزء من الكلمة."
 
-#: main/forms.py:215
+#: main/forms.py:216
 msgid "Select a blog"
 msgstr "حدد مدونة"
 
-#: main/forms.py:263
+#: main/forms.py:264
 msgid "N-gram type"
 msgstr "نوع المتلازمة اللفظية"
 
-#: main/forms.py:264
+#: main/forms.py:265
 msgid "Select the type of n-gram to search for."
 msgstr "حدد نوع المتلازمة اللفظية للبحث عنها."
 
-#: main/forms.py:281 main/models.py:18
+#: main/forms.py:282 main/models.py:18
 #: main/templates/main/detail/profile.html:17
 msgid "Blogs"
 msgstr "المدونات"
 
-#: main/forms.py:282
+#: main/forms.py:283
 msgid "Select the blogs to compare."
 msgstr "حدد المدونات للمقارنة."
 
-#: main/forms.py:304
+#: main/forms.py:313
 msgid "Previous words"
 msgstr "الكلمات السابقة"
 
-#: main/forms.py:304
+#: main/forms.py:313
 msgid "Next words"
 msgstr "الكلمات التالية"
 
-#: main/forms.py:304
+#: main/forms.py:313
 msgid "Position"
 msgstr "الموضع"
 
-#: main/forms.py:305
+#: main/forms.py:314
 msgid "Select the position of the words to search for."
 msgstr "حدد الموضع للكلمات التي تبحث عنها."
 
-#: main/forms.py:310
+#: main/forms.py:319
 msgid "Partial search"
 msgstr "بحث جزئي"
 
-#: main/forms.py:317
+#: main/forms.py:326
 msgid "Enter a word or part of it to search for its previous and next words."
 msgstr "أدخل كلمة أو جزء منها للبحث عن كلماتها السابقة والتالية."
 
-#: main/forms.py:345
+#: main/forms.py:354
 msgid ""
 "Enter a word to search for its derivations (by adding the possible prefixes "
 "and suffixes)."
@@ -618,12 +618,12 @@ msgstr ""
 "أدخل كلمة للبحث عن اشتقاقاتها (من خلال إضافة السوابق واللواحق الممكنة)."
 
 #: main/models.py:17 main/models.py:120
-#: main/templates/main/search/advanced_search_form.html:3 main/utils.py:127
+#: main/templates/main/search/advanced_search_form.html:3 main/utils.py:129
 msgid "Blog"
 msgstr "المدونة"
 
 #: main/models.py:20 main/models.py:122 main/models.py:224
-#: main/templates/main/search/search_results.html:31 main/utils.py:127
+#: main/templates/main/search/search_results.html:31 main/utils.py:129
 msgid "Title"
 msgstr "العنوان"
 
@@ -692,7 +692,7 @@ msgstr "عنوان النص"
 msgid "Content of the text"
 msgstr "محتوى النص"
 
-#: main/models.py:125 main/models.py:145 main/utils.py:128
+#: main/models.py:125 main/models.py:145 main/utils.py:130
 msgid "Type"
 msgstr "النوع"
 
@@ -708,7 +708,7 @@ msgstr "الرقم"
 msgid "Number of the student"
 msgstr "رقم الطالب"
 
-#: main/models.py:132 main/utils.py:127
+#: main/models.py:132 main/utils.py:129
 msgid "Sex"
 msgstr "الجنس"
 
@@ -717,7 +717,7 @@ msgid "Student sex"
 msgstr "جنس الطالب"
 
 #: main/models.py:135 main/templates/main/common/blog_card.html:57
-#: main/utils.py:127
+#: main/utils.py:129
 msgid "Level"
 msgstr "الصف"
 
@@ -725,7 +725,7 @@ msgstr "الصف"
 msgid "Level of the student"
 msgstr "صف الطالب"
 
-#: main/models.py:139 main/utils.py:127
+#: main/models.py:139 main/utils.py:129
 msgid "School"
 msgstr "المدرسة"
 
@@ -733,7 +733,7 @@ msgstr "المدرسة"
 msgid "School of the student"
 msgstr "مدرسة الطالب"
 
-#: main/models.py:142 main/utils.py:127
+#: main/models.py:142 main/utils.py:129
 msgid "City"
 msgstr "المدينة"
 
@@ -741,7 +741,7 @@ msgstr "المدينة"
 msgid "City of the student"
 msgstr "مدينة الطالب"
 
-#: main/models.py:148 main/utils.py:128
+#: main/models.py:148 main/utils.py:130
 msgid "Source"
 msgstr "المصدر"
 
@@ -921,6 +921,34 @@ msgstr "اللواحق"
 msgid "Content of the suffix"
 msgstr "محتوى اللاحقة"
 
+#: main/models.py:295
+msgid "Symbol"
+msgstr "الرمز"
+
+#: main/models.py:296
+msgid "Symbol of the tag (You can use only letters, numbers, and underscores)"
+msgstr "رمز الوسم (يمكن استخدام الحروف، الأرقام، والشرطات السفلية فقط)"
+
+#: main/models.py:298
+msgid "Content of the tag"
+msgstr "محتوى الوسم"
+
+#: main/models.py:307
+msgid "Semantic Tag"
+msgstr "الوسم الدلالي"
+
+#: main/models.py:308
+msgid "Semantic Tags"
+msgstr "الوسوم الدلالية"
+
+#: main/models.py:314
+msgid "Morphological Tag"
+msgstr "الوسم الصرفي"
+
+#: main/models.py:315
+msgid "Morphological Tags"
+msgstr "الوسوم الصرفية"
+
 #: main/templates/main/base/base.html:8
 msgid "Copyright 2024. All rights reserved. Dr. Abdulaziz Abdullah Almhyubi"
 msgstr "حقوق النشر 2024. جميع الحقوق محفوظة. د. عبد العزيز عبد الله المهيوبي"
@@ -981,7 +1009,7 @@ msgid "Search in progress"
 msgstr "البحث جارٍ"
 
 #: main/templates/main/base/scripts.html:67
-#: main/templates/main/search/search.html:19
+#: main/templates/main/search/search.html:20
 msgid "An error occurred"
 msgstr "حدث خطأ"
 
@@ -1144,11 +1172,11 @@ msgstr "لم يتم العثور على متلازمات لفظية"
 msgid "Search in the database"
 msgstr "البحث في قاعدة البيانات"
 
-#: main/templates/main/search/search.html:12
+#: main/templates/main/search/search.html:13
 msgid "Available blogs"
 msgstr "المدونات المتاحة"
 
-#: main/templates/main/search/search.html:23
+#: main/templates/main/search/search.html:24
 msgid "An error occurred while loading the blog cards."
 msgstr "حدث خطأ أثناء تحميل بطاقات المدونات."
 
@@ -1229,27 +1257,27 @@ msgstr "البحث عن الألفاظ الأكثر شيوعًا مع التكر
 msgid "Advanced options"
 msgstr "خيارات متقدمة"
 
-#: main/utils.py:127
+#: main/utils.py:129
 msgid "Context"
 msgstr "السياق"
 
-#: main/utils.py:127
+#: main/utils.py:129
 msgid "Student number"
 msgstr "رقم الطالب"
 
-#: main/utils.py:186 main/utils.py:392
+#: main/utils.py:188 main/utils.py:394
 msgid "Word"
 msgstr "الكلمة"
 
-#: main/view/api.py:98 main/view/api.py:154
+#: main/view/api.py:99 main/view/api.py:155
 msgid "Vocabulary results"
 msgstr "نتائج شيوع الألفاظ"
 
-#: main/view/api.py:217
+#: main/view/api.py:227
 msgid "Surrounding words results"
 msgstr "نتائج الكلمات المحيطة"
 
-#: main/view/api.py:246
+#: main/view/api.py:256
 msgid "Word derivations results"
 msgstr "نتائج اشتقاقات الكلمة"
 

@@ -119,3 +119,15 @@ class SuffixAdmin(admin.ModelAdmin):
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         kwargs['widget'] = CheckboxSelectMultiple
         return super().formfield_for_manytomany(db_field, request, **kwargs)
+
+
+@admin.register(SemanticTag)
+class SemanticTagAdmin(admin.ModelAdmin):
+    list_display = ['symbol', 'content']
+    search_fields = ['symbol', 'content']
+
+
+@admin.register(MorphologicalTag)
+class MorphologicalTagAdmin(admin.ModelAdmin):
+    list_display = SemanticTagAdmin.list_display
+    search_fields = SemanticTagAdmin.search_fields

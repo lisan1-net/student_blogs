@@ -11,7 +11,7 @@ from openpyxl import Workbook
 from pyarabic.araby import DIACRITICS
 
 from indexes.models import TextToken, Bigram, Trigram
-from indexes.utils import normalize
+from indexes.utils import normalize, remove_tags
 from main.models import Text, FunctionalWord, Prefix, Suffix
 
 
@@ -27,7 +27,11 @@ def find_search_query_position(text: str, query: str, start_index=0) -> tuple[in
     end = -1
     if query.startswith('"') and query.endswith('"'):
         query = query[1:-1]
-        match = re.search(fr'\b{get_diacritics_insensitive_regexp(query).pattern}\b', text[start_index:])
+        letter_diac = fr'[\w{"".join(DIACRITICS)}]'
+        match = re.search(
+            fr'(?<!{letter_diac}){get_diacritics_insensitive_regexp(query).pattern}(?!{letter_diac})',
+            text[start_index:]
+        )
         if match:
             start = match.start() + start_index
             end = match.end() + start_index
@@ -54,7 +58,7 @@ def find_all_search_query_positions(text: str, query: str) -> list[tuple[int, in
 def find_search_results(query: str, texts: Iterable) -> list[dict]:
     results = []
     for text in texts:
-        for positions in find_all_search_query_positions(text.content, query):
+        for positions in find_all_search_query_positions(remove_tags(text.content), query):
             results.append({'text': text, 'start': positions[0], 'end': positions[1]})
     return results
 
