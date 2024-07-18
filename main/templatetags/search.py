@@ -102,53 +102,52 @@ def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None
         highlight_end = int(highlight_end)
 
     text_before, highlighted_text, text_after, visible_words_before, visible_words_after, prefix, suffix = get_context(
-        text, highlight_start, highlight_end, surrounding_words
+        replace_custom_tags_with_popovers(text), highlight_start, highlight_end, surrounding_words
     )
 
     def get_generated_text(words: list[str], prefix='', suffix=''):
         return prefix + ' '.join(words) + suffix
 
-    # generated_before_text = get_generated_text(visible_words_before, prefix=prefix)
-    # generated_after_text = get_generated_text(visible_words_after, suffix=suffix)
-    # definitions_start = highlight_start - len(generated_before_text) + len(prefix)
-    # definitions_end = highlight_end + len(generated_after_text)
-    # positions_definitions = get_definitions(pk, definitions_start, definitions_end)
-    #
-    # def close_indexes(pos_defs: dict, indexes: tuple[int, int], margin=3):
-    #     for pos_idx in pos_defs.keys():
-    #         start_diff = abs(pos_idx[0] - indexes[0])
-    #         end_diff = abs(pos_idx[1] - indexes[1])
-    #         pos_range = pos_idx[1] - pos_idx[0]
-    #         indexes_range = indexes[1] - indexes[0]
-    #         if start_diff <= margin and end_diff <= margin and pos_range == indexes_range:
-    #             return pos_idx
-    #     return None
-    #
-    # def add_popovers(words: list[str], start: int, pos_defs: dict):
-    #     popover_words = []
-    #     for word in words:
-    #         end = start + len(word)
-    #         if found_indexes := close_indexes(pos_defs, (start, end)):
-    #             terms_definitions = pos_defs[found_indexes]
-    #             popover_words.append(
-    #                 format_html(
-    #                     '<span data-toggle="popover" data-trigger="hover" title="{word}" data-content="{content}"\
-    #              tabindex="0" class="font-weight-bold" data-html="true" data-boundary="viewport">{word}</span>',
-    #                     word=word,
-    #                     content='<br>'.join(terms_definitions[y]['definition'] for y in range(len(terms_definitions))))
-    #             )
-    #         else:
-    #             popover_words.append(word)
-    #         start = end + 1
-    #         if found_indexes:
-    #             start = found_indexes[1] + 1
-    #     return popover_words
-    #
-    # visible_words_before = add_popovers(visible_words_before, definitions_start, positions_definitions)
-    # highlighted_text = add_popovers([highlighted_text], len(text_before) + 1, positions_definitions)[0]
-    # visible_words_after = add_popovers(
-    #     visible_words_after, len(text_before) + len(highlighted_text) + 2, positions_definitions
-    # )
+    generated_before_text = get_generated_text(visible_words_before, prefix=prefix)
+    generated_after_text = get_generated_text(visible_words_after, suffix=suffix)
+
+    definitions_start = highlight_start - len(generated_before_text) + len(prefix)
+    definitions_end = highlight_end + len(generated_after_text)
+    positions_definitions = get_definitions(pk, definitions_start, definitions_end)
+
+    def close_indexes(pos_defs: dict, indexes: tuple[int, int], margin=3):
+        for pos_idx in pos_defs.keys():
+            start_diff = abs(pos_idx[0] - indexes[0])
+            end_diff = abs(pos_idx[1] - indexes[1])
+            pos_range = pos_idx[1] - pos_idx[0]
+            indexes_range = indexes[1] - indexes[0]
+            if start_diff <= margin and end_diff <= margin and pos_range == indexes_range:
+                return pos_idx
+        return None
+
+    def add_popovers(words: list[str], start: int, pos_defs: dict):
+        popover_words = []
+        for word in words:
+            end = start + len(word)
+            if found_indexes := close_indexes(pos_defs, (start, end)):
+                terms_definitions = pos_defs[found_indexes]
+                popover_words.append(
+                    wrap_with_popover(
+                        word, '<br>'.join(terms_definitions[y]['definition'] for y in range(len(terms_definitions)))
+                    )
+                )
+            else:
+                popover_words.append(word)
+            start = end + 1
+            if found_indexes:
+                start = found_indexes[1] + 1
+        return popover_words
+
+    visible_words_before = add_popovers(visible_words_before, definitions_start, positions_definitions)
+    highlighted_text = add_popovers([highlighted_text], len(text_before) + 1, positions_definitions)[0]
+    visible_words_after = add_popovers(
+        visible_words_after, len(text_before) + len(highlighted_text) + 2, positions_definitions
+    )
 
     if link and pk is not None:
         href = reverse('text', args=[pk]) + f'?start={highlight_start}&end={highlight_end}'
@@ -197,17 +196,16 @@ def replace_custom_tags_with_popovers(text: str):
         if tags.exists():
             tag = tags.first()
             tag_text = text[open_index + insertion_offset:close_index + insertion_offset]
-            popover_span = wrap_with_popover(tag_text, tag.content)
+            popover_span = wrap_with_popover(tag_text, tag.content, wrap_element='b')
             text = text[:open_index + insertion_offset] + popover_span + text[close_index + insertion_offset:]
             insertion_offset += len(popover_span) - len(tag_text)
     return mark_safe(text)
 
 
 @lru_cache(64)
-def wrap_with_popover(title: str, content: str):
+def wrap_with_popover(title: str, content: str, wrap_element='u'):
     return format_html(
         '<span data-toggle="popover" data-trigger="hover" title="{title}" data-content="{content}" tabindex="0" '
-        'data-html="true" data-boundary="viewport"><u>{title}</u></span>',
-        title=title,
-        content=content
+        'data-html="true" data-boundary="viewport"><{wrap_element}>{title}</{wrap_element}></span>',
+        title=title, content=content, wrap_element=wrap_element
     )

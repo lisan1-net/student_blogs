@@ -83,5 +83,5 @@ class TestTemplateTags(TestCase):
         result = replace_custom_tags_with_popovers(text)
         self.assertEqual(
             result,
-            f'هذا {wrap_with_popover("نص", semantic.content)} تجريبي و{wrap_with_popover("نص", morphological.content)} آخر'
+            f'هذا {wrap_with_popover("نص", semantic.content, "b")} تجريبي و{wrap_with_popover("نص", morphological.content, "b")} آخر'
         )

@@ -20,8 +20,7 @@
             </div>
             <div class="card-body lead">
                 <div class="card-text">
-                    {% highlight_range result.text.content result.start result.end result.text.pk link=True as highlighted %}
-                    {{ highlighted|replace_custom_tags_with_popovers}}
+                    {% highlight_range result.text.content result.start result.end result.text.pk link=True %}
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-between">
