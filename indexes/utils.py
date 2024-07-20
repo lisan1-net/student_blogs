@@ -4,7 +4,7 @@ from functools import lru_cache
 from pyarabic.araby import (tokenize, strip_diacritics, strip_tatweel, strip_tashkeel, is_arabicword, COMMA, SEMICOLON,
                             QUESTION)
 
-tagging_pattern = re.compile(r'<(\w+)>([^<]+)</\1>')
+tagging_pattern = re.compile(r'<([\w|]+)>([^<]+)</\1>')
 
 
 @lru_cache(128)

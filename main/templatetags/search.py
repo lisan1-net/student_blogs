@@ -1,5 +1,6 @@
 import re
 from functools import lru_cache
+from html.parser import HTMLParser
 from urllib.parse import *
 
 from django import template
@@ -9,7 +10,7 @@ from django.db.models import Q
 from django.db.models.functions import Length
 from django.template.defaultfilters import mark_safe, floatformat
 from django.urls import reverse
-from django.utils.html import format_html
+from django.utils.html import escape
 from django.utils.text import slugify
 
 from indexes.utils import separate_tags_positions_and_text
@@ -133,7 +134,7 @@ def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None
                 terms_definitions = pos_defs[found_indexes]
                 popover_words.append(
                     wrap_with_popover(
-                        word, '<br>'.join(terms_definitions[y]['definition'] for y in range(len(terms_definitions)))
+                        word, '\n\n'.join(terms_definitions[y]['definition'] for y in range(len(terms_definitions)))
                     )
                 )
             else:
@@ -188,15 +189,20 @@ def get_definitions(text_pk, start, end):
 
 @register.filter
 def replace_custom_tags_with_popovers(text: str):
+    tag_merger = TagMerger()
+    tag_merger.feed(text)
+    text = ''.join(tag_merger.result)
     tags_pos, text = separate_tags_positions_and_text(text)
     insertion_offset = 0
     for (open_index, open_tag), (close_index, close_tag) in zip(tags_pos[:-1], tags_pos[1:]):
-        tag_symbol = open_tag.strip('<>')
-        tags = SemanticTag.objects.filter(symbol=tag_symbol).union(MorphologicalTag.objects.filter(symbol=tag_symbol))
+        tag_symbols = open_tag.strip('<>').split('|')
+        tags = SemanticTag.objects.filter(symbol__in=tag_symbols).union(
+            MorphologicalTag.objects.filter(symbol__in=tag_symbols)
+        )
         if tags.exists():
-            tag = tags.first()
+            popover_content = '\n\n'.join(f'{tag.content}' for tag in tags)
             tag_text = text[open_index + insertion_offset:close_index + insertion_offset]
-            popover_span = wrap_with_popover(tag_text, tag.content, wrap_element='b')
+            popover_span = wrap_with_popover(tag_text, popover_content, wrap_element='b')
             text = text[:open_index + insertion_offset] + popover_span + text[close_index + insertion_offset:]
             insertion_offset += len(popover_span) - len(tag_text)
     return mark_safe(text)
@@ -204,8 +210,52 @@ def replace_custom_tags_with_popovers(text: str):
 
 @lru_cache(64)
 def wrap_with_popover(title: str, content: str, wrap_element='u'):
-    return format_html(
+    return (
         '<span data-toggle="popover" data-trigger="hover" title="{title}" data-content="{content}" tabindex="0" '
-        'data-html="true" data-boundary="viewport"><{wrap_element}>{title}</{wrap_element}></span>',
-        title=title, content=content, wrap_element=wrap_element
+        'data-html="true" data-boundary="viewport"><{wrap_element}>{title}</{wrap_element}></span>'
+    ).format(
+        title=escape(title), wrap_element=escape(wrap_element),
+        content='<ul>' + ''.join(f'<li>{escape(part)}</li>' for part in content.split('\n\n')) + '</ul>',
     )
+
+
+class TagMerger(HTMLParser):
+
+    def __init__(self):
+        super().__init__()
+        self._result = []
+        self.level = 0
+
+    def handle_starttag(self, tag, attrs):
+        if attrs:
+            return
+        if self.level == 0:
+            self._result.append('<' + tag + '>')
+        else:
+            self._result[-1] = self._result[-1][:-1] + '|' + tag + '>'
+        self.level += 1
+
+    def handle_endtag(self, tag):
+        self.level -= 1
+        if '</' in self._result[-1]:
+            self._result[-1] = self._result[-1][:-1] + '|' + tag + '>'
+        else:
+            self._result[-1] += '</' + tag + '>'
+
+    def handle_data(self, data):
+        if self.level == 0:
+            self._result.append(data)
+        else:
+            self._result[-1] += data
+
+    @property
+    def result(self):
+        result = []
+        for item in self._result:
+            if '</' in item:
+                close_tag = item[item.index('</'):]
+                tag_names = reversed(close_tag.strip('</>').split('|'))
+                close_tag = '</' + '|'.join(tag_names) + '>'
+                item = item[:-len(close_tag)] + close_tag
+            result.append(item)
+        return result

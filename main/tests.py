@@ -3,8 +3,7 @@ from django.core.management import call_command
 from django.shortcuts import reverse
 from django.test import TestCase
 
-from main.models import SemanticTag, MorphologicalTag
-from main.templatetags.search import replace_custom_tags_with_popovers, wrap_with_popover
+from main.templatetags.search import replace_custom_tags_with_popovers, wrap_with_popover, TagMerger
 
 
 class TestWebApp(TestCase):
@@ -67,21 +66,44 @@ class TestWebApp(TestCase):
 
 class TestTemplateTags(TestCase):
 
+    def setUp(self):
+        self.SemanticTag = apps.get_model('main', 'SemanticTag')
+        self.MorphologicalTag = apps.get_model('main', 'MorphologicalTag')
+
+    def test_merge_nested_tags(self):
+        merger = TagMerger()
+        merger.feed('هذا <b><u>نص</u></b> للتجريب')
+        self.assertEqual(merger.result, ['هذا ', '<b|u>نص</b|u>', ' للتجريب'])
+
     def test_wrap_with_popover(self):
         title = 'عنوان تجريبي'
         content = 'هذا هو المحتوى الموافق للعنوان التجريبي'
-        self.assertEqual(
-            wrap_with_popover(title, content),
-            f'<span data-toggle="popover" data-trigger="hover" title="{title}" data-content="{content}" tabindex="0" '
-            f'data-html="true" data-boundary="viewport"><u>{title}</u></span>'
-        )
+        result = wrap_with_popover(title, content, wrap_element='b')
+        self.assertIn(f'title="{title}"', result)
+        self.assertIn('<b>' + title + '</b>', result)
+        self.assertIn('<ul><li>' + content + '</li></ul>', result)
 
     def test_replace_custom_tags_with_popovers(self):
         text = 'هذا <semantic>نص</semantic> تجريبي و<morphological>نص</morphological> آخر'
-        semantic = SemanticTag.objects.create(symbol='semantic', content='هذا هو المحتوى الموافق للعنوان التجريبي')
-        morphological = MorphologicalTag.objects.create(symbol='morphological', content='هذا هو المحتوى الموافق للعنوان الآخر')
+        semantic = self.SemanticTag.objects.create(symbol='semantic', content='هذا هو المحتوى الموافق للعنوان التجريبي')
+        morphological = self.MorphologicalTag.objects.create(symbol='morphological', content='هذا هو المحتوى الموافق للعنوان الآخر')
         result = replace_custom_tags_with_popovers(text)
         self.assertEqual(
             result,
             f'هذا {wrap_with_popover("نص", semantic.content, "b")} تجريبي و{wrap_with_popover("نص", morphological.content, "b")} آخر'
         )
+
+    def test_replace_custom_tags_with_popovers_nested_tags(self):
+        text = 'هذا <semantic><morphological>نص</morphological></semantic> تجريبي'
+        semantic = self.SemanticTag.objects.create(symbol='semantic', content='هذا هو المحتوى الموافق للعنوان التجريبي')
+        morphological = self.MorphologicalTag.objects.create(symbol='morphological', content='هذا هو المحتوى الموافق للعنوان الآخر')
+        result = replace_custom_tags_with_popovers(text)
+        self.assertIn('<li>' + semantic.content + '</li>', result)
+        self.assertIn('<li>' + morphological.content + '</li>', result)
+        self.assertIn('نص', result)
+
+    def test_replace_custom_tags_with_popovers_non_existing_tags(self):
+        text = 'هذا <semantic>نص</semantic> تجريبي'
+        result = replace_custom_tags_with_popovers(text)
+        expected = 'هذا نص تجريبي'
+        self.assertEqual(result, expected)

@@ -138,3 +138,12 @@ class TestSeparateTagsPositionsAndText(SimpleTestCase):
         expected_tags_positions = [(3, '<p>'), (20, '</p>'), (21, '<span>'), (40, '</span>')]
         expected_text_without_tags = "قل الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ الرَّحْمَنِ الرَّحِيمِ"
         self.assertEqual(separate_tags_positions_and_text(text), (expected_tags_positions, expected_text_without_tags))
+
+    def test_text_with_combined_tags(self):
+        # Test with a text containing tags having | in their names
+        text = "قل <p|u>الحمد لله</p|u> <span|b>رب العالمين</span|b> الرحمن الرحيم"
+        expected_tags_positions = [(3, '<p|u>'), (12, '</p|u>'), (13, '<span|b>'), (24, '</span|b>')]
+        expected_text_without_tags = "قل الحمد لله رب العالمين الرحمن الرحيم"
+        self.assertEqual(
+            separate_tags_positions_and_text(text), (expected_tags_positions, expected_text_without_tags)
+        )
