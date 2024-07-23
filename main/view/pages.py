@@ -30,7 +30,7 @@ def blog(request, pk):
 def profile(request, pk):
     user = get_object_or_404(get_user_model(), pk=pk)
     blogs = Blog.objects.filter(owner=user, public=True)
-    if request.user == user:
+    if request.user == user or request.user.is_superuser:
         blogs |= Blog.objects.filter(owner=user, public=False)
     return render(request, 'main/detail/profile.html', context={'user': user, 'blogs': blogs})
 

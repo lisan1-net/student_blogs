@@ -95,15 +95,17 @@ def percent(value, unlocalized=False):
 
 @register.simple_tag
 def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None, surrounding_words=5, link=True):
-    if highlight_start is None or highlight_end is None:
-        return text
-    if isinstance(highlight_start, str):
+    text_without_custom_tags = replace_custom_tags_with_popovers(text)
+    if isinstance(highlight_start, str) and highlight_start.isdigit():
         highlight_start = int(highlight_start)
-    if isinstance(highlight_end, str):
+    else:
+        highlight_start = 0
+    if isinstance(highlight_end, str) and highlight_end.isdigit():
         highlight_end = int(highlight_end)
-
+    else:
+        highlight_end = len(text_without_custom_tags)
     text_before, highlighted_text, text_after, visible_words_before, visible_words_after, prefix, suffix = get_context(
-        replace_custom_tags_with_popovers(text), highlight_start, highlight_end, surrounding_words
+        text_without_custom_tags, highlight_start, highlight_end, surrounding_words
     )
 
     def get_generated_text(words: list[str], prefix='', suffix=''):
@@ -145,7 +147,7 @@ def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None
         return popover_words
 
     visible_words_before = add_popovers(visible_words_before, definitions_start, positions_definitions)
-    highlighted_text = add_popovers([highlighted_text], len(text_before) + 1, positions_definitions)[0]
+    highlighted_text = ' '.join(add_popovers(highlighted_text.split(' '), len(text_before) + 1, positions_definitions))
     visible_words_after = add_popovers(
         visible_words_after, len(text_before) + len(highlighted_text) + 2, positions_definitions
     )
@@ -159,9 +161,12 @@ def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None
                   get_generated_text(visible_words_after, suffix=suffix))
     else:
         span = f'<span class="text-warning">{highlighted_text}</span>'
-        markup = (get_generated_text(visible_words_before, prefix=prefix)
-                  + span +
-                  get_generated_text(visible_words_after, suffix=suffix))
+        if text_before or text_after:
+            markup = (get_generated_text(visible_words_before, prefix=prefix)
+                      + span +
+                      get_generated_text(visible_words_after, suffix=suffix))
+        else:
+            markup = highlighted_text
     return mark_safe(markup)
 
 
