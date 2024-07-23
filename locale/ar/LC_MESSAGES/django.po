@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 10:42+0000\n"
+"POT-Creation-Date: 2024-07-23 18:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -197,7 +197,7 @@ msgstr "الاسم الأول"
 msgid "Last Name"
 msgstr "الاسم الأخير"
 
-#: accounts/views.py:40 accounts/views.py:41
+#: accounts/views.py:48 accounts/views.py:49
 msgid "Username or Email"
 msgstr "اسم المستخدم أو البريد الإلكتروني"
 
@@ -395,8 +395,8 @@ msgstr "المتلازمة اللفظية الثنائية"
 msgid "Bigrams"
 msgstr "المتلازمات اللفظية الثنائية"
 
-#: indexes/models.py:60 indexes/models.py:90 main/utils.py:285
-#: main/utils.py:289 main/utils.py:345
+#: indexes/models.py:60 indexes/models.py:90 main/utils.py:289
+#: main/utils.py:293 main/utils.py:349
 msgid "First Token"
 msgstr "الوحدة الأولى"
 
@@ -404,8 +404,8 @@ msgstr "الوحدة الأولى"
 msgid "First token of the bigram"
 msgstr "الوحدة الأولى من المتلازمة اللفظية الثنائية"
 
-#: indexes/models.py:64 indexes/models.py:94 main/utils.py:285
-#: main/utils.py:289 main/utils.py:345
+#: indexes/models.py:64 indexes/models.py:94 main/utils.py:289
+#: main/utils.py:293 main/utils.py:349
 msgid "Second Token"
 msgstr "الوحدة الثانية"
 
@@ -418,8 +418,8 @@ msgid "Text that contains this bigram"
 msgstr "النص الذي يحتوي على هذه المتلازمة اللفظية الثنائية"
 
 #: indexes/models.py:72 indexes/models.py:106
-#: main/templates/main/common/word_frequency_card.html:8 main/utils.py:188
-#: main/utils.py:285 main/utils.py:289 main/utils.py:345 main/utils.py:394
+#: main/templates/main/common/word_frequency_card.html:8 main/utils.py:192
+#: main/utils.py:289 main/utils.py:293 main/utils.py:349 main/utils.py:398
 msgid "Frequency"
 msgstr "التكرار"
 
@@ -448,7 +448,7 @@ msgstr "الوحدة الأولى من المتلازمة اللفظية الث�
 msgid "Second token of the trigram"
 msgstr "الوحدة الثانية من المتلازمة اللفظية الثلاثية"
 
-#: indexes/models.py:98 main/utils.py:289
+#: indexes/models.py:98 main/utils.py:293
 msgid "Third Token"
 msgstr "الوحدة الثالثة"
 
@@ -618,12 +618,12 @@ msgstr ""
 "أدخل كلمة للبحث عن اشتقاقاتها (من خلال إضافة السوابق واللواحق الممكنة)."
 
 #: main/models.py:17 main/models.py:120
-#: main/templates/main/search/advanced_search_form.html:3 main/utils.py:129
+#: main/templates/main/search/advanced_search_form.html:3 main/utils.py:133
 msgid "Blog"
 msgstr "المدونة"
 
 #: main/models.py:20 main/models.py:122 main/models.py:224
-#: main/templates/main/search/search_results.html:31 main/utils.py:129
+#: main/templates/main/search/search_results.html:31 main/utils.py:133
 msgid "Title"
 msgstr "العنوان"
 
@@ -692,7 +692,7 @@ msgstr "عنوان النص"
 msgid "Content of the text"
 msgstr "محتوى النص"
 
-#: main/models.py:125 main/models.py:145 main/utils.py:130
+#: main/models.py:125 main/models.py:145 main/utils.py:134
 msgid "Type"
 msgstr "النوع"
 
@@ -708,7 +708,7 @@ msgstr "الرقم"
 msgid "Number of the student"
 msgstr "رقم الطالب"
 
-#: main/models.py:132 main/utils.py:129
+#: main/models.py:132 main/utils.py:133
 msgid "Sex"
 msgstr "الجنس"
 
@@ -717,7 +717,7 @@ msgid "Student sex"
 msgstr "جنس الطالب"
 
 #: main/models.py:135 main/templates/main/common/blog_card.html:57
-#: main/utils.py:129
+#: main/utils.py:133
 msgid "Level"
 msgstr "الصف"
 
@@ -725,7 +725,7 @@ msgstr "الصف"
 msgid "Level of the student"
 msgstr "صف الطالب"
 
-#: main/models.py:139 main/utils.py:129
+#: main/models.py:139 main/utils.py:133
 msgid "School"
 msgstr "المدرسة"
 
@@ -733,7 +733,7 @@ msgstr "المدرسة"
 msgid "School of the student"
 msgstr "مدرسة الطالب"
 
-#: main/models.py:142 main/utils.py:129
+#: main/models.py:142 main/utils.py:133
 msgid "City"
 msgstr "المدينة"
 
@@ -741,7 +741,7 @@ msgstr "المدينة"
 msgid "City of the student"
 msgstr "مدينة الطالب"
 
-#: main/models.py:148 main/utils.py:130
+#: main/models.py:148 main/utils.py:134
 msgid "Source"
 msgstr "المصدر"
 
@@ -926,8 +926,10 @@ msgid "Symbol"
 msgstr "الرمز"
 
 #: main/models.py:296
-msgid "Symbol of the tag (You can use only letters, numbers, and underscores)"
-msgstr "رمز الوسم (يمكن استخدام الحروف، الأرقام، والشرطات السفلية فقط)"
+msgid ""
+"Symbol of the tag (You can use only English letters, numbers, and "
+"underscores)"
+msgstr "رمز الوسم (يمكن استخدام الحروف الإنجليزية، الأرقام، والشرطات السفلية فقط)"
 
 #: main/models.py:298
 msgid "Content of the tag"
@@ -1257,15 +1259,15 @@ msgstr "البحث عن الألفاظ الأكثر شيوعًا مع التكر
 msgid "Advanced options"
 msgstr "خيارات متقدمة"
 
-#: main/utils.py:129
+#: main/utils.py:133
 msgid "Context"
 msgstr "السياق"
 
-#: main/utils.py:129
+#: main/utils.py:133
 msgid "Student number"
 msgstr "رقم الطالب"
 
-#: main/utils.py:188 main/utils.py:394
+#: main/utils.py:192 main/utils.py:398
 msgid "Word"
 msgstr "الكلمة"
 

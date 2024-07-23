@@ -107,3 +107,9 @@ class TestTemplateTags(TestCase):
         result = replace_custom_tags_with_popovers(text)
         expected = 'هذا نص تجريبي'
         self.assertEqual(result, expected)
+
+    def test_replace_custom_tags_with_popovers_alphanumeric(self):
+        text = 'هذا <def1>نص</def1> تجريبي'
+        tag = self.MorphologicalTag.objects.create(symbol='def1', content='هذا هو المحتوى الموافق للتعريف')
+        result = replace_custom_tags_with_popovers(text)
+        self.assertEqual(result, f'هذا {wrap_with_popover("نص", tag.content, "b")} تجريبي')

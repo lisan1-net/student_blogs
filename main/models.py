@@ -293,8 +293,8 @@ class Tag(models.Model):
         abstract = True
 
     symbol = models.CharField(max_length=20, verbose_name=_('Symbol'), unique=True,
-                              help_text=_('Symbol of the tag (You can use only letters, numbers, and underscores)'),
-                              validators=[validators.RegexValidator(r'^\w+$')])
+                              help_text=_('Symbol of the tag (You can use only English letters, numbers, and underscores)'),
+                              validators=[validators.RegexValidator(r'^[A-Za-z0-9_]+$')])
     content = models.TextField(verbose_name=_('Content'), help_text=_('Content of the tag'))
 
     def __str__(self):
