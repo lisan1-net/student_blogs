@@ -11,7 +11,7 @@ from django.db.models import Q
 from django.db.models.functions import Length
 from django.template.defaultfilters import mark_safe, floatformat
 from django.urls import reverse
-from django.utils.html import escape
+from django.utils.html import conditional_escape as escape
 from django.utils.text import slugify
 
 from indexes.utils import separate_tags_positions_and_text
