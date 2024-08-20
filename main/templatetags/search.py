@@ -1,6 +1,7 @@
 import re
 from functools import lru_cache
 from html.parser import HTMLParser
+from typing import Iterable
 from urllib.parse import *
 
 from django import template
@@ -98,11 +99,11 @@ def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None
     text_without_custom_tags = replace_custom_tags_with_popovers(text)
     if isinstance(highlight_start, str) and highlight_start.isdigit():
         highlight_start = int(highlight_start)
-    else:
+    elif highlight_start is None:
         highlight_start = 0
     if isinstance(highlight_end, str) and highlight_end.isdigit():
         highlight_end = int(highlight_end)
-    else:
+    elif highlight_end is None:
         highlight_end = len(text_without_custom_tags)
     text_before, highlighted_text, text_after, visible_words_before, visible_words_after, prefix, suffix = get_context(
         text_without_custom_tags, highlight_start, highlight_end, surrounding_words
@@ -128,7 +129,7 @@ def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None
                 return pos_idx
         return None
 
-    def add_popovers(words: list[str], start: int, pos_defs: dict):
+    def add_popovers(words: Iterable[str], start: int, pos_defs: dict):
         popover_words = []
         for word in words:
             end = start + len(word)
@@ -146,10 +147,10 @@ def highlight_range(text: str, highlight_start=None, highlight_end=None, pk=None
                 start = found_indexes[1] + 1
         return popover_words
 
-    visible_words_before = add_popovers(visible_words_before, definitions_start, positions_definitions)
-    highlighted_text = ' '.join(add_popovers(highlighted_text.split(' '), len(text_before) + 1, positions_definitions))
+    visible_words_before = add_popovers(map(escape, visible_words_before), definitions_start, positions_definitions)
+    highlighted_text = ' '.join(add_popovers(escape(highlighted_text).split(' '), len(text_before) + 1, positions_definitions))
     visible_words_after = add_popovers(
-        visible_words_after, len(text_before) + len(highlighted_text) + 2, positions_definitions
+        map(escape, visible_words_after), len(text_before) + len(highlighted_text) + 2, positions_definitions
     )
 
     if link and pk is not None:

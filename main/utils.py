@@ -59,7 +59,8 @@ def find_search_results(query: str, texts: Iterable) -> list[dict]:
     results = []
     for text in texts:
         for positions in find_all_search_query_positions(remove_tags(text.content), query):
-            results.append({'text': text, 'start': positions[0], 'end': positions[1]})
+            start, end = positions
+            results.append({'text': text, 'start': start, 'end': end})
     return results
 
 
